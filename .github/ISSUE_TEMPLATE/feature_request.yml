@@ -1,0 +1,50 @@
+name: Feature request
+description: Propose a change to the extra, dashboard, or protocol client
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please read the [invariants](https://openalon.com/herdr-bar/guide/invariants) first. herdr-bar will not create terminals, poll `agent.list` on a timer, or reinterpret harness status — that stays in Herdr.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What is painful or missing today?
+      placeholder: I cannot tell which session a blocked agent belongs to from the extra alone.
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed change
+      description: What should the extra or dashboard do instead?
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives you considered
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: invariants
+    attributes:
+      label: Invariants
+      options:
+        - label: This does not require creating a terminal, window, pane, tab, or agent.
+          required: true
+        - label: This does not poll Herdr on a timer (events still invalidate; `agent.list` still refreshes).
+          required: true
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+      description: Mockups, related issues, protocol fields Herdr already sends.
+    validations:
+      required: false

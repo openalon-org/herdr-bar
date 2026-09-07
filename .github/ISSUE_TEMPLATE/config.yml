@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentation
+    url: https://openalon.com/herdr-bar/
+    about: Install, usage, architecture, and the protocol (English and 中文).
+  - name: Herdr (the TUI this extra talks to)
+    url: https://herdr.dev/
+    about: herdr-bar does not start Herdr. Socket and TUI issues belong with Herdr.

@@ -1,0 +1,15 @@
+{
+  "name": "herdr-bar",
+  "version": "1.0.0",
+  "description": "macOS menu-bar companion for Herdr — docs site",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
+  },
+  "devDependencies": {
+    "vitepress": "^1.6.3"
+  }
+}

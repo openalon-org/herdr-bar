@@ -1,0 +1,32 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Build
+build/
+dist/
+*.egg-info/
+
+# Environments
+.venv/
+
+# Editors
+.idea/
+.vscode/
+.DS_Store
+
+# Swift
+.build/
+.swiftpm/
+*.xcodeproj
+DerivedData/
+
+# Docs
+node_modules/
+docs/.vitepress/dist/
+docs/.vitepress/cache/
+

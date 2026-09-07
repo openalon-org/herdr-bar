@@ -1,0 +1,107 @@
+name: Bug report
+description: Something in herdr-bar is wrong or unexpected
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report. herdr-bar is the **menu-bar extra**. If Herdr itself is down, the extra shows a 22pt grey dot — that is usually a missing socket, not an install failure. See the [docs](https://openalon.com/herdr-bar/).
+
+  - type: input
+    id: version
+    attributes:
+      label: herdr-bar version
+      description: GitHub Release tag (e.g. `v0.1.0`) or commit SHA if built from source.
+      placeholder: v0.1.0
+    validations:
+      required: true
+
+  - type: input
+    id: macos-version
+    attributes:
+      label: macOS version
+      description: Apple menu → About This Mac
+      placeholder: macOS 15.6
+    validations:
+      required: true
+
+  - type: dropdown
+    id: chip
+    attributes:
+      label: Mac chip
+      options:
+        - Apple Silicon
+        - Intel
+    validations:
+      required: true
+
+  - type: dropdown
+    id: install-method
+    attributes:
+      label: Installation method
+      options:
+        - GitHub Release zip
+        - Built from source (`./scripts/install.sh`)
+        - `./scripts/dev-run.sh`
+        - `./scripts/dev-run.sh --demo`
+    validations:
+      required: true
+
+  - type: input
+    id: herdr-version
+    attributes:
+      label: Herdr version
+      description: herdr-bar needs Herdr 0.8+. Leave blank only for `--demo`.
+      placeholder: 0.8.x
+    validations:
+      required: false
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened
+      placeholder: The extra stayed a grey dot even though herdr.sock exists.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open Herdr (`herdr` or `herdr session attach work`)
+        2. Open HerdrBar.app
+        3. …
+    validations:
+      required: true
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: Extra / dashboard
+      description: What the menu bar showed (22pt dot, which chips, counts) and whether the dashboard opened.
+    validations:
+      required: false
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs or crash reports
+      description: Console.app messages for `MacBar` / `dev.herdr.herdr-bar`, or files under `~/Library/Logs/DiagnosticReports/`.
+      render: text
+    validations:
+      required: false
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+    validations:
+      required: false

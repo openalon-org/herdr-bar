@@ -1,0 +1,57 @@
+# Contributing
+
+Thanks for looking at herdr-bar. Keep changes focused, preserve the invariants in [`AGENTS.md`](AGENTS.md), and open a pull request against `main`.
+
+## Before you start
+
+- Read [`AGENTS.md`](AGENTS.md) — those constraints *are* the product.
+- Search [existing issues](https://github.com/openalon-org/herdr-bar/issues) before filing a new one.
+- Use the [bug](https://github.com/openalon-org/herdr-bar/issues/new?template=bug_report.yml) or [feature](https://github.com/openalon-org/herdr-bar/issues/new?template=feature_request.yml) form. Questions about Herdr itself belong at [herdr.dev](https://herdr.dev/).
+
+## Setup
+
+macOS 13+, Swift (Xcode or Command Line Tools), Node (for the oracle tests and the docs site).
+
+```bash
+git clone https://github.com/openalon-org/herdr-bar.git
+cd herdr-bar
+swift test
+node --test tests/herdr.test.mjs
+```
+
+Throwaway extra (does not replace `~/Applications/HerdrBar.app`):
+
+```bash
+./scripts/dev-run.sh
+./scripts/dev-run.sh --demo
+```
+
+After MacBar / HerdrCore changes the user should see, replace the live extra:
+
+```bash
+./scripts/reload.sh              # swift test, then install + restart
+./scripts/reload.sh --skip-tests # this round already passed
+```
+
+`swift test` does **not** update the menu-bar extra.
+
+## Pull requests
+
+1. Branch from latest `main`.
+2. Keep the diff on one concern.
+3. Behavior changes: add the narrowest useful test (`tests/HerdrCoreTests` and/or `tests/herdr.test.mjs`).
+4. If install, settings, interactions, or requirements change, update `README.md` and `docs/guide/` (English and `docs/zh/`).
+5. Do not commit real home directories, logins, hostnames, local project paths, or real session / repo names. Use `/Users/me`, `/home/user`, `~/…`, and the generic session name `work`.
+6. Fill in `.github/pull_request_template.md`.
+
+CI (`.github/workflows/ci.yml`) runs `swift test`, the Node oracle, and a VitePress build on every push and pull request.
+
+## Releases
+
+Maintainers publish by pushing a `v*` tag. That builds a universal zip and creates a GitHub Release. Manually running **Release macOS app** only uploads an Actions artifact (`0.0.0-dev`) — it does not publish.
+
+The zip is ad-hoc signed. There is no Developer ID / notarization in this tree.
+
+## Security
+
+Do not file public issues for vulnerabilities. See [`SECURITY.md`](SECURITY.md).
