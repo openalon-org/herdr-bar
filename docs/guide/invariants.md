@@ -49,5 +49,5 @@ These constraints *are* the product. Read [`AGENTS.md`](https://github.com/opena
 ## Interpretation boundary
 
 - Harness-specific status interpretation stays in Herdr.
-- Git branch, model, and elapsed time are local enrichment, not Herdr fields. Working ticks from the latest jsonl write (matching CLI `Churning`); Done freezes that prompt’s `end_turn −` human start. Idle draws no duration. A 1s timer may re-read jsonl while any agent is Working; it must not poll `agent.list`.
+- Git branch and model are local enrichment, not Herdr fields. Do not show elapsed time or tokens. Do not timer-poll jsonl or `agent.list`.
 - `Herdr.js` remains the oracle for status order, counts, and socket paths. Behavior changes should ship the narrowest useful test, and update the README plus this site when they affect install, settings, or interactions.

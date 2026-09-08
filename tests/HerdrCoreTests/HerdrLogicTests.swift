@@ -81,7 +81,7 @@ struct HerdrLogicTests {
         #expect(HerdrLogic.shortPane("p7") == "p7")
     }
 
-    @Test func subtitleAddsBranchAndPaneWhenNeeded() {
+    @Test func subtitleAddsBranchAndModel() {
         let a = Agent(
             sessionName: "work",
             paneId: "w2:p7",
@@ -111,12 +111,10 @@ struct HerdrLogicTests {
             HerdrLogic.subtitle(for: a, among: among, home: "/home/user", showSession: true)
                 == "work · repo · feature/login"
         )
-        #expect(HerdrLogic.paneBadge(for: a, among: among) == "p7")
         #expect(
             HerdrLogic.subtitle(for: unique, among: among, home: "/home/user", showSession: true)
                 == "work · other · main"
         )
-        #expect(HerdrLogic.paneBadge(for: unique, among: among) == nil)
         #expect(HerdrLogic.folderName("/home/user/workspace/alpha") == "alpha")
         #expect(HerdrLogic.folderName("/home/user/workspace/alpha/") == "alpha")
         let withModel = Agent(
@@ -424,40 +422,22 @@ struct SessionTimeTests {
         try? FileManager.default.removeItem(at: root)
     }
 
-    @Test func shortModelAndElapsed() {
+    @Test func shortModel() {
         #expect(SessionTimeCache.shortModel("x-ai-grok/grok-4.6") == "Grok 4.6")
         #expect(SessionTimeCache.shortModel("claude-opus-4-6") == "Opus 4.6")
         #expect(SessionTimeCache.shortModel("anthropic-claude/claude-sonnet-5") == "Sonnet 5")
-        #expect(SessionTimeCache.formatElapsed(14) == "14s")
-        #expect(SessionTimeCache.formatElapsed(75) == "1m15s")
-        #expect(SessionTimeCache.formatElapsed(3723) == "1h02m")
     }
 
-    @Test func parseTranscriptTailReadsModelAndUserTurn() {
+    @Test func parseTranscriptTailReadsLatestModel() {
         let user = #"{"type":"user","timestamp":"2026-09-06T06:00:00.000Z"}"#
-        let assistant = #"{"type":"assistant","timestamp":"2026-09-06T06:01:00.000Z","message":{"model":"x-ai-grok/grok-4.6","role":"assistant"}}"#
-        let data = Data((user + "\n" + assistant + "\n").utf8)
-        let parsed = SessionTimeCache.parseTranscriptTail(data, startedMidLine: false)
-        #expect(parsed.modelName == "Grok 4.6")
-        #expect(parsed.turnStartedAt == SessionTimeCache.parseISO("2026-09-06T06:00:00.000Z"))
-        #expect(parsed.turnEndedAt == nil)
-        #expect(parsed.lastActivityAt == SessionTimeCache.parseISO("2026-09-06T06:01:00.000Z"))
+        let first = #"{"type":"assistant","message":{"model":"claude-sonnet-5","role":"assistant"}}"#
+        let last = #"{"type":"assistant","timestamp":"2026-09-06T06:01:00.000Z","message":{"model":"x-ai-grok/grok-4.6","role":"assistant"}}"#
+        let data = Data((user + "\n" + first + "\n" + last + "\n").utf8)
+        #expect(SessionTimeCache.parseTranscriptTail(data, startedMidLine: false) == "Grok 4.6")
     }
 
-    @Test func parseTranscriptTailIgnoresToolResultAndFreezesEndTurn() {
-        let user = #"{"type":"user","timestamp":"2026-09-06T06:00:00.000Z","message":{"role":"user","content":"hi"}}"#
-        let tool = #"{"type":"user","timestamp":"2026-09-06T06:20:00.000Z","message":{"role":"user","content":[{"type":"tool_result","content":"x"}]},"toolUseResult":{}}"#
-        let done = #"{"type":"assistant","timestamp":"2026-09-06T07:06:00.000Z","message":{"model":"x-ai-grok/grok-4.6","stop_reason":"end_turn"}}"#
-        let data = Data((user + "\n" + tool + "\n" + done + "\n").utf8)
-        let parsed = SessionTimeCache.parseTranscriptTail(data, startedMidLine: false)
-        #expect(parsed.turnStartedAt == SessionTimeCache.parseISO("2026-09-06T06:00:00.000Z"))
-        #expect(parsed.turnEndedAt == SessionTimeCache.parseISO("2026-09-06T07:06:00.000Z"))
-        #expect(parsed.lastActivityAt == SessionTimeCache.parseISO("2026-09-06T07:06:00.000Z"))
-        #expect(SessionTimeCache.formatElapsed(parsed.turnEndedAt!.timeIntervalSince(parsed.turnStartedAt!)) == "1h06m")
-    }
-
-    @Test func workingDoesNotAccumulatePreviousPrompt() throws {
-        let root = FileManager.default.temporaryDirectory.appendingPathComponent("herdr-turn-\(UUID().uuidString)")
+    @Test func enrichCopiesModelFromTranscript() throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent("herdr-model-\(UUID().uuidString)")
         let cwd = "/Users/me/repo"
         let slug = SessionTimeCache.projectSlug(cwd)
         let project = root.appendingPathComponent(slug)
@@ -465,8 +445,7 @@ struct SessionTimeTests {
         let id = UUID().uuidString
         let jsonl = project.appendingPathComponent("\(id).jsonl")
         let body = """
-        {"type":"user","timestamp":"2026-09-06T06:00:00.000Z","message":{"role":"user","content":"old"}}
-        {"type":"assistant","timestamp":"2026-09-06T07:06:00.000Z","message":{"stop_reason":"end_turn"}}
+        {"type":"assistant","message":{"model":"x-ai-grok/grok-4.6"}}
         """
         try body.write(to: jsonl, atomically: true, encoding: .utf8)
         let cache = SessionTimeCache(projectsRoot: root.path)
@@ -477,39 +456,7 @@ struct SessionTimeTests {
             cwd: cwd,
             agentSessionId: id
         )
-        let enriched = cache.enrich([working])[0]
-        #expect(enriched.turnEndedAt == nil)
-        let start = try #require(enriched.turnStartedAt)
-        #expect(start != SessionTimeCache.parseISO("2026-09-06T06:00:00.000Z"))
-        #expect(Date().timeIntervalSince(start) < 5)
-        try? FileManager.default.removeItem(at: root)
-    }
-
-    @Test func workingTicksFromLastJsonlWriteNotHumanPrompt() throws {
-        let root = FileManager.default.temporaryDirectory.appendingPathComponent("herdr-activity-\(UUID().uuidString)")
-        let cwd = "/Users/me/repo"
-        let slug = SessionTimeCache.projectSlug(cwd)
-        let project = root.appendingPathComponent(slug)
-        try FileManager.default.createDirectory(at: project, withIntermediateDirectories: true)
-        let id = UUID().uuidString
-        let jsonl = project.appendingPathComponent("\(id).jsonl")
-        let body = """
-        {"type":"user","timestamp":"2026-09-06T06:00:00.000Z","message":{"role":"user","content":"hi"}}
-        {"type":"assistant","timestamp":"2026-09-06T06:01:40.000Z","message":{"stop_reason":"tool_use"}}
-        {"type":"user","timestamp":"2026-09-06T06:01:42.000Z","message":{"role":"user","content":[{"type":"tool_result"}]},"toolUseResult":{}}
-        """
-        try body.write(to: jsonl, atomically: true, encoding: .utf8)
-        let cache = SessionTimeCache(projectsRoot: root.path)
-        let working = Agent(
-            sessionName: "default",
-            paneId: "p3",
-            agentStatusRaw: "working",
-            cwd: cwd,
-            agentSessionId: id
-        )
-        let enriched = cache.enrich([working])[0]
-        #expect(enriched.turnEndedAt == nil)
-        #expect(enriched.turnStartedAt == SessionTimeCache.parseISO("2026-09-06T06:01:42.000Z"))
+        #expect(cache.enrich([working])[0].modelName == "Grok 4.6")
         try? FileManager.default.removeItem(at: root)
     }
 }

@@ -19,12 +19,6 @@ public struct Agent: Equatable, Sendable, Identifiable {
     public var lastSessionAt: Date?
     /// Short model label from the latest assistant `message.model` in the transcript.
     public var modelName: String?
-    /// Latest **human** user-turn timestamp (`tool_result` is also `type=user` and is ignored).
-    /// Done freezes `turnEndedAt − this`. Working overwrites this with last jsonl
-    /// activity (assistant / tool_result) so the chip matches CLI `Churning`.
-    public var turnStartedAt: Date?
-    /// Assistant `end_turn` of that same prompt. Nil while Working.
-    public var turnEndedAt: Date?
 
     public init(
         sessionName: String,
@@ -40,9 +34,7 @@ public struct Agent: Equatable, Sendable, Identifiable {
         gitBranch: String? = nil,
         agentSessionId: String? = nil,
         lastSessionAt: Date? = nil,
-        modelName: String? = nil,
-        turnStartedAt: Date? = nil,
-        turnEndedAt: Date? = nil
+        modelName: String? = nil
     ) {
         self.sessionName = sessionName
         self.paneId = paneId
@@ -58,8 +50,6 @@ public struct Agent: Equatable, Sendable, Identifiable {
         self.agentSessionId = agentSessionId
         self.lastSessionAt = lastSessionAt
         self.modelName = modelName
-        self.turnStartedAt = turnStartedAt
-        self.turnEndedAt = turnEndedAt
     }
 
     public var id: String { "\(sessionName)::\(paneId)" }

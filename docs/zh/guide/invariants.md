@@ -49,5 +49,5 @@ outline: false
 ## 解释边界
 
 - 各 agent 运行时特有的状态解释留在 Herdr。
-- Git 分支、模型、耗时是本机富化，不是 Herdr 字段。Working 从 jsonl 最近一次写入起算（对齐 CLI `Churning`）；Done 冻住该问 `end_turn −` 真人 start。Idle 不画时长。Working 期间允许 1s 重读 jsonl，禁止轮询 `agent.list`。
+- Git 分支和模型是本机富化，不是 Herdr 字段。不画耗时、不画 token。禁止定时轮询 jsonl 或 `agent.list`。
 - `Herdr.js` 仍是状态顺序、计数、socket 路径的行为对照。行为变化应带上最窄有用的测试，并在影响安装 / 设置 / 交互时更新 README 与本站。

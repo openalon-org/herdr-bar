@@ -60,17 +60,15 @@ Session 是 **过滤器**，不是排序键。`All` 和单个 session 用同一�
 
 1. 状态优先级
 2. `lastSessionAt` 新的在前（刚变成 Idle 的 Done 压过更老的 idle pane）
-3. pane 号（`w2:p7` / `p7`）
+3. pane 号（`w2:p7` / `p7`）—— 只当排序键，不画在行上
 4. 标签，不区分大小写
 
 ::: warning 不要用 `state_change_seq` 做 All 视图的跨 session 排序
 序号是每个 Herdr 进程自己的。拿它排 All 会把无关 session 搅在一起。它只用于「同优先级时谁更需要注意力」。
 :::
 
-Working / Done 行的模型和耗时也来自同一份 jsonl，不是 Claude statusline 的 stdin：
+Working / Done 行的模型名也来自同一份 jsonl，不是 Claude statusline 的 stdin：
 
 - `modelName` — 最近一条 assistant `message.model`，缩成 `Opus 4.6` / `Grok 4.6`
-- `turnStartedAt` — 最近一次**真人** user turn（`tool_result` 不算）。Done 从这里冻到 `end_turn`
-- `turnEndedAt` — 该问 assistant `end_turn`。Done 在状态旁冻住 `end − start`（例如 `1h06m`）。Idle 不画时长
-- Working 的数字跟 CLI `Churning`：从 jsonl **最近一次写入**（真人 / `tool_result` / assistant）起算，不从本问开头累加。新一轮 Working、jsonl 还停在上一问时，用第一次看到 Working 的时刻当起点
+- 不画耗时、不画 token。jsonl 不是 CLI 页脚（`16m 51s · ↓ 8.8k`）；用 transcript 时间戳 / `usage` 猜出来的是错的数字
 - 运动 — Darwin spinner，`floor(ms/120) % 12`。idle / done / blocked / unknown 停在同一个 14pt 槽的 `✻` 上，没有 4px 状态条

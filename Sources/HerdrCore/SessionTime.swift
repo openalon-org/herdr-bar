@@ -2,16 +2,14 @@ import Foundation
 
 /// Transcript extras for an agent pane.
 ///
-/// `agent.list` has no wall-clock and no model. The honest source is the
-/// Claude jsonl for `agent_session.value`, same files the CLI statusline
-/// reads — HerdrBar just does not get that stdin JSON.
+/// `agent.list` has no model and no idle-space recency. The source is the
+/// Claude jsonl for `agent_session.value`.
 ///
 /// - `lastSessionAt`: file mtime (idle-space recency)
 /// - `modelName`: latest assistant `message.model`
-/// - `turnStartedAt`: latest **human** user-turn timestamp (`tool_result` ignored)
-/// - `turnEndedAt`: that prompt's assistant `end_turn`; nil while the turn is open
-/// - `lastActivityAt`: latest user (incl. tool_result) or assistant timestamp.
-///   Working ticks from here so a long tool loop does not look like 45h.
+///
+/// Duration and token chips are not shown — jsonl is not Claude statusline
+/// stdin, so those numbers would not match the CLI footer.
 public final class SessionTimeCache: @unchecked Sendable {
     public static let shared = SessionTimeCache()
 
@@ -25,9 +23,6 @@ public final class SessionTimeCache: @unchecked Sendable {
         var mtime: Date?
         var lastSessionAt: Date?
         var modelName: String?
-        var turnStartedAt: Date?
-        var turnEndedAt: Date?
-        var lastActivityAt: Date?
     }
 
     public init(
@@ -39,10 +34,6 @@ public final class SessionTimeCache: @unchecked Sendable {
             ?? (fileManager.homeDirectoryForCurrentUser.path + "/.claude/projects")
     }
 
-    /// First instant we saw this pane Working. Used when jsonl still has the
-    /// previous prompt's `end_turn`. Keyed by Agent.id.
-    private var workingFallback: [String: Date] = [:]
-
     public func enrich(_ agents: [Agent]) -> [Agent] {
         agents.map { agent in
             var copy = agent
@@ -52,37 +43,7 @@ public final class SessionTimeCache: @unchecked Sendable {
             )
             if copy.lastSessionAt == nil { copy.lastSessionAt = details.lastSessionAt }
             if copy.modelName == nil { copy.modelName = details.modelName }
-            applyTurn(&copy, from: details)
             return copy
-        }
-    }
-
-    private func applyTurn(
-        _ copy: inout Agent,
-        from details: (lastSessionAt: Date?, modelName: String?, turnStartedAt: Date?, turnEndedAt: Date?, lastActivityAt: Date?)
-    ) {
-        let key = copy.id
-        if copy.status == .working {
-            // Pin the first Working instant. jsonl often still has the previous
-            // end_turn; reusing that user timestamp looks like a running total.
-            lock.lock()
-            let firstSeen = workingFallback[key] ?? Date()
-            workingFallback[key] = firstSeen
-            lock.unlock()
-            // Live chip = last jsonl write (tool_use / tool_result / user), not
-            // the human prompt. That is what CLI `Churning (17s)` measures.
-            if details.turnEndedAt == nil, let activity = details.lastActivityAt {
-                copy.turnStartedAt = activity
-            } else {
-                copy.turnStartedAt = firstSeen
-            }
-            copy.turnEndedAt = nil
-        } else {
-            lock.lock()
-            workingFallback.removeValue(forKey: key)
-            lock.unlock()
-            copy.turnStartedAt = details.turnStartedAt
-            copy.turnEndedAt = details.turnEndedAt
         }
     }
 
@@ -90,11 +51,11 @@ public final class SessionTimeCache: @unchecked Sendable {
         details(id: id, cwd: cwd).lastSessionAt
     }
 
-    public func details(id: String?, cwd: String?) -> (lastSessionAt: Date?, modelName: String?, turnStartedAt: Date?, turnEndedAt: Date?, lastActivityAt: Date?) {
-        guard let id, !id.isEmpty else { return (nil, nil, nil, nil, nil) }
-        guard let path = transcriptPath(id: id, cwd: cwd) else { return (nil, nil, nil, nil, nil) }
+    public func details(id: String?, cwd: String?) -> (lastSessionAt: Date?, modelName: String?) {
+        guard let id, !id.isEmpty else { return (nil, nil) }
+        guard let path = transcriptPath(id: id, cwd: cwd) else { return (nil, nil) }
         let stamp = stamp(at: path)
-        return (stamp?.lastSessionAt, stamp?.modelName, stamp?.turnStartedAt, stamp?.turnEndedAt, stamp?.lastActivityAt)
+        return (stamp?.lastSessionAt, stamp?.modelName)
     }
 
     /// Claude project folder for a cwd: `/Users/me/repo` → `-Users-me-repo`.
@@ -136,16 +97,6 @@ public final class SessionTimeCache: @unchecked Sendable {
         }
         flushVersion()
         return words.joined(separator: " ")
-    }
-
-    public static func formatElapsed(_ interval: TimeInterval) -> String {
-        let seconds = max(Int(interval), 0)
-        let hours = seconds / 3600
-        let minutes = (seconds % 3600) / 60
-        let secs = seconds % 60
-        if hours > 0 { return "\(hours)h\(String(format: "%02d", minutes))m" }
-        if minutes > 0 { return "\(minutes)m\(String(format: "%02d", secs))s" }
-        return "\(secs)s"
     }
 
     private func transcriptPath(id: String, cwd: String?) -> String? {
@@ -191,10 +142,7 @@ public final class SessionTimeCache: @unchecked Sendable {
         let snapshot = Stamp(
             mtime: mtime,
             lastSessionAt: mtime,
-            modelName: parsed.modelName,
-            turnStartedAt: parsed.turnStartedAt,
-            turnEndedAt: parsed.turnEndedAt,
-            lastActivityAt: parsed.lastActivityAt
+            modelName: parsed
         )
         lock.lock()
         pathToStamp[path] = snapshot
@@ -202,31 +150,27 @@ public final class SessionTimeCache: @unchecked Sendable {
         return snapshot
     }
 
-    /// Tail-scan: last assistant model, last human user timestamp, optional end_turn.
-    /// Caps at 512 KiB.
-    static func parseTranscript(at path: String) -> (modelName: String?, turnStartedAt: Date?, turnEndedAt: Date?, lastActivityAt: Date?) {
-        guard let handle = FileHandle(forReadingAtPath: path) else { return (nil, nil, nil, nil) }
+    /// Tail-scan for the latest assistant `message.model`. Caps at 512 KiB.
+    static func parseTranscript(at path: String) -> String? {
+        guard let handle = FileHandle(forReadingAtPath: path) else { return nil }
         defer { try? handle.close() }
         let size = (try? handle.seekToEnd()) ?? 0
         let window: UInt64 = 512 * 1024
         let start = size > window ? size - window : 0
         do {
             try handle.seek(toOffset: start)
-            guard let data = try handle.readToEnd(), !data.isEmpty else { return (nil, nil, nil, nil) }
+            guard let data = try handle.readToEnd(), !data.isEmpty else { return nil }
             return parseTranscriptTail(data, startedMidLine: start > 0)
         } catch {
-            return (nil, nil, nil, nil)
+            return nil
         }
     }
 
-    static func parseTranscriptTail(_ data: Data, startedMidLine: Bool) -> (modelName: String?, turnStartedAt: Date?, turnEndedAt: Date?, lastActivityAt: Date?) {
-        guard let text = String(data: data, encoding: .utf8) else { return (nil, nil, nil, nil) }
+    static func parseTranscriptTail(_ data: Data, startedMidLine: Bool) -> String? {
+        guard let text = String(data: data, encoding: .utf8) else { return nil }
         var lines = text.split(separator: "\n", omittingEmptySubsequences: false).map(String.init)
         if startedMidLine, !lines.isEmpty { lines.removeFirst() }
         var modelName: String?
-        var startedAt: Date?
-        var endedAt: Date?
-        var lastActivityAt: Date?
         for line in lines {
             guard let obj = try? JSONSerialization.jsonObject(with: Data(line.utf8)) as? [String: Any] else {
                 continue
@@ -234,29 +178,8 @@ public final class SessionTimeCache: @unchecked Sendable {
             if let name = model(from: obj) {
                 modelName = shortModel(name)
             }
-            let kind = obj["type"] as? String
-            let ts = parseISO(obj["timestamp"] as? String)
-            if kind == "user" || kind == "assistant", let ts {
-                lastActivityAt = ts
-            }
-            if kind == "user" {
-                if isToolResult(obj) {
-                    endedAt = nil
-                    continue
-                }
-                if let ts { startedAt = ts }
-                endedAt = nil
-            } else if kind == "assistant" {
-                let message = obj["message"] as? [String: Any]
-                let stop = message?["stop_reason"] as? String
-                if stop == "end_turn" || stop == "stop_sequence" || stop == "max_tokens" {
-                    endedAt = ts
-                } else {
-                    endedAt = nil
-                }
-            }
         }
-        return (modelName, startedAt, endedAt, lastActivityAt)
+        return modelName
     }
 
     private static func model(from obj: [String: Any]) -> String? {
@@ -273,23 +196,5 @@ public final class SessionTimeCache: @unchecked Sendable {
             return model
         }
         return nil
-    }
-
-    /// jsonl writes tool_result as type=user; that must not start a new turn.
-    private static func isToolResult(_ obj: [String: Any]) -> Bool {
-        if obj["toolUseResult"] != nil { return true }
-        let message = obj["message"] as? [String: Any]
-        let content = message?["content"] as? [[String: Any]]
-        return content?.contains { $0["type"] as? String == "tool_result" } == true
-    }
-
-    static func parseISO(_ raw: String?) -> Date? {
-        guard let raw, !raw.isEmpty else { return nil }
-        let withFrac = ISO8601DateFormatter()
-        withFrac.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-        if let date = withFrac.date(from: raw) { return date }
-        let plain = ISO8601DateFormatter()
-        plain.formatOptions = [.withInternetDateTime]
-        return plain.date(from: raw)
     }
 }

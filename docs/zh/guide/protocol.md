@@ -46,7 +46,7 @@ outline: false
 | `terminal_title_stripped` / `terminal_title` | 标签回退 |
 | `agent_session.value` | Claude 对话 UUID |
 
-Herdr **不**给 git 分支、模型或耗时。那些由 `GitBranchCache` 和 `SessionTimeCache` 补上。
+Herdr **不**给 git 分支或模型。那些由 `GitBranchCache` 和 `SessionTimeCache` 补上。耗时和 token 不进 extra，也不进仪表盘。
 
 ## 事件 {#events}
 

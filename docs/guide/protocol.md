@@ -46,7 +46,7 @@ Transport is **newline-delimited JSON-RPC over a Unix domain socket**. Herdr clo
 | `terminal_title_stripped` / `terminal_title` | label fallback |
 | `agent_session.value` | Claude conversation UUID |
 
-Herdr does **not** send git branch, model, or elapsed time. `GitBranchCache` and `SessionTimeCache` fill those in.
+Herdr does **not** send git branch or model. `GitBranchCache` and `SessionTimeCache` fill those in. Elapsed time and tokens stay out of the extra and the dashboard.
 
 ## Events {#events}
 

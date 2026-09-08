@@ -160,18 +160,6 @@ public enum HerdrLogic {
         return paneId
     }
 
-    public static func locationKey(of agent: Agent) -> String {
-        let cwd = agent.foregroundCwd ?? agent.cwd ?? ""
-        return cwd + "\n" + (agent.gitBranch ?? "")
-    }
-
-    /// Same directory + same branch (or both missing) is not enough to tell agents apart.
-    public static func needsPane(for agent: Agent, among agents: [Agent]) -> Bool {
-        let key = locationKey(of: agent)
-        guard !key.trimmingCharacters(in: .newlines).isEmpty else { return false }
-        return agents.filter { locationKey(of: $0) == key }.count > 1
-    }
-
     /// Last path component: `/Users/me/workspace/alpha` → `alpha`.
     public static func folderName(_ rawPath: String?) -> String {
         guard let rawPath, !rawPath.isEmpty else { return "" }
@@ -180,7 +168,7 @@ public enum HerdrLogic {
         return URL(fileURLWithPath: path).lastPathComponent
     }
 
-    /// `work · repo · feature/login`. Pane is a separate badge so a long path cannot clip it.
+    /// `work · repo · feature/login`. Titles already identify the pane.
     public static func subtitle(
         for agent: Agent,
         among agents: [Agent],
@@ -203,10 +191,6 @@ public enum HerdrLogic {
             parts.append(model)
         }
         return parts.joined(separator: " · ")
-    }
-
-    public static func paneBadge(for agent: Agent, among agents: [Agent]) -> String? {
-        needsPane(for: agent, among: agents) ? shortPane(agent.paneId) : nil
     }
 
     public static func shortenBranch(_ name: String, maxLength: Int = 28) -> String {
@@ -266,10 +250,7 @@ public enum HerdrLogic {
         ]
         for row in rows {
             let status = row.status
-            var detail = subtitle(for: row, among: rows, home: home, showSession: false)
-            if let pane = paneBadge(for: row, among: rows) {
-                detail = detail.isEmpty ? pane : detail + " · " + pane
-            }
+            let detail = subtitle(for: row, among: rows, home: home, showSession: false)
             lines.append("\(status.tooltipMark)  \(status.label)  \(agentLabel(row))")
             if !detail.isEmpty { lines.append("    \(detail)") }
         }

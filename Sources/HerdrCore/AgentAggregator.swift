@@ -6,8 +6,6 @@ public final class AgentAggregator: ObservableObject {
     @Published public private(set) var snapshots: [String: SessionSnapshot] = [:]
     @Published public private(set) var agents: [Agent] = []
     @Published public private(set) var anyOnline = false
-    /// While Working, Herdr may emit no events. Re-read jsonl every 1s; never poll agent.list.
-    private var jsonlTick: Timer?
 
     public init() {}
 
@@ -41,29 +39,5 @@ public final class AgentAggregator: ObservableObject {
         let online = snapshots.values.filter(\.online)
         anyOnline = !online.isEmpty
         agents = online.flatMap(\.agents)
-        syncJsonlTick()
-    }
-
-    private func syncJsonlTick() {
-        let working = agents.contains { $0.status == .working }
-        if working, jsonlTick == nil {
-            jsonlTick = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
-                Task { @MainActor in
-                    self?.refreshWorkingTranscripts()
-                }
-            }
-        } else if !working {
-            jsonlTick?.invalidate()
-            jsonlTick = nil
-        }
-    }
-
-    private func refreshWorkingTranscripts() {
-        guard agents.contains(where: { $0.status == .working }) else {
-            jsonlTick?.invalidate()
-            jsonlTick = nil
-            return
-        }
-        agents = SessionTimeCache.shared.enrich(agents)
     }
 }

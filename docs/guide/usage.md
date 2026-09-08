@@ -49,9 +49,8 @@ Rows:
 
 - Title from `name` / `display_agent` / `terminal_title` / `agent` / `pane_id`
 - Subtitle: `session · folder · branch · model`
-- Pane badge (`w2:p7` → `p7`) only when the same directory + branch has more than one pane
-- Working rows: Darwin spinner, short model name, elapsed from the latest jsonl write
-- Done rows: freeze `end_turn −` the latest **human** user turn
+- Working rows: Darwin spinner and short model name
+- Status sits on the right of the row. No elapsed time, no token count — those live in the CLI footer, not herdr-bar
 
 Click a row = `agent.focus` that pane, then raise the host terminal.
 

@@ -49,9 +49,8 @@ Popover 固定 **372 × 480**。藏 idle 不会把窗口缩小后再长不回来
 
 - 标题来自 `name` / `display_agent` / `terminal_title` / `agent` / `pane_id`
 - 副标题：`session · folder · branch · model`
-- 同一目录 + 同一分支有多个 pane 时才显示 pane badge（`w2:p7` → `p7`）
-- working 行：Darwin spinner、短模型名、从 jsonl **最近一次写入**起算的耗时（对齐 CLI `Churning`）
-- Done 行：冻住该问 `end_turn −` 最近一次**真人** user turn
+- working 行：Darwin spinner、短模型名
+- 状态在行右侧。不画耗时、不画 token —— 那些在 CLI 页脚，不在 herdr-bar
 
 点一行 = `agent.focus` 那个 pane，然后举起宿主终端。
 

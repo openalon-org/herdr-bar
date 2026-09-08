@@ -440,19 +440,9 @@ private struct AgentRow: View {
                     .lineLimit(1)
             }
             Spacer(minLength: 8)
-            VStack(alignment: .trailing, spacing: 3) {
-                HStack(spacing: 5) {
-                    elapsedChip
-                    Text(agent.status.label)
-                        .font(.caption.bold())
-                        .foregroundStyle(Color(hex: agent.status.hexColor))
-                }
-                if let pane = HerdrLogic.paneBadge(for: agent, among: among) {
-                    Text(pane)
-                        .font(.caption.monospaced())
-                        .foregroundStyle(.secondary)
-                }
-            }
+            Text(agent.status.label)
+                .font(.caption.bold())
+                .foregroundStyle(Color(hex: agent.status.hexColor))
         }
         .padding(.horizontal, 8)
         .padding(.vertical, 5)
@@ -489,22 +479,6 @@ private struct AgentRow: View {
             showSession: showSession,
             showFolder: showFolder
         )
-    }
-
-    /// Working ticks from last jsonl write (Churning). Done freezes the prompt. Idle blank.
-    @ViewBuilder
-    private var elapsedChip: some View {
-        if agent.status == .working, let start = agent.turnStartedAt {
-            TimelineView(.periodic(from: .now, by: 1)) { timeline in
-                Text(SessionTimeCache.formatElapsed(timeline.date.timeIntervalSince(start)))
-                    .font(.caption.monospacedDigit())
-                    .foregroundStyle(.secondary)
-            }
-        } else if agent.status == .done, let start = agent.turnStartedAt, let end = agent.turnEndedAt, end > start {
-            Text(SessionTimeCache.formatElapsed(end.timeIntervalSince(start)))
-                .font(.caption.monospacedDigit())
-                .foregroundStyle(.secondary)
-        }
     }
 }
 

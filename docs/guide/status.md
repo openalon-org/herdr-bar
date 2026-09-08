@@ -60,17 +60,15 @@ Session is a **filter**, not a sort key. `All` and a single session share the sa
 
 1. Status priority
 2. Newer `lastSessionAt` first (a Done that just became Idle stays above older idle panes)
-3. Pane number (`w2:p7` / `p7`)
+3. Pane number (`w2:p7` / `p7`) — sort key only, not drawn on the row
 4. Label, case-insensitive
 
 ::: warning Do not sort All with `state_change_seq`
 The sequence is per Herdr process. Using it across sessions in All mixes unrelated work. It is only the tie-break for attention.
 :::
 
-Working / Done model and elapsed time also come from that jsonl — not Claude statusline stdin:
+Working / Done model names also come from that jsonl — not Claude statusline stdin:
 
 - `modelName` — latest assistant `message.model`, shortened to `Opus 4.6` / `Grok 4.6`
-- `turnStartedAt` — latest **human** user turn (`tool_result` does not count). Done freezes from here to `end_turn`
-- `turnEndedAt` — that prompt’s assistant `end_turn`. Done shows frozen `end − start` (e.g. `1h06m`). Idle draws no duration
-- Working digits match CLI `Churning`: from the **latest jsonl write** (human / `tool_result` / assistant), not from the start of this prompt. A fresh Working whose jsonl still sits on the previous prompt pins the first-seen Working instant
+- Do not draw elapsed time or tokens. jsonl is not the CLI footer (`16m 51s · ↓ 8.8k`); guessing from transcript timestamps / `usage` is the wrong number
 - Motion — Darwin spinner, `floor(ms/120) % 12`. idle / done / blocked / unknown park on `✻` in the same 14pt slot — no 4px status bar
