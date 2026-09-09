@@ -6,13 +6,14 @@
 ## Testing
 
 - [ ] `swift test`
-- [ ] `node --test tests/herdr.test.mjs`
+- [ ] `node --test tests/herdr.test.mjs tests/changelog.test.mjs`
 - [ ] Extra / core UI: `./scripts/reload.sh` (or `--demo`) and I checked the menu bar / dashboard
 
 ## Docs
 
 - [ ] No user-facing change, **or**
 - [ ] `README.md` and `docs/guide/` (English + `docs/zh/`) match the new behavior
+- [ ] User-facing change is listed in [`CHANGELOG.md`](../CHANGELOG.md) **or** this is not a release PR (changelog is written when tagging)
 
 ## Checklist
 

@@ -32,6 +32,19 @@ jobs:
           ./scripts/package-app.sh dist/HerdrBar.app
           ditto -c -k --keepParent dist/HerdrBar.app "dist/HerdrBar-${ver}-macos.zip"
 
+      - name: Changelog notes
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          HERDR_BAR_VERSION: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          ver="${HERDR_BAR_VERSION#v}"
+          {
+            ./scripts/changelog-notes.sh "$ver"
+            printf '\n\nThe zip is ad-hoc signed. After unzip:\n\n```\nxattr -cr HerdrBar.app\nopen HerdrBar.app\n```\n'
+            printf '\nFull notes: https://openalon.com/herdr-bar/changelog/\n'
+          } > dist/RELEASE_NOTES.md
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
@@ -44,5 +57,5 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: dist/HerdrBar-*-macos.zip
-          generate_release_notes: true
+          body_path: dist/RELEASE_NOTES.md
           fail_on_unmatched_files: true

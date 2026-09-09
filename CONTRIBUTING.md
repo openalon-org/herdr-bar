@@ -41,14 +41,17 @@ After MacBar / HerdrCore changes the user should see, replace the live extra:
 2. Keep the diff on one concern.
 3. Behavior changes: add the narrowest useful test (`tests/HerdrCoreTests` and/or `tests/herdr.test.mjs`).
 4. If install, settings, interactions, or requirements change, update `README.md` and `docs/guide/` (English and `docs/zh/`).
-5. Do not commit real home directories, logins, hostnames, local project paths, or real session / repo names. Use `/Users/me`, `/home/user`, `~/…`, and the generic session name `work`.
-6. Fill in `.github/pull_request_template.md`.
+5. User-facing behavior belongs in [`CHANGELOG.md`](CHANGELOG.md) at release time, not in the PR unless you are cutting the tag. Do not keep a second changelog under `docs/`.
+6. Do not commit real home directories, logins, hostnames, local project paths, or real session / repo names. Use `/Users/me`, `/home/user`, `~/…`, and the generic session name `work`.
+7. Fill in `.github/pull_request_template.md`.
 
-CI (`.github/workflows/ci.yml`) runs `swift test`, the Node oracle, and a VitePress build on every push and pull request.
+CI (`.github/workflows/ci.yml`) runs `swift test`, the Node oracle plus changelog tests, and a VitePress build on every push and pull request.
 
 ## Releases
 
-Maintainers publish by pushing a `v*` tag. That builds a universal zip and creates a GitHub Release. Manually running **Release macOS app** only uploads an Actions artifact (`0.0.0-dev`) — it does not publish.
+Maintainers follow `.agents/skills/release`: add a `## [X.Y.Z]` section at the top of [`CHANGELOG.md`](CHANGELOG.md), merge that, then push `vX.Y.Z`. The tag must match a heading. `.github/workflows/release.yml` builds a universal zip and fills the GitHub Release body from that section (`scripts/changelog-notes.sh`). The docs page includes the same file.
+
+Manually running **Release macOS app** only uploads an Actions artifact (`0.0.0-dev`) — it does not publish.
 
 The zip is ad-hoc signed. There is no Developer ID / notarization in this tree.
 

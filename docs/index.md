@@ -13,8 +13,8 @@ hero:
       text: Install
       link: /guide/installation
     - theme: alt
-      text: Architecture
-      link: /guide/architecture
+      text: Changelog
+      link: /changelog
 
 features:
   - icon: 👁

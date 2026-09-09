@@ -15,7 +15,7 @@ jobs:
       - name: Test Swift model and protocol
         run: swift test
       - name: Test JavaScript oracle
-        run: node --test tests/herdr.test.mjs
+        run: node --test tests/herdr.test.mjs tests/changelog.test.mjs
 
   docs:
     runs-on: ubuntu-latest

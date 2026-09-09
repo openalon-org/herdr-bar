@@ -13,8 +13,8 @@ hero:
       text: 开始安装
       link: /zh/guide/installation
     - theme: alt
-      text: 看架构
-      link: /zh/guide/architecture
+      text: 更新日志
+      link: /zh/changelog
 
 features:
   - icon: 👁
