@@ -57,6 +57,7 @@ struct SettingsView: View {
                     }
 
                     HotkeySection()
+                    UpdateSection()
                 }
                 .padding(.leading, 16)
                 .padding(.trailing, 14)
@@ -155,6 +156,150 @@ private struct HotkeySection: View {
             return "That shortcut is already taken. Try another."
         }
         return "Opener is system-wide. Arrows and Return work while this window is open."
+    }
+}
+
+/// GitHub `/releases/latest` — same user action as cmux's Check for Updates,
+/// without Sparkle install (this zip is ad-hoc signed).
+private struct UpdateSection: View {
+    @StateObject private var checker = UpdateChecker()
+
+    var body: some View {
+        SettingsGroup(title: "About", footer: footer) {
+            HStack(spacing: 10) {
+                Text("Version")
+                    .font(.body)
+                Spacer(minLength: 8)
+                Text(checker.currentVersion)
+                    .font(.callout.monospaced())
+                    .foregroundStyle(.secondary)
+            }
+            .padding(.horizontal, 12)
+            .padding(.vertical, 9)
+
+            SettingsDivider()
+            statusRow
+        }
+        .onDisappear { checker.cancel() }
+    }
+
+    @ViewBuilder
+    private var statusRow: some View {
+        switch checker.status {
+        case .idle, .current, .failed:
+            Button(action: { checker.check() }) {
+                HStack(spacing: 10) {
+                    Text("Check for Updates")
+                        .font(.body)
+                        .foregroundStyle(.primary)
+                    Spacer(minLength: 8)
+                    if checker.status == .current {
+                        Text("Up to date")
+                            .font(.caption.weight(.semibold))
+                            .foregroundStyle(.secondary)
+                    } else if case .failed = checker.status {
+                        Text("Retry")
+                            .font(.caption.weight(.semibold))
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                .padding(.horizontal, 12)
+                .padding(.vertical, 9)
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+
+        case .checking:
+            HStack(spacing: 10) {
+                ProgressView()
+                    .controlSize(.small)
+                Text("Checking for updates…")
+                    .font(.body)
+                Spacer(minLength: 8)
+            }
+            .padding(.horizontal, 12)
+            .padding(.vertical, 9)
+
+        case .available(let release):
+            HStack(spacing: 10) {
+                Text("Update \(release.version)")
+                    .font(.body)
+                Spacer(minLength: 8)
+                Button("Open") {
+                    NSWorkspace.shared.open(release.htmlURL)
+                }
+                .buttonStyle(.plain)
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(.secondary)
+                .help("Open the GitHub Release")
+            }
+            .padding(.horizontal, 12)
+            .padding(.vertical, 9)
+        }
+    }
+
+    private var footer: String {
+        switch checker.status {
+        case .idle:
+            return "Compares this build to GitHub Releases. An update opens the tag — herdr-bar cannot install itself."
+        case .checking:
+            return "Asking GitHub for the latest tag."
+        case .current:
+            return "You're already running the latest version."
+        case .available(let release):
+            return "\(release.version) is on GitHub. Open the release, unzip, then xattr -cr HerdrBar.app."
+        case .failed(let message):
+            return message
+        }
+    }
+}
+
+@MainActor
+private final class UpdateChecker: ObservableObject {
+    enum Status: Equatable {
+        case idle
+        case checking
+        case current
+        case available(UpdateRelease)
+        case failed(String)
+    }
+
+    let currentVersion: String
+    @Published var status: Status = .idle
+    private var task: Task<Void, Never>?
+
+    init(currentVersion: String = UpdateCheck.currentVersion()) {
+        self.currentVersion = currentVersion
+    }
+
+    func check() {
+        task?.cancel()
+        status = .checking
+        let current = currentVersion
+        task = Task {
+            do {
+                let latest = try await UpdateCheck.fetchLatest()
+                if Task.isCancelled { return }
+                if UpdateCheck.isNewer(latest.version, than: current) {
+                    status = .available(latest)
+                } else {
+                    status = .current
+                }
+            } catch is CancellationError {
+                return
+            } catch {
+                if Task.isCancelled { return }
+                status = .failed(error.localizedDescription)
+            }
+        }
+    }
+
+    func cancel() {
+        task?.cancel()
+        task = nil
+        if status == .checking {
+            status = .idle
+        }
     }
 }
 

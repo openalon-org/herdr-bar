@@ -66,6 +66,7 @@ Two Swift targets: `HerdrCore` (protocol, discovery, aggregation, raising the ho
           <span class="layer-item">GitBranchCache</span>
           <span class="layer-item">SessionTimeCache</span>
           <span class="layer-item">FocusRaiser</span>
+          <span class="layer-item">UpdateCheck</span>
         </div>
       </div>
     </div>

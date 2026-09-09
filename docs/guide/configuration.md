@@ -77,3 +77,7 @@ JSON example (⇧⌘Space, `kVK_Space` = 49):
 ```
 
 The same group lists in-window shortcuts: ↑↓ walk tasks, ←→ walk sessions / folders, ↩ focuses.
+
+## Updates {#updates}
+
+Gear → **About**. The extra reads `CFBundleShortVersionString` and compares it to GitHub `/repos/openalon-org/herdr-bar/releases/latest`. There is no Sparkle install path — an available update opens the release page. Local `swift run` / unpackaged binaries show `dev`.

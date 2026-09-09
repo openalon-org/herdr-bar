@@ -43,7 +43,7 @@ Three layers only — no third chip row:
 Header:
 
 - **Eye** — notification mode. On by default: hide idle rows in mixed groups, drop idle-only groups.
-- **Gear** — status colors and keyboard (system-wide opener plus in-window shortcuts).
+- **Gear** — status colors, keyboard (system-wide opener plus in-window shortcuts), and About (version + Check for Updates against GitHub Releases).
 
 Rows:
 

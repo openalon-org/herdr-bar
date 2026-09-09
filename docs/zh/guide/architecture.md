@@ -66,6 +66,7 @@ herdr-bar 是两个 Swift target：`HerdrCore`（协议、发现、聚合、举�
           <span class="layer-item">GitBranchCache</span>
           <span class="layer-item">SessionTimeCache</span>
           <span class="layer-item">FocusRaiser</span>
+          <span class="layer-item">UpdateCheck</span>
         </div>
       </div>
     </div>

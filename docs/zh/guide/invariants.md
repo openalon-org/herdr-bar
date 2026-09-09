@@ -44,6 +44,7 @@ outline: false
 - 默认颜色 = Claude Code tab-status；working = spinner 陶土 `#CF7650`。
 - 覆盖写在 `~/.config/herdr/herdr-bar.json`。
 - agent 列表保持跳转列表；颜色进齿轮。
+- 齿轮 → About 可以对照 GitHub Releases。禁止自行安装或重启（没有 Sparkle；zip 是 ad-hoc）。
 - 不要再发 OS 通知。Herdr 已经有 `[ui.toast]`。
 
 ## 解释边界

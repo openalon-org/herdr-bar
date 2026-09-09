@@ -70,7 +70,7 @@ Pin a single socket with `HERDR_SOCKET=/path/to/herdr.sock`.
 | Enter | Focus the highlighted row (priority agent if none) |
 | Arrow keys | Up/down: tasks. Left/right: session chips, or folders when only one session is online |
 | Eye | Notification mode (default): hide idle |
-| Gear | Status colors and a system-wide opener |
+| Gear | Status colors, opener, and Check for Updates |
 
 Status colors default to [Claude Code](https://code.claude.com/docs)’s terminal tab palette; working uses the CLI spinner terracotta. Overrides live in `~/.config/herdr/herdr-bar.json`. Details: [Usage](https://openalon.com/herdr-bar/guide/usage), [Configuration](https://openalon.com/herdr-bar/guide/configuration).
 

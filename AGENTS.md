@@ -25,13 +25,13 @@ herdr-bar is a macOS menu-bar companion for Herdr. It renders normalized coding-
   3. Blocked / unknown join only when they need you. Width hugs that cluster (`+ 4pt inset`); it jumps for digit rollover or an interrupt, not because a skeleton chip vanished.
   4. Say each fact once: `0` already means none — do not dim. Neighbor gaps and the press-highlight capsule are `NSStatusBarButton`'s; `StatusItemView` stays transparent (`isOpaque = false`, no `super.draw`) so Tahoe glass shows through.
   Offline stays the 22pt dot. Optical spacing (halo leading pad, shared mark-to-digit gap), not equal box gaps.
-- Dashboard settings can bind a Carbon global hotkey (`hotkey` in herdr-bar.json) that toggles the popover. No extra Accessibility prompt. While the dashboard is open, up/down walk the visible task list and left/right cycle session chips (or folder groups when only one session is online). Enter focuses the highlighted row. Settings is two inset groups (Status colors, Keyboard); the Keyboard group lists those in-window shortcuts next to the opener.
+- Dashboard settings can bind a Carbon global hotkey (`hotkey` in herdr-bar.json) that toggles the popover. No extra Accessibility prompt. While the dashboard is open, up/down walk the visible task list and left/right cycle session chips (or folder groups when only one session is online). Enter focuses the highlighted row. Settings is three inset groups (Status colors, Keyboard, About). Keyboard lists the in-window shortcuts next to the opener. About shows the bundle version and a Check for Updates control that hits GitHub `/releases/latest` — it never installs (no Sparkle; the zip is ad-hoc). An available update opens the release page.
 - Agent list and settings scroll like a Chrome page: overlay thumb, momentum, hard stop at the edges (`verticalScrollElasticity = .none` on the SwiftUI `NSScrollView`). Do not rubber-band. Keyboard arrows reveal the highlight only if it is off-screen; a mouse fling must not be yanked back to the selected row.
 - The published tree is de-personalized. Tests, comments, fixtures, and docs must not contain a real home directory, login, machine hostname, local project path (`/Users/<you>/…`, `/home/<you>/…`, `workspace2/`), or a real session / repo name. Named-session examples are `default` plus a generic `work`. Folder fixtures are synthetic (`alpha`, `notes`, `beta`, `gamma`, `app.local`). Use roots `/Users/me`, `/home/user`, `~/…`. A test that only runs on one laptop does not belong in git; rewrite it against temp dirs or those fixtures. Scan before commit: `git grep -nE '/Users/|/home/|eden|client\\.new' -- . ':!package-lock.json'`.
 
 ## Repository map
 
-- `Sources/HerdrCore` — protocol, discovery, aggregation, focus raising.
+- `Sources/HerdrCore` — protocol, discovery, aggregation, focus raising, GitHub update check.
 - `Sources/MacBar` — `NSStatusItem`, dashboard popover.
 - `Herdr.js` / `tests/herdr.test.mjs` — behavior oracle kept during the port.
 - `tools/demo-server.py` — newline JSON fixture.

@@ -21,7 +21,7 @@ herdr-bar does not start Herdr. A lone 22pt grey dot usually means the socket is
 
 ## Install {#steps}
 
-Push a `v*` tag and `.github/workflows/release.yml` builds a universal `HerdrBar.app`, zips it, and attaches the zip to a GitHub Release. The binary is ad-hoc signed only — no Developer ID, no notarization, and no Sparkle updater (that lane needs Apple certificates this repo does not have). After unzip:
+Push a `v*` tag and `.github/workflows/release.yml` builds a universal `HerdrBar.app`, zips it, and attaches the zip to a GitHub Release. The binary is ad-hoc signed only — no Developer ID, no notarization, and no Sparkle updater (that lane needs Apple certificates this repo does not have). Gear → About can check GitHub Releases and open the latest tag; it cannot replace the running extra. After unzip:
 
 ```bash
 xattr -cr HerdrBar.app

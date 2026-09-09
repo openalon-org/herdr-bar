@@ -77,3 +77,7 @@ JSON 示例（⇧⌘Space，`kVK_Space` = 49）：
 ```
 
 同一组里还列出窗内快捷键：↑↓ 走任务，←→ 走 session / folder，↩ 聚焦。
+
+## 更新 {#updates}
+
+齿轮 → **About**。extra 读 `CFBundleShortVersionString`，对照 GitHub `/repos/openalon-org/herdr-bar/releases/latest`。没有 Sparkle 安装路径——有更新时打开 Release 页。本地 `swift run` / 未打包二进制显示 `dev`。

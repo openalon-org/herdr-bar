@@ -44,6 +44,7 @@ These constraints *are* the product. Read [`AGENTS.md`](https://github.com/opena
 - Default colors = Claude Code tab-status; working = spinner terracotta `#CF7650`.
 - Overrides live in `~/.config/herdr/herdr-bar.json`.
 - The agent list stays a jump list; colors live in the gear.
+- Gear → About may check GitHub Releases. It must not install or relaunch (no Sparkle; the zip is ad-hoc).
 - Do not post extra OS notifications. Herdr already owns `[ui.toast]`.
 
 ## Interpretation boundary

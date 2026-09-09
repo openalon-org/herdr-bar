@@ -21,7 +21,7 @@ herdr-bar 自己不启动 Herdr。菜单栏如果只剩一颗 22pt 灰点，多�
 
 ## 安装 {#steps}
 
-推一个 `v*` tag 后，`.github/workflows/release.yml` 会编一份 universal `HerdrBar.app`，打成 zip 挂到 GitHub Release。二进制只有 ad-hoc 签名——没有 Developer ID、没有公证、也没有 Sparkle 自动更新（那条发布线需要本仓库没有的 Apple 证书）。下载解压后：
+推一个 `v*` tag 后，`.github/workflows/release.yml` 会编一份 universal `HerdrBar.app`，打成 zip 挂到 GitHub Release。二进制只有 ad-hoc 签名——没有 Developer ID、没有公证、也没有 Sparkle 自动更新（那条发布线需要本仓库没有的 Apple 证书）。齿轮 → About 可以对照 GitHub Releases 并打开最新 tag，但不能替换正在运行的 extra。下载解压后：
 
 ```bash
 xattr -cr HerdrBar.app
