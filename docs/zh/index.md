@@ -48,3 +48,14 @@ features:
 
 需要 Herdr 0.8+ 和 macOS 13+。应用是 `LSUIElement`，不出现在 Dock。
 :::
+
+## 常见问题
+
+**herdr-bar 是什么？**
+[Herdr](https://herdr.dev/) 的 macOS 菜单栏 extra。它不启动 Herdr，只发现 `herdr.sock`，显示 Done / Working 计数，Option-click 聚焦最高优先级 agent。
+
+**怎么安装？**
+从 [GitHub Releases](https://github.com/openalon-org/herdr-bar/releases) 下载带 tag 的 `HerdrBar-*-macos.zip`，或从源码跑 `./scripts/install.sh`。zip 是 ad-hoc 签名，第一次可能要右键 → 打开。详见 [安装](/zh/guide/installation)。
+
+**会新建 pane 吗？**
+不会。聚焦是 `agent.focus`，再举起已经在跑该 session TUI 的终端。见 [使用](/zh/guide/usage) 和 [架构](/zh/guide/architecture)。

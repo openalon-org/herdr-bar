@@ -1,5 +1,6 @@
 ---
 outline: false
+description: "Newline JSON-RPC over a Unix socket: agent.list, agent.focus, and events.subscribe."
 ---
 
 # Protocol

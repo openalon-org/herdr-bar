@@ -1,5 +1,6 @@
 ---
 outline: false
+description: How herdr-bar watches Herdr sockets, aggregates sessions, and raises the host TUI.
 ---
 
 # Architecture

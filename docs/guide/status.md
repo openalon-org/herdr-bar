@@ -1,5 +1,6 @@
 ---
 outline: false
+description: Five agent states, priority order, menu-bar glance rules, and folder grouping.
 ---
 
 # Status model

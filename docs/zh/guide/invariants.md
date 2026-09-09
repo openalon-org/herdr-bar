@@ -1,5 +1,6 @@
 ---
 outline: false
+description: 产品不变量：事件驱动更新、禁止创建 pane、菜单栏是一览不是清单。
 ---
 
 # 不变量

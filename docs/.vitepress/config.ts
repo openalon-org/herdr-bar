@@ -1,11 +1,22 @@
 import { defineConfig } from 'vitepress'
+import {
+  GITHUB,
+  SITE_DESCRIPTION_EN,
+  SITE_DESCRIPTION_ZH,
+  SITE_TITLE,
+  SITE_URL,
+  descriptionFor,
+  pageHead,
+  replaceSeoHead,
+  titleFor,
+} from './seo'
 
 const repo = process.env.GITHUB_REPOSITORY
 const base =
   process.env.VITEPRESS_BASE
   ?? (process.env.GITHUB_ACTIONS && repo ? `/${repo.split('/')[1]}/` : '/')
 
-const github = 'https://github.com/openalon-org/herdr-bar'
+const github = GITHUB
 
 function sidebar(prefix: string, t: {
   start: string
@@ -144,16 +155,38 @@ function sidebar(prefix: string, t: {
 export default defineConfig({
   ignoreDeadLinks: false,
   base,
-  title: 'herdr-bar',
-  description: 'macOS menu-bar companion for Herdr: see every coding agent, jump to the one that needs you.',
+  title: SITE_TITLE,
+  titleTemplate: `:title | ${SITE_TITLE}`,
+  description: SITE_DESCRIPTION_EN,
+  lang: 'en-US',
+  lastUpdated: true,
+  sitemap: {
+    hostname: `${SITE_URL}/`,
+  },
+  transformPageData(pageData) {
+    if (pageData.isNotFound) return
+    pageData.description = descriptionFor(pageData)
+    if (pageData.frontmatter.layout === 'home') {
+      pageData.title = titleFor(pageData)
+      pageData.titleTemplate = false
+    }
+    pageData.frontmatter.head = replaceSeoHead(pageData.frontmatter.head, pageHead(pageData))
+  },
+  transformHead({ pageData }) {
+    if (!pageData.isNotFound) return []
+    return [['meta', { name: 'robots', content: 'noindex, nofollow' }]]
+  },
   head: [
     ['link', { rel: 'icon', type: 'image/svg+xml', href: `${base.replace(/\/$/, '')}/herdr-bar-icon.svg` }],
+    ['meta', { name: 'theme-color', content: '#CF7650' }],
+    ['meta', { name: 'color-scheme', content: 'light dark' }],
   ],
 
   locales: {
     root: {
       label: 'English',
       lang: 'en-US',
+      description: SITE_DESCRIPTION_EN,
       themeConfig: {
         nav: [
           { text: 'Start', link: '/guide/installation' },
@@ -214,7 +247,7 @@ export default defineConfig({
     zh: {
       label: '简体中文',
       lang: 'zh-CN',
-      description: 'macOS 菜单栏上的 Herdr 伴侣：一眼看到每个 coding agent，跳到最需要你的那个。',
+      description: SITE_DESCRIPTION_ZH,
       themeConfig: {
         nav: [
           { text: '开始', link: '/zh/guide/installation' },
@@ -278,7 +311,9 @@ export default defineConfig({
     logo: '/herdr-bar-icon.svg',
     socialLinks: [{ icon: 'github', link: github }],
     search: { provider: 'local' },
+    editLink: {
+      pattern: `${github}/edit/main/docs/:path`,
+      text: 'Edit this page on GitHub',
+    },
   },
-
-  lastUpdated: true,
 })

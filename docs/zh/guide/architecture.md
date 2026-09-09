@@ -1,5 +1,6 @@
 ---
 outline: false
+description: herdr-bar 如何监视 Herdr socket、聚合 session，并举起宿主 TUI。
 ---
 
 # 架构

@@ -73,7 +73,7 @@ Pin a single socket with `HERDR_SOCKET=/path/to/herdr.sock`.
 | Eye | Notification mode (default): hide idle |
 | Gear | Open at login, status colors, opener, and Check for Updates |
 
-Status colors default to [Claude Code](https://code.claude.com/docs)’s terminal tab palette; working uses the CLI spinner terracotta. Overrides live in `~/.config/herdr/herdr-bar.json`. Details: [Usage](https://openalon.com/herdr-bar/guide/usage), [Configuration](https://openalon.com/herdr-bar/guide/configuration).
+Status colors default to [Claude Code](https://code.claude.com/docs)’s terminal tab palette; working uses the CLI spinner terracotta. Overrides live in `~/.config/herdr/herdr-bar.json`. Details: [Usage](https://openalon.com/herdr-bar/guide/usage.html), [Configuration](https://openalon.com/herdr-bar/guide/configuration.html).
 
 ## Develop
 
@@ -91,7 +91,7 @@ npm install
 npm run docs:dev
 ```
 
-Push to `main` deploys GitHub Pages. A `v*` tag runs the Release workflow (zip + GitHub Release). The Release body is the matching `CHANGELOG.md` section, not GitHub’s auto-generated notes. Manual **Run workflow** on that job only uploads an Actions artifact — it does not publish a Release. User-facing history: [Changelog](https://openalon.com/herdr-bar/changelog/).
+Push to `main` deploys GitHub Pages. Canonical, Open Graph, JSON-LD, sitemap, and robots all share `https://openalon.com/herdr-bar/`. Descriptions and FAQ schema are extracted from each markdown page at build time. A `v*` tag runs the Release workflow (zip + GitHub Release). The Release body is the matching `CHANGELOG.md` section, not GitHub’s auto-generated notes. Manual **Run workflow** on that job only uploads an Actions artifact — it does not publish a Release. User-facing history: [Changelog](https://openalon.com/herdr-bar/changelog.html).
 
 ## Architecture
 

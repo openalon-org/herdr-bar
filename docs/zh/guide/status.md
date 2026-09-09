@@ -1,5 +1,6 @@
 ---
 outline: false
+description: 五种 agent 状态、优先级、菜单栏一览规则，以及 folder 分组。
 ---
 
 # 状态模型

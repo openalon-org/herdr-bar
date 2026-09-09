@@ -48,3 +48,14 @@ features:
 
 Requires Herdr 0.8+ and macOS 13+. The app is an `LSUIElement` — it never appears in the Dock.
 :::
+
+## FAQ
+
+**What is herdr-bar?**
+A macOS menu-bar extra for [Herdr](https://herdr.dev/). It does not start Herdr. It discovers `herdr.sock`, shows Done / Working counts, and Option-click focuses the highest-priority agent.
+
+**How do I install it?**
+Download a tagged `HerdrBar-*-macos.zip` from [GitHub Releases](https://github.com/openalon-org/herdr-bar/releases), or `./scripts/install.sh` from source. The zip is ad-hoc signed — first launch may need right-click → Open. Details: [Install](/guide/installation).
+
+**Does it create new panes?**
+No. Focus is `agent.focus` plus raising the terminal that already hosts that session’s TUI. See [Usage](/guide/usage) and [Architecture](/guide/architecture).

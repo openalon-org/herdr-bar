@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://openalon.com/herdr-bar/sitemap.xml

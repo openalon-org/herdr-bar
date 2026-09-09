@@ -26,4 +26,6 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - run: node --test tests/from-markdown.test.mjs
       - run: npm run docs:build
+      - run: node --test tests/seo.test.mjs

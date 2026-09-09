@@ -1,5 +1,6 @@
 ---
 outline: false
+description: "Product constraints: event-driven updates, never create panes, glance not inventory."
 ---
 
 # Invariants

@@ -1,5 +1,6 @@
 ---
 outline: false
+description: Unix socket 上的 newline JSON-RPC：agent.list、agent.focus 与 events.subscribe。
 ---
 
 # 协议

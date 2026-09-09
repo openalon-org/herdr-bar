@@ -33,6 +33,8 @@ jobs:
         run: npm ci
       - name: Build with VitePress
         run: npm run docs:build
+      - name: SEO contract
+        run: node --test tests/from-markdown.test.mjs tests/seo.test.mjs
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
