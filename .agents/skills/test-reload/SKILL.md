@@ -22,7 +22,7 @@ The working tree is not `~/Applications/HerdrBar.app`. `swift test` / `swift run
    ./scripts/reload.sh
    ```
 
-   Default path: `swift test` → `scripts/install.sh` (release) → kill every `MacBar` → `open ~/Applications/HerdrBar.app`.
+   Default path: `swift test` → `scripts/install.sh` (release) → kill every `MacBar` and leftover `HerdrWidget` → `open ~/Applications/HerdrBar.app`.
 
 3. If this turn **already** ran `swift test` and it passed:
 
@@ -41,6 +41,6 @@ The working tree is not `~/Applications/HerdrBar.app`. `swift test` / `swift run
 ## Do not
 
 - `open` the old bundle without `install.sh`.
-- Leave `scripts/dev-run.sh` running — reload kills every `MacBar` (installed extra **and** `swift run`).
+- Leave `scripts/dev-run.sh` running — reload kills every `MacBar` (installed extra **and** `swift run`) and a leftover `HerdrWidget` process.
 - Skip tests after extra / glance / layout changes. `--skip-tests` is only when tests already passed this turn.
 - Treat `.build/debug/MacBar` as the menu extra. The live binary is `~/Applications/HerdrBar.app/Contents/MacOS/MacBar`.

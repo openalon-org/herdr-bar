@@ -10,6 +10,8 @@ final class StatusItemController: NSObject {
     private let store = AgentAggregator()
     private let chrome = PopoverChrome()
     private let manager: SessionManager
+    private var snapshotPublisher: WidgetSnapshotPublisher?
+    private var pendingFocus: (session: String, pane: String)?
     private var buttonView: StatusItemView?
     /// Our own latch. `NSPopover.isShown` lags during activate / close animation,
     /// so a second hotkey in that window looks like another "open" and is dropped.
@@ -80,6 +82,7 @@ final class StatusItemController: NSObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (_: Void) in
                 self?.render()
+                self?.flushPendingFocus()
             }
             .store(in: &cancellables)
 
@@ -92,19 +95,42 @@ final class StatusItemController: NSObject {
                 self?.applySettingsChrome(showing)
             }
             .store(in: &cancellables)
+
+        chrome.$hideIdle
+            .dropFirst()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.snapshotPublisher?.schedule()
+            }
+            .store(in: &cancellables)
     }
 
     private var cancellables: Set<AnyCancellable> = []
 
     func start() {
         manager.start()
+        let publisher = WidgetSnapshotPublisher(store: store)
+        snapshotPublisher = publisher
+        publisher.start()
         render()
+        flushPendingFocus()
     }
 
     func stop() {
         HotkeyCenter.shared.unregister()
         stopOutsideClickDismiss()
+        snapshotPublisher?.stop()
         manager.stop()
+    }
+
+    func handleURL(_ url: URL) {
+        guard let link = WidgetSnapshot.parseURL(url) else { return }
+        if let session = link.session, let pane = link.paneId, link.focusesRow {
+            pendingFocus = (session, pane)
+            flushPendingFocus()
+            return
+        }
+        openPopover()
     }
 
     private func applySettingsChrome(_ showing: Bool) {
@@ -249,6 +275,16 @@ final class StatusItemController: NSObject {
         } catch {
             NSSound.beep()
         }
+    }
+
+    private func flushPendingFocus() {
+        guard let pending = pendingFocus else { return }
+        let match = store.agents.first {
+            $0.sessionName == pending.session && $0.paneId == pending.pane
+        }
+        guard let match else { return }
+        pendingFocus = nil
+        focus(match)
     }
 
     private func render() {

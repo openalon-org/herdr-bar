@@ -1,0 +1,368 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0C6A98503C0135AABD14AE01 /* HerdrCore in Frameworks */ = {isa = PBXBuildFile; productRef = 0D7056171E397A375528EF3A /* HerdrCore */; };
+		765C765DEBD6EC1A782B616F /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 217DED787B1BD6DB173FCE9A /* WidgetKit.framework */; };
+		7A729438CF81139811B37AE9 /* HerdrWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD51B3A42FB79883BCD6FA7 /* HerdrWidget.swift */; };
+		BC617454697DEC360CC4FF65 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E84E2F99AEF82490728C4F53 /* SwiftUI.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		217DED787B1BD6DB173FCE9A /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		5161F5576DCC4E92FD68B839 /* herdr-bar */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "herdr-bar"; path = ..; sourceTree = SOURCE_ROOT; };
+		66B22255F6B85774F0E8B443 /* HerdrWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = HerdrWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		E84E2F99AEF82490728C4F53 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		FCD51B3A42FB79883BCD6FA7 /* HerdrWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HerdrWidget.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		28F4F4F39BAC7528065CB139 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0C6A98503C0135AABD14AE01 /* HerdrCore in Frameworks */,
+				BC617454697DEC360CC4FF65 /* SwiftUI.framework in Frameworks */,
+				765C765DEBD6EC1A782B616F /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		41DD87EB8C1B82C83F4BE300 = {
+			isa = PBXGroup;
+			children = (
+				DD991B496023174BD285D40C /* herdr-bar */,
+				589C4C62AAA79E0A2E233D62 /* Packages */,
+				57DB30C800EF0B62FC4809CB /* Frameworks */,
+				EFB7BED4D18B7220F6BE6A4C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		57DB30C800EF0B62FC4809CB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E84E2F99AEF82490728C4F53 /* SwiftUI.framework */,
+				217DED787B1BD6DB173FCE9A /* WidgetKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		589C4C62AAA79E0A2E233D62 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				5161F5576DCC4E92FD68B839 /* herdr-bar */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+		88C1957E8C36517A250A47BC /* HerdrWidget */ = {
+			isa = PBXGroup;
+			children = (
+				FCD51B3A42FB79883BCD6FA7 /* HerdrWidget.swift */,
+			);
+			path = HerdrWidget;
+			sourceTree = "<group>";
+		};
+		D05E23E623A58BD411339DEE /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				88C1957E8C36517A250A47BC /* HerdrWidget */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		DD991B496023174BD285D40C /* herdr-bar */ = {
+			isa = PBXGroup;
+			children = (
+				D05E23E623A58BD411339DEE /* Sources */,
+			);
+			name = "herdr-bar";
+			path = ..;
+			sourceTree = "<group>";
+		};
+		EFB7BED4D18B7220F6BE6A4C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				66B22255F6B85774F0E8B443 /* HerdrWidgetExtension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		37EE2F7081ACED8EB20B3494 /* HerdrWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A53DD61D99984B7D05FC6F5F /* Build configuration list for PBXNativeTarget "HerdrWidgetExtension" */;
+			buildPhases = (
+				5FBE060F55FD82FEB3CC76BA /* Sources */,
+				28F4F4F39BAC7528065CB139 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HerdrWidgetExtension;
+			packageProductDependencies = (
+				0D7056171E397A375528EF3A /* HerdrCore */,
+			);
+			productName = HerdrWidgetExtension;
+			productReference = 66B22255F6B85774F0E8B443 /* HerdrWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CBADC1BE91B55F9B3B8DD6EC /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+				};
+			};
+			buildConfigurationList = 204EEE8418F122966DCD1A92 /* Build configuration list for PBXProject "HerdrWidgetExtension" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 41DD87EB8C1B82C83F4BE300;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				9B8BFD6310BEFD8702F8329B /* XCLocalSwiftPackageReference ".." */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = EFB7BED4D18B7220F6BE6A4C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				37EE2F7081ACED8EB20B3494 /* HerdrWidgetExtension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5FBE060F55FD82FEB3CC76BA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7A729438CF81139811B37AE9 /* HerdrWidget.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		2FDC01EECE2B2417FE78CF5E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGN_ENTITLEMENTS = HerdrWidget.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.herdr.herdr-bar.widget";
+				PRODUCT_NAME = HerdrWidget;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		57DBE5322DCD2076D51EB37F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		D5CF5EDDCB6C428C49F00A01 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		E75E5D8787479702343BCA54 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGN_ENTITLEMENTS = HerdrWidget.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.herdr.herdr-bar.widget";
+				PRODUCT_NAME = HerdrWidget;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		204EEE8418F122966DCD1A92 /* Build configuration list for PBXProject "HerdrWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D5CF5EDDCB6C428C49F00A01 /* Debug */,
+				57DBE5322DCD2076D51EB37F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		A53DD61D99984B7D05FC6F5F /* Build configuration list for PBXNativeTarget "HerdrWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2FDC01EECE2B2417FE78CF5E /* Debug */,
+				E75E5D8787479702343BCA54 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		9B8BFD6310BEFD8702F8329B /* XCLocalSwiftPackageReference ".." */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ..;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0D7056171E397A375528EF3A /* HerdrCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = HerdrCore;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = CBADC1BE91B55F9B3B8DD6EC /* Project object */;
+}

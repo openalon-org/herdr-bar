@@ -22,8 +22,11 @@ dist/
 # Swift
 .build/
 .swiftpm/
-*.xcodeproj
 DerivedData/
+
+# Widget extension: commit the XcodeGen project; ignore local user state.
+WidgetExtension/*.xcodeproj/xcuserdata/
+WidgetExtension/*.xcodeproj/project.xcworkspace/xcuserdata/
 
 # Docs
 node_modules/

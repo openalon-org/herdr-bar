@@ -10,6 +10,7 @@ let package = Package(
     products: [
         .library(name: "HerdrCore", targets: ["HerdrCore"]),
         .executable(name: "MacBar", targets: ["MacBar"]),
+        .executable(name: "HerdrWidget", targets: ["HerdrWidget"]),
     ],
     targets: [
         .target(
@@ -21,6 +22,15 @@ let package = Package(
             linkerSettings: [
                 .linkedFramework("Carbon"),
                 .linkedFramework("ServiceManagement"),
+                .linkedFramework("WidgetKit"),
+            ]
+        ),
+        .executableTarget(
+            name: "HerdrWidget",
+            dependencies: ["HerdrCore"],
+            linkerSettings: [
+                .linkedFramework("WidgetKit"),
+                .linkedFramework("SwiftUI"),
             ]
         ),
         .testTarget(

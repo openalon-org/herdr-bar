@@ -43,7 +43,7 @@ open ~/Applications/HerdrBar.app
 
 1. `swift build -c release --product MacBar`
 2. Write `~/Applications/HerdrBar.app` (`LSUIElement`, bundle id `dev.herdr.herdr-bar`)
-3. Copy the binary to `Contents/MacOS/MacBar`, render `AppIcon.icns` (white tile + label-gray `cpu`), and ad-hoc `codesign`
+3. Copy the binary to `Contents/MacOS/MacBar`, `xcodebuild` the widget app-extension into `PlugIns/HerdrWidget.appex`, render `AppIcon.icns` (white tile + label-gray `cpu`), and ad-hoc `codesign` (appex first). Packaging the widget needs Xcode (`xcodebuild`), not only Command Line Tools.
 
 The app stays out of the Dock. The right side of the menu bar shows a dot (all idle / offline) or a cluster of status chips.
 

@@ -44,7 +44,7 @@ Header:
 
 - **Mark** — quiet hierarchical `cpu` SF Symbol. Finder / Login Items / About use the same gray `cpu` on a light tile.
 - **Eye** — notification mode. On by default: hide idle rows in mixed groups, drop idle-only groups.
-- **Gear** — General (open at login), status colors, keyboard (system-wide opener plus in-window shortcuts), and About (app icon + version + Check for Updates against GitHub Releases).
+- **Gear** — General (open at login), keyboard (system-wide opener plus in-window shortcuts), About (one row: icon + name open the source repo; Check for Updates on the right against GitHub Releases), then status colors.
 
 Rows:
 
@@ -54,6 +54,10 @@ Rows:
 - Status sits on the right of the row. No elapsed time, no token count — those live in the CLI footer, not herdr-bar
 
 Click a row = `agent.focus` that pane, then raise the host terminal.
+
+## Desktop widget {#widget}
+
+Notification Center → Edit Widgets → **Herdr**. Medium and Large show the All-scope list under the extra’s current eye. The extra writes `~/.config/herdr/widget-snapshot.json`; the widget only reads it. Tap a row to focus that pane (`herdr-bar://focus`). The plate is Tahoe’s system glass (same as Calendar / Reminders). The list pins to the top of the card — Medium 4 rows, Large 10; WidgetKit does not scroll. The extra has to be running (Open at login). After replacing `HerdrBar.app`, remove and re-add the widget if the gallery still shows the old extension.
 
 ## Keyboard {#keyboard}
 

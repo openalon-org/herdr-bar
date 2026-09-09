@@ -1,0 +1,52 @@
+# SwiftPM cannot emit com.apple.product-type.app-extension. A hand-wrapped
+# executable exits on macOS 26 before chronod can fetch descriptors, so the
+# gallery stays empty. This spec is the WidgetKit product; package-app.sh
+# runs xcodegen + xcodebuild and nests the .appex.
+name: HerdrWidgetExtension
+options:
+  createIntermediateGroups: true
+  deploymentTarget:
+    macOS: "13.0"
+packages:
+  herdr-bar:
+    path: ..
+targets:
+  HerdrWidgetExtension:
+    type: app-extension
+    platform: macOS
+    deploymentTarget: "13.0"
+    sources:
+      - path: ../Sources/HerdrWidget
+    dependencies:
+      - package: herdr-bar
+        product: HerdrCore
+      - sdk: SwiftUI.framework
+      - sdk: WidgetKit.framework
+    info:
+      path: Info.plist
+      properties:
+        CFBundleDisplayName: Herdr
+        CFBundleName: Herdr
+        CFBundlePackageType: XPC!
+        CFBundleShortVersionString: "$(MARKETING_VERSION)"
+        CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
+        LSMinimumSystemVersion: "13.0"
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+    settings:
+      base:
+        APPLICATION_EXTENSION_API_ONLY: YES
+        CODE_SIGNING_ALLOWED: NO
+        CURRENT_PROJECT_VERSION: "1"
+        ENABLE_APP_SANDBOX: YES
+        CODE_SIGN_ENTITLEMENTS: HerdrWidget.entitlements
+        ENABLE_HARDENED_RUNTIME: NO
+        GENERATE_INFOPLIST_FILE: NO
+        INFOPLIST_FILE: Info.plist
+        LD_RUNPATH_SEARCH_PATHS: "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks"
+        MACOSX_DEPLOYMENT_TARGET: "13.0"
+        MARKETING_VERSION: "1.0.0"
+        PRODUCT_BUNDLE_IDENTIFIER: dev.herdr.herdr-bar.widget
+        PRODUCT_NAME: HerdrWidget
+        SKIP_INSTALL: YES
+        SWIFT_VERSION: "6.0"

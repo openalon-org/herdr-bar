@@ -700,3 +700,88 @@ struct DashboardNavTests {
         #expect(DashboardNav.firstInSession(in: withDone + [blockedWork], session: "work")?.id == blockedWork.id)
     }
 }
+
+@Suite("Widget snapshot")
+struct WidgetSnapshotTests {
+    private func agent(_ session: String, _ pane: String, _ status: String, cwd: String, name: String? = nil) -> Agent {
+        Agent(sessionName: session, paneId: pane, name: name ?? pane, agentStatusRaw: status, cwd: cwd)
+    }
+
+    @Test func hideIdleDropsIdleOnlyGroupsAndKeepsMixed() {
+        let idleOnly = agent("work", "p9", "idle", cwd: "/home/user/notes")
+        let working = agent("work", "p2", "working", cwd: "/home/user/alpha")
+        let idleMixed = agent("work", "p3", "idle", cwd: "/home/user/alpha")
+        let blocked = agent("default", "p1", "blocked", cwd: "/home/user/gamma")
+        let snap = WidgetSnapshot.make(
+            agents: [idleOnly, working, idleMixed, blocked],
+            anyOnline: true,
+            hideIdle: true,
+            sessionNames: ["default", "work"],
+            home: "/home/user",
+            now: Date(timeIntervalSince1970: 1)
+        )
+        #expect(snap.groups.map(\.folder) == ["gamma", "alpha"])
+        #expect(!snap.rows.contains(where: { $0.paneId == "p9" }))
+        #expect(!snap.rows.contains(where: { $0.paneId == "p3" }))
+        #expect(snap.groups.first { $0.folder == "alpha" }?.hiddenIdle == 1)
+        #expect(snap.rows.map(\.paneId) == ["p1", "p2"])
+        #expect(snap.counts["blocked"] == 1)
+        #expect(snap.counts["working"] == 1)
+        #expect(snap.counts["idle"] == 2)
+        #expect(snap.sessionNames == ["default", "work"])
+    }
+
+    @Test func roundTripAndFocusURL() throws {
+        let row = agent("work", "p2", "working", cwd: "/home/user/alpha", name: "build")
+        let snap = WidgetSnapshot.make(
+            agents: [row],
+            anyOnline: true,
+            hideIdle: true,
+            sessionNames: ["work"],
+            home: "/home/user",
+            now: Date(timeIntervalSince1970: 1_700_000_000)
+        )
+        let dir = FileManager.default.temporaryDirectory.appendingPathComponent("widget-snap-\(UUID().uuidString)")
+        let path = dir.appendingPathComponent("widget-snapshot.json").path
+        try snap.write(to: path)
+        let loaded = WidgetSnapshot.load(from: path)
+        #expect(loaded?.rows.first?.title == "build")
+        #expect(loaded?.rows.first?.status == .working)
+        try? FileManager.default.removeItem(at: dir)
+
+        let url = WidgetSnapshot.focusURL(session: "work", pane: "p2")
+        #expect(url.scheme == "herdr-bar")
+        let link = WidgetSnapshot.parseURL(url)
+        #expect(link?.session == "work")
+        #expect(link?.paneId == "p2")
+        #expect(link?.focusesRow == true)
+        #expect(WidgetSnapshot.parseURL(WidgetSnapshot.openURL())?.focusesRow == false)
+        #expect(WidgetSnapshot.parseURL(URL(string: "https://example.com")!) == nil)
+    }
+
+    @Test func snapshotPathIsPOSIXHomeNotContainer() {
+        let path = WidgetSnapshot.path
+        #expect(path.hasSuffix("/.config/herdr/widget-snapshot.json"))
+        #expect(!path.contains("/Library/Containers/"))
+        #expect(WidgetSnapshot.widgetContainerPath.contains("/Library/Containers/\(WidgetSnapshot.widgetBundleID)/Data/"))
+        #expect(WidgetSnapshot.widgetContainerPath.hasSuffix("/.config/herdr/widget-snapshot.json"))
+    }
+
+    @Test func loadTriesEachCandidateUntilOneDecodes() throws {
+        let row = agent("work", "p2", "working", cwd: "/home/user/alpha", name: "build")
+        let snap = WidgetSnapshot.make(
+            agents: [row],
+            anyOnline: true,
+            hideIdle: true,
+            sessionNames: ["work"],
+            home: "/home/user",
+            now: Date(timeIntervalSince1970: 1)
+        )
+        let dir = FileManager.default.temporaryDirectory.appendingPathComponent("widget-load-\(UUID().uuidString)")
+        let path = dir.appendingPathComponent("widget-snapshot.json").path
+        try snap.write(to: path)
+        #expect(WidgetSnapshot.load(from: path)?.rows.first?.title == "build")
+        #expect(WidgetSnapshot.load(from: dir.appendingPathComponent("missing.json").path) == nil)
+        try? FileManager.default.removeItem(at: dir)
+    }
+}

@@ -43,7 +43,7 @@ open ~/Applications/HerdrBar.app
 
 1. `swift build -c release --product MacBar`
 2. 写出 `~/Applications/HerdrBar.app`（`LSUIElement`，bundle id `dev.herdr.herdr-bar`）
-3. 把二进制放进 `Contents/MacOS/MacBar`，渲 `AppIcon.icns`（浅色底 + 和 dashboard 左上角一样的灰 `cpu`），再 ad-hoc `codesign`
+3. 把二进制放进 `Contents/MacOS/MacBar`，用 `xcodebuild` 打真正的 widget app-extension 到 `PlugIns/HerdrWidget.appex`，渲 `AppIcon.icns`（浅色底 + 和 dashboard 左上角一样的灰 `cpu`），再 ad-hoc `codesign`（先签 appex）。小组件打包需要 Xcode（`xcodebuild`），不只是 Command Line Tools。
 
 应用不出现在 Dock。菜单栏右侧会出现一颗点（全 idle / 离线）或一组状态 chip。
 

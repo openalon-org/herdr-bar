@@ -15,8 +15,8 @@ Usage: scripts/reload.sh [--skip-tests] [--all-tests]
   --all-tests   also run node --test tests/herdr.test.mjs
   --skip-tests  install + restart only (agent already ran tests this turn)
 
-Kills every MacBar process (installed extra and `swift run`), then opens
-the bundle. Do not run alongside scripts/dev-run.sh.
+Kills every MacBar process (installed extra and `swift run`) and a leftover
+HerdrWidget .appex, then opens the bundle. Do not run alongside scripts/dev-run.sh.
 EOF
 }
 
@@ -51,6 +51,16 @@ if pgrep -x MacBar >/dev/null; then
   if pgrep -x MacBar >/dev/null; then
     killall -9 MacBar 2>/dev/null || true
     sleep 0.2
+  fi
+fi
+
+# chronod keeps the previous .appex process; a new MacBar is not enough.
+if pgrep -x HerdrWidget >/dev/null; then
+  killall HerdrWidget 2>/dev/null || true
+  sleep 0.2
+  if pgrep -x HerdrWidget >/dev/null; then
+    killall -9 HerdrWidget 2>/dev/null || true
+    sleep 0.1
   fi
 fi
 

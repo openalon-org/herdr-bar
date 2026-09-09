@@ -44,7 +44,7 @@ Popover 固定 **372 × 480**。藏 idle 不会把窗口缩小后再长不回来
 
 - **图标** — 安静的 hierarchical `cpu` SF Symbol。Finder / 登录项 / About 是同一颗灰 `cpu`，浅色底。
 - **眼睛** — 通知模式。默认开：混合组里藏 idle 行，纯 idle 组整组丢掉。
-- **齿轮** — General（开机启动）、状态颜色、键盘（系统级打开快捷键 + 窗内快捷键说明）、About（app icon + 版本号 + 对照 GitHub Releases 检查更新）。
+- **齿轮** — General（开机启动）、键盘（系统级打开快捷键 + 窗内快捷键说明）、About（一行：点图标或名称打开源码仓库；右侧 Check for Updates 对照 GitHub Releases），最后才是状态颜色。
 
 行内容：
 
@@ -54,6 +54,10 @@ Popover 固定 **372 × 480**。藏 idle 不会把窗口缩小后再长不回来
 - 状态在行右侧。不画耗时、不画 token —— 那些在 CLI 页脚，不在 herdr-bar
 
 点一行 = `agent.focus` 那个 pane，然后举起宿主终端。
+
+## 桌面小组件 {#widget}
+
+通知中心 → 编辑小组件 → **Herdr**。Medium / Large 是 extra 当前眼睛下 All 范围的列表。extra 写 `~/.config/herdr/widget-snapshot.json`，小组件只读。点一行聚焦那个 pane（`herdr-bar://focus`）。底板是 Tahoe 系统玻璃（和日历 / 提醒事项一样）。列表从卡片顶部往下排——Medium 4 行、Large 10 行，WidgetKit 不滚动。extra 必须在跑（开机启动）。换过 `HerdrBar.app` 后如果画廊还是旧扩展，把小组件拿掉再加一次。
 
 ## 键盘 {#keyboard}
 
