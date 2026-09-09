@@ -86,4 +86,4 @@ A throwaway `swift run` / `dev-run.sh` binary cannot register. Pack `HerdrBar.ap
 
 ## Updates {#updates}
 
-Gear → **About**. The extra reads `CFBundleShortVersionString` and compares it to GitHub `/repos/openalon-org/herdr-bar/releases/latest`. There is no Sparkle install path — an available update opens the release page. Local `swift run` / unpackaged binaries show `dev`.
+Gear → **About**. One row: icon + **HerdrBar** open the source repository; **Check for Updates** on the right reads `CFBundleShortVersionString` and compares it to GitHub `/repos/openalon-org/herdr-bar/releases/latest`. There is no Sparkle install path — an available update opens the release page. Local `swift run` / unpackaged binaries show `dev`.

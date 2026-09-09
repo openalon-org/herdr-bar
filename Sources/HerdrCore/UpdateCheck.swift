@@ -34,6 +34,7 @@ public enum UpdateCheckError: Error, Equatable, LocalizedError, Sendable {
 
 public enum UpdateCheck {
     public static let repository = "openalon-org/herdr-bar"
+    public static let repositoryURL = URL(string: "https://github.com/\(repository)")!
     public static let latestReleaseURL = URL(
         string: "https://api.github.com/repos/\(repository)/releases/latest"
     )!

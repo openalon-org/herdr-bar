@@ -44,6 +44,8 @@ struct SettingsView: View {
             SteadyScrollView {
                 VStack(alignment: .leading, spacing: 18) {
                     LoginItemSection()
+                    HotkeySection()
+                    UpdateSection()
 
                     SettingsGroup(
                         title: "Status colors",
@@ -57,9 +59,6 @@ struct SettingsView: View {
                             }
                         }
                     }
-
-                    HotkeySection()
-                    UpdateSection()
                 }
                 .padding(.leading, 16)
                 .padding(.trailing, 14)
@@ -210,77 +209,60 @@ private struct UpdateSection: View {
     var body: some View {
         SettingsGroup(title: "About", footer: footer) {
             HStack(spacing: 10) {
-                BrandMark(style: .badge, size: 28)
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("HerdrBar")
-                        .font(.body)
-                    Text(checker.currentVersion)
-                        .font(.callout.monospaced())
-                        .foregroundStyle(.secondary)
+                Button(action: { NSWorkspace.shared.open(UpdateCheck.repositoryURL) }) {
+                    HStack(spacing: 10) {
+                        BrandMark(style: .badge, size: 28)
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("HerdrBar")
+                                .font(.body)
+                            Text(checker.currentVersion)
+                                .font(.callout.monospaced())
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                    .contentShape(Rectangle())
                 }
+                .buttonStyle(.plain)
+                .help("Open the herdr-bar repository")
+
                 Spacer(minLength: 8)
+                updateControl
             }
             .padding(.horizontal, 12)
             .padding(.vertical, 9)
-
-            SettingsDivider()
-            statusRow
         }
         .onDisappear { checker.cancel() }
     }
 
     @ViewBuilder
-    private var statusRow: some View {
+    private var updateControl: some View {
         switch checker.status {
-        case .idle, .current, .failed:
-            Button(action: { checker.check() }) {
-                HStack(spacing: 10) {
-                    Text("Check for Updates")
-                        .font(.body)
-                        .foregroundStyle(.primary)
-                    Spacer(minLength: 8)
-                    if checker.status == .current {
-                        Text("Up to date")
-                            .font(.caption.weight(.semibold))
-                            .foregroundStyle(.secondary)
-                    } else if case .failed = checker.status {
-                        Text("Retry")
-                            .font(.caption.weight(.semibold))
-                            .foregroundStyle(.secondary)
-                    }
-                }
-                .padding(.horizontal, 12)
-                .padding(.vertical, 9)
-                .contentShape(Rectangle())
-            }
-            .buttonStyle(.plain)
-
-        case .checking:
-            HStack(spacing: 10) {
-                ProgressView()
-                    .controlSize(.small)
-                Text("Checking for updates…")
-                    .font(.body)
-                Spacer(minLength: 8)
-            }
-            .padding(.horizontal, 12)
-            .padding(.vertical, 9)
-
-        case .available(let release):
-            HStack(spacing: 10) {
-                Text("Update \(release.version)")
-                    .font(.body)
-                Spacer(minLength: 8)
-                Button("Open") {
-                    NSWorkspace.shared.open(release.htmlURL)
-                }
+        case .idle:
+            Button("Check for Updates", action: { checker.check() })
                 .buttonStyle(.plain)
                 .font(.caption.weight(.semibold))
                 .foregroundStyle(.secondary)
-                .help("Open the GitHub Release")
+                .help("Compare this build to GitHub Releases")
+        case .checking:
+            ProgressView()
+                .controlSize(.small)
+        case .current:
+            Text("Up to date")
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(.secondary)
+        case .available(let release):
+            Button("Open \(release.version)") {
+                NSWorkspace.shared.open(release.htmlURL)
             }
-            .padding(.horizontal, 12)
-            .padding(.vertical, 9)
+            .buttonStyle(.plain)
+            .font(.caption.weight(.semibold))
+            .foregroundStyle(.secondary)
+            .help("Open the GitHub Release")
+        case .failed:
+            Button("Retry", action: { checker.check() })
+                .buttonStyle(.plain)
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(.secondary)
         }
     }
 

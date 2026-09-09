@@ -86,4 +86,4 @@ JSON 示例（⇧⌘Space，`kVK_Space` = 49）：
 
 ## 更新 {#updates}
 
-齿轮 → **About**。extra 读 `CFBundleShortVersionString`，对照 GitHub `/repos/openalon-org/herdr-bar/releases/latest`。没有 Sparkle 安装路径——有更新时打开 Release 页。本地 `swift run` / 未打包二进制显示 `dev`。
+齿轮 → **About**。一行：图标和 **HerdrBar** 打开源码仓库；右侧 **Check for Updates** 读 `CFBundleShortVersionString`，对照 GitHub `/repos/openalon-org/herdr-bar/releases/latest`。没有 Sparkle 安装路径——有更新时打开 Release 页。本地 `swift run` / 未打包二进制显示 `dev`。
