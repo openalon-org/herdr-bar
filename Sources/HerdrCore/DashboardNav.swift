@@ -69,6 +69,16 @@ public enum DashboardNav {
         return ids.first
     }
 
+    /// First row of a named herdr session, in dashboard list order
+    /// (blocked → done → working → unknown → idle, then folder / recency).
+    /// The chip arrow always takes this head — Done when it is first, idle
+    /// when the session is idle-only. All is a union, not a session. Not
+    /// `attentionAgent` (Option-click): that is global priority.
+    public static func firstInSession(in agents: [Agent], session: String) -> Agent? {
+        let scoped = HerdrLogic.filtered(agents, by: AgentFilter(session: session))
+        return HerdrLogic.grouped(scoped).first.flatMap { $0.agents.first }
+    }
+
     static func wrap(_ value: Int, count: Int) -> Int {
         guard count > 0 else { return 0 }
         let remainder = value % count

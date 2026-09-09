@@ -261,13 +261,9 @@ struct DashboardView: View {
     private var scopeRow: some View {
         HStack(spacing: 5) {
             if store.multipleSessionsOnline {
-                sessionChip(title: "All", selected: chrome.session == nil, help: "Every session") {
-                    selectSession(nil)
-                }
+                sessionChip(title: "All", session: nil, selected: chrome.session == nil, help: "Every session")
                 ForEach(store.onlineSessionNames, id: \.self) { name in
-                    sessionChip(title: name, selected: chrome.session == name, help: "Only \(name)") {
-                        selectSession(name)
-                    }
+                    sessionChip(title: name, session: name, selected: chrome.session == name, help: "Only \(name)")
                 }
             }
             Spacer(minLength: 4)
@@ -288,22 +284,46 @@ struct DashboardView: View {
         }
     }
 
-    private func sessionChip(title: String, selected: Bool, help: String, action: @escaping () -> Void) -> some View {
-        Button(action: action) {
-            Text(title)
-                .font(.caption.weight(.semibold))
-                .padding(.horizontal, 7)
-                .padding(.vertical, 3)
-                .foregroundStyle(selected ? Color.primary : Color.secondary)
-                .background(
-                    Capsule().fill(Color.primary.opacity(selected ? 0.12 : 0.045))
-                )
-                .overlay(
-                    Capsule().stroke(Color.primary.opacity(selected ? 0.35 : 0.12), lineWidth: 1)
-                )
+    private func sessionChip(title: String, session: String?, selected: Bool, help: String) -> some View {
+        let jump = session.flatMap { DashboardNav.firstInSession(in: store.agents, session: $0) }
+        let ink = selected ? Color.primary : Color.secondary
+        return HStack(spacing: 0) {
+            Button {
+                selectSession(session)
+            } label: {
+                Text(title)
+                    .font(.caption.weight(.semibold))
+                    .padding(.leading, 7)
+                    .padding(.trailing, jump == nil ? 7 : 4)
+                    .padding(.vertical, 3)
+                    .foregroundStyle(ink)
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .help(help)
+
+            if let jump {
+                Button {
+                    chrome.selectedID = jump.id
+                    onFocus(jump)
+                } label: {
+                    Image(systemName: "arrow.up.forward")
+                        .font(.system(size: 8, weight: .semibold))
+                        .foregroundStyle(ink.opacity(0.7))
+                        .padding(.trailing, 6)
+                        .padding(.vertical, 3)
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .help("Open \(title)")
+            }
         }
-        .buttonStyle(.plain)
-        .help(help)
+        .background(
+            Capsule().fill(Color.primary.opacity(selected ? 0.12 : 0.045))
+        )
+        .overlay(
+            Capsule().stroke(Color.primary.opacity(selected ? 0.35 : 0.12), lineWidth: 1)
+        )
     }
 
     private var filterEmpty: some View {

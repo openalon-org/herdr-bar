@@ -36,7 +36,7 @@ Popover 固定 **372 × 480**。藏 idle 不会把窗口缩小后再长不回来
 
 层级只有三层，没有第三排 chip：
 
-1. **Session** — 顶行 scope chip：`All` / `default` / `work`（仅当 ≥2 个 session 在线）
+1. **Session** — 顶行 scope chip：`All` / `default` / `work`（仅当 ≥2 个 session 在线）。点 chip 本体是筛选。具体 session（不是 All）名字后面有箭头，聚焦该 herdr session 列表的第一行（含 idle）。
 2. **Folder** — 列表分区标题（`foreground_cwd` / `cwd` 的最后一段）
 3. **Status** — 行颜色与优先级
 

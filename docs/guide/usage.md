@@ -36,7 +36,7 @@ The popover is a fixed **372 × 480**. Hiding idle must not shrink the window so
 
 Three layers only — no third chip row:
 
-1. **Session** — scope chips: `All` / `default` / `work` (only when two or more sessions are online)
+1. **Session** — scope chips: `All` / `default` / `work` (only when two or more sessions are online). Chip body filters. Named session chips (not All) keep a trailing arrow that focuses the first row of that herdr session, including idle.
 2. **Folder** — section headers (last path component of `foreground_cwd` / `cwd`)
 3. **Status** — row color and priority
 

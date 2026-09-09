@@ -678,4 +678,25 @@ struct DashboardNavTests {
         #expect(DashboardNav.clampSelection(groups: groups, hideIdle: true, selected: "gone", preferred: a.id) == a.id)
         #expect(DashboardNav.clampSelection(groups: groups, hideIdle: true, selected: nil, preferred: nil) == a.id)
     }
+
+    @Test func firstInSessionIsNamedSessionListHead() {
+        let idleOnly = agent("work", "p9", "idle", cwd: "/home/user/notes")
+        let blocked = agent("default", "p1", "blocked", cwd: "/home/user/gamma")
+        let working = agent("work", "p2", "working", cwd: "/home/user/alpha")
+        let idleMixed = agent("work", "p3", "idle", cwd: "/home/user/alpha")
+        let agents = [idleOnly, blocked, working, idleMixed]
+        // work: alpha (working) ranks above idle-only notes.
+        #expect(DashboardNav.firstInSession(in: agents, session: "work")?.id == working.id)
+        #expect(DashboardNav.firstInSession(in: agents, session: "default")?.id == blocked.id)
+        // Idle-only session still has a first task — the chip arrow ignores the eye.
+        #expect(DashboardNav.firstInSession(in: [idleOnly], session: "work")?.id == idleOnly.id)
+        #expect(DashboardNav.firstInSession(in: agents, session: "missing") == nil)
+
+        let done = agent("work", "p4", "done", cwd: "/home/user/beta")
+        let blockedWork = agent("work", "p5", "blocked", cwd: "/home/user/gamma")
+        let withDone = [idleOnly, working, idleMixed, done]
+        // Arrow = list head. Done ranks above working / idle; blocked still ranks above done.
+        #expect(DashboardNav.firstInSession(in: withDone, session: "work")?.id == done.id)
+        #expect(DashboardNav.firstInSession(in: withDone + [blockedWork], session: "work")?.id == blockedWork.id)
+    }
 }
