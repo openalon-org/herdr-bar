@@ -43,7 +43,7 @@ open ~/Applications/HerdrBar.app
 
 1. `swift build -c release --product MacBar`
 2. Write `~/Applications/HerdrBar.app` (`LSUIElement`, bundle id `dev.herdr.herdr-bar`)
-3. Copy the binary to `Contents/MacOS/MacBar` and ad-hoc `codesign`
+3. Copy the binary to `Contents/MacOS/MacBar`, render `AppIcon.icns` (white tile + label-gray `cpu`), and ad-hoc `codesign`
 
 The app stays out of the Dock. The right side of the menu bar shows a dot (all idle / offline) or a cluster of status chips.
 
@@ -58,7 +58,7 @@ The app stays out of the Dock. The right side of the menu bar shows a dot (all i
 5. Right-click → refresh now.
 
 ::: warning Login items
-macOS will not launch this at login by itself. Add `HerdrBar` under **System Settings → General → Login Items** if you want that.
+macOS will not launch this at login by itself. Flip **Open at login** in the dashboard gear (or add `HerdrBar` under **System Settings → General → Login Items**). Both write the same login-item list.
 :::
 
 ## Demo mode {#demo}

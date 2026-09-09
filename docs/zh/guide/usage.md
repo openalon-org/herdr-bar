@@ -42,8 +42,9 @@ Popover 固定 **372 × 480**。藏 idle 不会把窗口缩小后再长不回来
 
 头部：
 
+- **图标** — 安静的 hierarchical `cpu` SF Symbol。Finder / 登录项 / About 是同一颗灰 `cpu`，浅色底。
 - **眼睛** — 通知模式。默认开：混合组里藏 idle 行，纯 idle 组整组丢掉。
-- **齿轮** — 状态颜色、键盘（系统级打开快捷键 + 窗内快捷键说明）、About（版本号 + 对照 GitHub Releases 检查更新）。
+- **齿轮** — General（开机启动）、状态颜色、键盘（系统级打开快捷键 + 窗内快捷键说明）、About（app icon + 版本号 + 对照 GitHub Releases 检查更新）。
 
 行内容：
 

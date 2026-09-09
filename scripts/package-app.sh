@@ -55,6 +55,8 @@ cat > "$dest/Contents/Info.plist" <<PLIST
   <string>$version</string>
   <key>CFBundleShortVersionString</key>
   <string>$version</string>
+  <key>CFBundleIconFile</key>
+  <string>AppIcon</string>
   <key>LSMinimumSystemVersion</key>
   <string>13.0</string>
   <key>LSUIElement</key>
@@ -67,6 +69,7 @@ PLIST
 
 cp "$bin" "$dest/Contents/MacOS/MacBar"
 chmod +x "$dest/Contents/MacOS/MacBar"
+swift "$root/scripts/render-app-icon.swift" "$dest/Contents/Resources/AppIcon.icns"
 # Ad-hoc sign so the extra launches after a zip download + xattr -cr.
 codesign --force --deep --sign - "$dest" >/dev/null
 echo "Packed $dest ($version)"

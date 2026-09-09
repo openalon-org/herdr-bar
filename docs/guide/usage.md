@@ -42,8 +42,9 @@ Three layers only — no third chip row:
 
 Header:
 
+- **Mark** — quiet hierarchical `cpu` SF Symbol. Finder / Login Items / About use the same gray `cpu` on a light tile.
 - **Eye** — notification mode. On by default: hide idle rows in mixed groups, drop idle-only groups.
-- **Gear** — status colors, keyboard (system-wide opener plus in-window shortcuts), and About (version + Check for Updates against GitHub Releases).
+- **Gear** — General (open at login), status colors, keyboard (system-wide opener plus in-window shortcuts), and About (app icon + version + Check for Updates against GitHub Releases).
 
 Rows:
 

@@ -78,6 +78,12 @@ JSON example (⇧⌘Space, `kVK_Space` = 49):
 
 The same group lists in-window shortcuts: ↑↓ walk tasks, ←→ walk sessions / folders, ↩ focuses.
 
+## Open at login {#login}
+
+Gear → **General → Open at login**. This is `SMAppService.mainApp`, the same list as **System Settings → General → Login Items** — not a `herdr-bar.json` key. macOS may ask you to approve the item the first time.
+
+A throwaway `swift run` / `dev-run.sh` binary cannot register. Pack `HerdrBar.app` (`./scripts/install.sh`) first. If the switch stays off after you flip it, the footer will say so, and **Open Login Items** jumps to the system pane.
+
 ## Updates {#updates}
 
 Gear → **About**. The extra reads `CFBundleShortVersionString` and compares it to GitHub `/repos/openalon-org/herdr-bar/releases/latest`. There is no Sparkle install path — an available update opens the release page. Local `swift run` / unpackaged binaries show `dev`.

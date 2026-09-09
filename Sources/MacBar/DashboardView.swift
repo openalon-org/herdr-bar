@@ -210,11 +210,7 @@ struct DashboardView: View {
 
     private var header: some View {
         HStack(spacing: 10) {
-            Image(systemName: "cpu")
-                .font(.title2)
-                .symbolRenderingMode(.hierarchical)
-                .opacity(store.anyOnline ? 1 : 0.45)
-                .frame(width: 28, height: 28)
+            BrandMark(style: .chrome, opacity: store.anyOnline ? 1 : 0.45)
             VStack(alignment: .leading, spacing: 2) {
                 Text("Herdr")
                     .font(.headline)

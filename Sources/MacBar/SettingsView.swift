@@ -43,6 +43,8 @@ struct SettingsView: View {
             // edge, groups inset so the thumb does not sit on the color wells.
             SteadyScrollView {
                 VStack(alignment: .leading, spacing: 18) {
+                    LoginItemSection()
+
                     SettingsGroup(
                         title: "Status colors",
                         footer: "Claude Code’s tab palette. Click a well to override one status."
@@ -102,6 +104,47 @@ private struct SettingsDivider: View {
         Divider()
             .padding(.leading, leading)
             .opacity(0.7)
+    }
+}
+
+private struct LoginItemSection: View {
+    @StateObject private var login = LoginItemController()
+
+    var body: some View {
+        SettingsGroup(title: "General", footer: login.footer) {
+            HStack(spacing: 10) {
+                Text("Open at login")
+                    .font(.body)
+                Spacer(minLength: 8)
+                Toggle("", isOn: Binding(
+                    get: { login.isOn },
+                    set: { login.setEnabled($0) }
+                ))
+                .labelsHidden()
+                .toggleStyle(.switch)
+                .controlSize(.small)
+                .disabled(!login.packed)
+            }
+            .padding(.horizontal, 12)
+            .padding(.vertical, 8)
+
+            if login.status == .requiresApproval {
+                SettingsDivider()
+                Button(action: login.openLoginItems) {
+                    HStack(spacing: 10) {
+                        Text("Open Login Items")
+                            .font(.body)
+                            .foregroundStyle(.primary)
+                        Spacer(minLength: 8)
+                    }
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 9)
+                    .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+            }
+        }
+        .onAppear { login.refresh() }
     }
 }
 
@@ -167,12 +210,15 @@ private struct UpdateSection: View {
     var body: some View {
         SettingsGroup(title: "About", footer: footer) {
             HStack(spacing: 10) {
-                Text("Version")
-                    .font(.body)
+                BrandMark(style: .badge, size: 28)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("HerdrBar")
+                        .font(.body)
+                    Text(checker.currentVersion)
+                        .font(.callout.monospaced())
+                        .foregroundStyle(.secondary)
+                }
                 Spacer(minLength: 8)
-                Text(checker.currentVersion)
-                    .font(.callout.monospaced())
-                    .foregroundStyle(.secondary)
             }
             .padding(.horizontal, 12)
             .padding(.vertical, 9)

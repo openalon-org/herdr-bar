@@ -20,6 +20,7 @@ let package = Package(
             dependencies: ["HerdrCore"],
             linkerSettings: [
                 .linkedFramework("Carbon"),
+                .linkedFramework("ServiceManagement"),
             ]
         ),
         .testTarget(

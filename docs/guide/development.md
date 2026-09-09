@@ -4,7 +4,7 @@ outline: false
 
 # Development
 
-Swift 6 package, macOS 13+. Two products: library `HerdrCore`, executable `MacBar` (links Carbon for the global hotkey).
+Swift 6 package, macOS 13+. Two products: library `HerdrCore`, executable `MacBar` (links Carbon for the global hotkey, ServiceManagement for open-at-login).
 
 ## Repository map {#map}
 
@@ -17,9 +17,12 @@ tests/HerdrCoreTests/  Swift model and protocol tests
 tools/demo-server.py   newline JSON fixture
 scripts/dev-run.sh     local run (optional --demo)
 scripts/package-app.sh pack HerdrBar.app (native; HERDR_BAR_UNIVERSAL=1 for CI)
+scripts/render-app-icon.swift SF Symbol `cpu` → AppIcon.icns (called from package-app.sh)
 scripts/install.sh     wrap package-app.sh into ~/Applications (does not kill the old process)
 scripts/reload.sh      swift test → install → kill MacBar → open the new extra
-.agents/skills/        project skill bodies (test-reload)
+scripts/changelog-notes.sh  one CHANGELOG.md section → GitHub Release body
+CHANGELOG.md           Keep a Changelog (docs /changelog includes this file)
+.agents/skills/        project skill bodies (test-reload, release)
 .claude/skills         → ../.agents/skills
 docs/                  this VitePress site (English root, Chinese under /zh/)
 ```
@@ -35,18 +38,20 @@ Key types:
 | `HerdrLogic` | pure functions: filter, group, count, labels |
 | `FocusRaiser` | find and activate the host GUI |
 | `StatusPalette` / `AppPreferences` | `herdr-bar.json` |
+| `LoginItem` | open-at-login UI mapping (`SMAppService` lives in MacBar) |
+| `BrandMark` | `chrome` SF Symbol in the dashboard header; `badge` icns in About |
 | `WorkingSpinner` | Darwin `·✢✳✶✻✽` ping-pong |
 
 ## Tests {#tests}
 
 ```bash
 swift test
-node --test tests/herdr.test.mjs
+node --test tests/herdr.test.mjs tests/changelog.test.mjs
 ```
 
-CI (`.github/workflows/ci.yml`) runs both on `macos-latest`. A separate Pages workflow builds VitePress on Ubuntu. Push a `v*` tag for `.github/workflows/release.yml`: universal `.app`, zip, GitHub Release. The binary is ad-hoc signed (not Developer ID / notarized). `workflow_dispatch` only uploads the artifact.
+CI (`.github/workflows/ci.yml`) runs both on `macos-latest`. A separate Pages workflow builds VitePress on Ubuntu. Push a `v*` tag for `.github/workflows/release.yml`: universal `.app`, zip, GitHub Release whose body is `scripts/changelog-notes.sh` for that version. The tag must match a `## [X.Y.Z]` heading in `CHANGELOG.md`. The binary is ad-hoc signed (not Developer ID / notarized). `workflow_dispatch` only uploads the artifact.
 
-Behavior changes should include the narrowest useful test. When install, settings, interactions, or requirements change, keep the README and `docs/guide/` in sync.
+Behavior changes should include the narrowest useful test. When install, settings, interactions, or requirements change, keep the README and `docs/guide/` in sync. User-facing history is `CHANGELOG.md` at release time (skill `release`).
 
 ## Run locally {#run}
 
@@ -80,4 +85,4 @@ npm run docs:build
 npm run docs:preview
 ```
 
-A push to `main` deploys `docs/.vitepress/dist` to GitHub Pages. Project-site `base` is `/herdr-bar/`; local dev uses `/`. The repo is [openalon-org/herdr-bar](https://github.com/openalon-org/herdr-bar).
+A push to `main` deploys `docs/.vitepress/dist` to GitHub Pages. Project-site `base` is `/herdr-bar/`; local dev uses `/`. The repo is [openalon-org/herdr-bar](https://github.com/openalon-org/herdr-bar). `/changelog` includes the root `CHANGELOG.md` — do not copy notes into `docs/`.

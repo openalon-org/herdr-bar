@@ -25,7 +25,8 @@ herdr-bar is a macOS menu-bar companion for Herdr. It renders normalized coding-
   3. Blocked / unknown join only when they need you. Width hugs that cluster (`+ 4pt inset`); it jumps for digit rollover or an interrupt, not because a skeleton chip vanished.
   4. Say each fact once: `0` already means none — do not dim. Neighbor gaps and the press-highlight capsule are `NSStatusBarButton`'s; `StatusItemView` stays transparent (`isOpaque = false`, no `super.draw`) so Tahoe glass shows through.
   Offline stays the 22pt dot. Optical spacing (halo leading pad, shared mark-to-digit gap), not equal box gaps.
-- Dashboard settings can bind a Carbon global hotkey (`hotkey` in herdr-bar.json) that toggles the popover. No extra Accessibility prompt. While the dashboard is open, up/down walk the visible task list and left/right cycle session chips (or folder groups when only one session is online). Enter focuses the highlighted row. Settings is three inset groups (Status colors, Keyboard, About). Keyboard lists the in-window shortcuts next to the opener. About shows the bundle version and a Check for Updates control that hits GitHub `/releases/latest` — it never installs (no Sparkle; the zip is ad-hoc). An available update opens the release page.
+- Finder / Login Items / About use a cmux-style light tile with a label-gray `cpu` (`AppIcon.icns`, `BrandMark.badge`) — same ink as the dashboard header. The header itself stays the quiet hierarchical `cpu` SF Symbol (`BrandMark.chrome`) so a filled plate does not compete with Working.
+- Dashboard settings can bind a Carbon global hotkey (`hotkey` in herdr-bar.json) that toggles the popover. No extra Accessibility prompt. While the dashboard is open, up/down walk the visible task list and left/right cycle session chips (or folder groups when only one session is online). Enter focuses the highlighted row. Settings is four inset groups (General, Status colors, Keyboard, About). General's Open at login toggle is `SMAppService.mainApp` — the same login-item list as System Settings, not a JSON key. A `swift run` binary cannot register. Keyboard lists the in-window shortcuts next to the opener. About shows the bundle version and a Check for Updates control that hits GitHub `/releases/latest` — it never installs (no Sparkle; the zip is ad-hoc). An available update opens the release page.
 - Agent list and settings scroll like a Chrome page: overlay thumb, momentum, hard stop at the edges (`verticalScrollElasticity = .none` on the SwiftUI `NSScrollView`). Do not rubber-band. Keyboard arrows reveal the highlight only if it is off-screen; a mouse fling must not be yanked back to the selected row.
 - The published tree is de-personalized. Tests, comments, fixtures, and docs must not contain a real home directory, login, machine hostname, local project path (`/Users/<you>/…`, `/home/<you>/…`, `workspace2/`), or a real session / repo name. Named-session examples are `default` plus a generic `work`. Folder fixtures are synthetic (`alpha`, `notes`, `beta`, `gamma`, `app.local`). Use roots `/Users/me`, `/home/user`, `~/…`. A test that only runs on one laptop does not belong in git; rewrite it against temp dirs or those fixtures. Scan before commit: `git grep -nE '/Users/|/home/|eden|client\\.new' -- . ':!package-lock.json'`.
 
@@ -35,15 +36,16 @@ herdr-bar is a macOS menu-bar companion for Herdr. It renders normalized coding-
 - `Sources/MacBar` — `NSStatusItem`, dashboard popover.
 - `Herdr.js` / `tests/herdr.test.mjs` — behavior oracle kept during the port.
 - `tools/demo-server.py` — newline JSON fixture.
-- `scripts/dev-run.sh` / `scripts/package-app.sh` / `scripts/install.sh` / `scripts/reload.sh` — throwaway run, pack a `.app` (CI zips it), install into `~/Applications/HerdrBar.app`, and test-then-replace the live extra. Source is not the running extra. Push a `v*` tag for the unsigned GitHub Release zip (`.github/workflows/release.yml`). No Developer ID / notarization in this tree.
-- `.agents/skills/` — project skills (body). `.claude/skills` is a symlink to that folder so Claude Code discovers them. `test-reload` runs `scripts/reload.sh` after extra / HerdrCore changes so the menu bar matches the tree.
+- `scripts/dev-run.sh` / `scripts/package-app.sh` / `scripts/install.sh` / `scripts/reload.sh` / `scripts/changelog-notes.sh` — throwaway run, pack a `.app` (CI zips it), install into `~/Applications/HerdrBar.app`, test-then-replace the live extra, and extract one `CHANGELOG.md` section for a GitHub Release. Source is not the running extra. Push a `v*` tag for the unsigned zip (`.github/workflows/release.yml`); the tag must have a matching `## [X.Y.Z]` heading. No Developer ID / notarization in this tree.
+- `.agents/skills/` — project skills (body). `.claude/skills` is a symlink to that folder so Claude Code discovers them. `test-reload` runs `scripts/reload.sh` after extra / HerdrCore changes so the menu bar matches the tree. `release` writes `CHANGELOG.md`, then tags.
+- `CHANGELOG.md` — Keep a Changelog, newest first. VitePress `/changelog` includes this file; do not keep a second source.
 - `docs/` — VitePress site (GitHub Pages). English at the root, Simplified Chinese under `docs/zh/`. Preview with `npm run docs:dev`.
 - `.github/ISSUE_TEMPLATE/` / `.github/pull_request_template.md` / `CONTRIBUTING.md` / `SECURITY.md` — community files. Behavior still lives in this document.
 
 ## Validation
 
 ```bash
-node --test tests/herdr.test.mjs
+node --test tests/herdr.test.mjs tests/changelog.test.mjs
 swift test
 ```
 

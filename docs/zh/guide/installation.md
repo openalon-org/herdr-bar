@@ -43,7 +43,7 @@ open ~/Applications/HerdrBar.app
 
 1. `swift build -c release --product MacBar`
 2. 写出 `~/Applications/HerdrBar.app`（`LSUIElement`，bundle id `dev.herdr.herdr-bar`）
-3. 把二进制放进 `Contents/MacOS/MacBar` 并 ad-hoc `codesign`
+3. 把二进制放进 `Contents/MacOS/MacBar`，渲 `AppIcon.icns`（浅色底 + 和 dashboard 左上角一样的灰 `cpu`），再 ad-hoc `codesign`
 
 应用不出现在 Dock。菜单栏右侧会出现一颗点（全 idle / 离线）或一组状态 chip。
 
@@ -58,7 +58,7 @@ open ~/Applications/HerdrBar.app
 5. 右键 → 立刻刷新。
 
 ::: warning 登录项
-macOS 不会自动开机启动。需要的话在 **系统设置 → 通用 → 登录项** 里把 `HerdrBar` 加上。
+macOS 不会自动开机启动。在仪表盘齿轮里打开 **Open at login**（或到 **系统设置 → 通用 → 登录项** 加上 `HerdrBar`）。两处写的是同一份名单。
 :::
 
 ## 演示模式 {#demo}

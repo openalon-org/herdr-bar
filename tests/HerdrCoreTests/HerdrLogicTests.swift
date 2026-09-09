@@ -581,6 +581,31 @@ struct AppPreferencesTests {
     }
 }
 
+@Suite("Login item")
+struct LoginItemTests {
+    @Test func packedAppIsABundleNotABareBinary() {
+        #expect(LoginItem.isPackedApp(bundlePath: "/Applications/HerdrBar.app"))
+        #expect(LoginItem.isPackedApp(bundlePath: "/tmp/HerdrBar.app/"))
+        #expect(!LoginItem.isPackedApp(bundlePath: "/tmp/.build/release/MacBar"))
+        #expect(!LoginItem.isPackedApp(bundlePath: "/usr/bin/MacBar"))
+    }
+
+    @Test func switchStaysOnUntilApprovalOrUnregister() {
+        #expect(LoginItem.isOn(.enabled))
+        #expect(LoginItem.isOn(.requiresApproval))
+        #expect(!LoginItem.isOn(.notRegistered))
+        #expect(!LoginItem.isOn(.notFound))
+    }
+
+    @Test func footerExplainsUnpackagedAndApproval() {
+        #expect(LoginItem.footer(packed: false, status: .notRegistered, error: nil).contains("swift run"))
+        #expect(LoginItem.footer(packed: true, status: .requiresApproval, error: nil).contains("Login Items"))
+        #expect(LoginItem.footer(packed: true, status: .notFound, error: nil).contains("packed app"))
+        #expect(LoginItem.footer(packed: true, status: .enabled, error: "denied").contains("denied"))
+        #expect(LoginItem.footer(packed: true, status: .enabled, error: nil).contains("log in"))
+    }
+}
+
 @Suite("Working spinner")
 struct WorkingSpinnerTests {
     @Test func darwinPingPongFrames() {
