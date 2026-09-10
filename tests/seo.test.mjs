@@ -81,4 +81,18 @@ describe('docs SEO head', () => {
     mustInclude(body, ['name="robots" content="noindex, nofollow"'], '404')
     assert.equal((body.match(/rel="canonical"/g) || []).length, 0)
   })
+
+  it('every page loads Google Tag Manager in head and noscript after body', () => {
+    for (const rel of ['index.html', 'guide/usage.html', 'zh/index.html', '404.html']) {
+      const body = html(rel)
+      mustInclude(body, [
+        'GTM-MNXQCPGT',
+        'https://www.googletagmanager.com/gtm.js?id=',
+        'googletagmanager.com/ns.html?id=GTM-MNXQCPGT',
+      ], rel)
+      const bodyOpen = body.search(/<body[^>]*>/)
+      const noscript = body.indexOf('googletagmanager.com/ns.html?id=GTM-MNXQCPGT')
+      assert.ok(bodyOpen >= 0 && noscript > bodyOpen, `${rel} noscript is not after <body>`)
+    }
+  })
 })

@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitepress'
+import { gtmHead, injectGtmNoscript } from './gtm'
 import {
   GITHUB,
   SITE_DESCRIPTION_EN,
@@ -176,7 +177,11 @@ export default defineConfig({
     if (!pageData.isNotFound) return []
     return [['meta', { name: 'robots', content: 'noindex, nofollow' }]]
   },
+  transformHtml(code) {
+    return injectGtmNoscript(code)
+  },
   head: [
+    ...gtmHead,
     ['link', { rel: 'icon', type: 'image/svg+xml', href: `${base.replace(/\/$/, '')}/herdr-bar-icon.svg` }],
     ['meta', { name: 'theme-color', content: '#CF7650' }],
     ['meta', { name: 'color-scheme', content: 'light dark' }],
