@@ -2,6 +2,22 @@
 
 All notable changes to herdr-bar are documented here.
 
+## [0.1.2] - 2026-09-10
+
+### Added
+- Desktop WidgetKit gallery widget: a read-only All-scope snapshot of the dashboard list. Tap a row to focus that agent in the extra (`herdr-bar://focus`). Extra must be running (Open at login).
+- App icon shared by Finder, Login Items, and About (light tile, label-gray cpu).
+- Open at login toggle in dashboard settings (`SMAppService`, the system Login Items list).
+- Check for Updates on the About row: compares this build to GitHub Releases and opens the latest tag. Still does not install itself (ad-hoc zip, no Sparkle).
+- Jump arrow on named session chips (not All). Chip body still filters; the arrow focuses that session's first list row, including idle.
+
+### Changed
+- Settings layout: About is one row (icon + name open the repo; Check for Updates on the trailing edge). Color wells move last so login, keyboard, and About fit the first screen.
+
+### Thanks to 1 contributor!
+
+- [@openalon](https://github.com/openalon)
+
 ## [0.1.1] - 2026-09-08
 
 ### Changed
