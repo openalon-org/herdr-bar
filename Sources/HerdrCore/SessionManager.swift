@@ -44,9 +44,17 @@ public final class SessionManager {
         guard let watcher = watchers[agent.sessionName] else {
             throw HerdrClient.ClientError.disconnected
         }
-        // Raise first: the host window should move now, not after the RPC.
-        FocusRaiser.raiseHost(sessionName: watcher.name, socketPath: watcher.socketPath)
+        // RPC first: Herdr 0.9 keeps TUI workspace/tab per client. Extra is an
+        // API socket, so `agent.focus` often only marks seen. `tab.focus` /
+        // `pane.focus` move the attached TUI. Raise after that so
+        // `activateAllWindows` cannot cover a tab that has not switched yet.
         try watcher.focus(target: agent.target)
+        // 0.9 follow-up: missing methods on 0.8 must not abort the raise.
+        if let tabId = agent.tabId, !tabId.isEmpty {
+            try? watcher.focusTab(id: tabId)
+        }
+        try? watcher.focusPane(id: agent.paneId)
+        FocusRaiser.raiseHost(sessionName: watcher.name, socketPath: watcher.socketPath)
     }
 
     public func focusAttention() throws {

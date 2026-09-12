@@ -65,6 +65,10 @@ class DemoServer:
                 self.send(conn, {"id": request_id, "result": {"type": "agent_list", "agents": self.agents()}})
             elif method == "agent.focus":
                 self.send(conn, {"id": request_id, "result": {"type": "agent_focused"}})
+            elif method == "tab.focus":
+                self.send(conn, {"id": request_id, "result": {"type": "tab_focused"}})
+            elif method == "pane.focus":
+                self.send(conn, {"id": request_id, "result": {"type": "pane_focused"}})
             elif method == "events.subscribe":
                 self.send(conn, {"id": request_id, "result": {"type": "subscription_started"}})
                 with self.lock:

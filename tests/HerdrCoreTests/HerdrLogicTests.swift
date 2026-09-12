@@ -49,6 +49,23 @@ struct HerdrLogicTests {
         #expect(HerdrLogic.target(for: Agent(sessionName: "default", paneId: "pane", agentStatusRaw: "idle")) == "pane")
     }
 
+    @Test func listRowKeepsTabAndWorkspace() throws {
+        let json = """
+        {"pane_id":"wN:p1","tab_id":"wN:t1","workspace_id":"wN","agent_status":"working"}
+        """.data(using: .utf8)!
+        let dto = try JSONDecoder().decode(AgentDTO.self, from: json)
+        let agent = dto.asAgent(sessionName: "default")
+        #expect(agent?.tabId == "wN:t1")
+        #expect(agent?.workspaceId == "wN")
+        #expect(agent?.paneId == "wN:p1")
+
+        let legacy = try JSONDecoder().decode(
+            AgentDTO.self,
+            from: Data(#"{"pane_id":"pane","agent_status":"idle"}"#.utf8)
+        )
+        #expect(legacy.asAgent(sessionName: "default")?.tabId == nil)
+    }
+
     @Test func shortenHomePath() {
         #expect(HerdrLogic.shortenPath("/home/user/Developer/project", home: "/home/user") == "~/Developer/project")
     }

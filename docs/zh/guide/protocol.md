@@ -31,7 +31,9 @@ description: Unix socket 上的 newline JSON-RPC：agent.list、agent.focus 与 
 | 方法 | Socket | 作用 |
 |---|---|---|
 | `agent.list` | 一次性 | 该 session 当前 agent |
-| `agent.focus` | 一次性 | 聚焦 `params.target`（名字或 pane id） |
+| `agent.focus` | 一次性 | 把 `params.target` 标成已看（名字或 pane id） |
+| `tab.focus` | 一次性 | 把已 attach 的 TUI 切到 `params.tab_id`（Herdr 0.9+） |
+| `pane.focus` | 一次性 | 在该 tab 里选 `params.pane_id` |
 | `events.subscribe` | 长连接 | 登记失效订阅 |
 
 `agent.list` 行映射到 `Agent`（snake_case JSON → Swift）：
@@ -39,6 +41,8 @@ description: Unix socket 上的 newline JSON-RPC：agent.list、agent.focus 与 
 | JSON | 字段 |
 |---|---|
 | `pane_id` | 身份。空则丢掉该行 |
+| `tab_id` | 该 pane 所在 tab，给 `tab.focus` 用 |
+| `workspace_id` | 该 pane 所在 workspace |
 | `name` | 聚焦目标，优先于 pane id |
 | `display_agent` / `agent` | 标签回退 |
 | `agent_status` | 规范化成五种状态 |

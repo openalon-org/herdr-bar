@@ -12,7 +12,11 @@ struct HerdrClientTests {
             #expect(agents.count == 4)
             #expect(agents.allSatisfy { $0.sessionName == "demo" })
             #expect(Set(agents.map(\.status)).contains(.working))
+            #expect(agents[0].tabId == "demo:t1")
+            #expect(agents[0].workspaceId == "demo")
             try client.focus(target: agents[0].target)
+            try client.focusTab(id: agents[0].tabId ?? "")
+            try client.focusPane(id: agents[0].paneId)
         }
     }
 

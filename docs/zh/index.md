@@ -31,7 +31,7 @@ features:
     link: /zh/guide/status
   - icon: 🪟
     title: 只聚焦，不创建
-    details: 调用 agent.focus，再举起已经在跑该 session TUI 的终端。从不新开窗口、pane 或 agent。
+    details: 调用 agent.focus，再 tab.focus 让已经 attach 的 TUI 跟过去，然后举起宿主终端。从不新开窗口、pane 或 agent。
     link: /zh/guide/architecture#focus-raiser
   - icon: 🧩
     title: 每个 live session
@@ -58,4 +58,4 @@ features:
 从 [GitHub Releases](https://github.com/openalon-org/herdr-bar/releases) 下载带 tag 的 `HerdrBar-*-macos.zip`，或从源码跑 `./scripts/install.sh`。zip 是 ad-hoc 签名，第一次可能要右键 → 打开。详见 [安装](/zh/guide/installation)。
 
 **会新建 pane 吗？**
-不会。聚焦是 `agent.focus`，再举起已经在跑该 session TUI 的终端。见 [使用](/zh/guide/usage) 和 [架构](/zh/guide/architecture)。
+不会。聚焦是 `agent.focus`，再 `tab.focus` / `pane.focus` 让已经 attach 的 TUI 跟过去，然后举起宿主终端。见 [使用](/zh/guide/usage) 和 [架构](/zh/guide/architecture)。

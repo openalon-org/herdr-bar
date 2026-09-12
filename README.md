@@ -17,7 +17,7 @@ A macOS menu-bar companion for [Herdr](https://herdr.dev/). It talks to Herdr’
 - **Priority focus** — Option-click jumps `blocked` → `done` → `working` → `unknown` → `idle`.
 - **Event-driven** — `events.subscribe` invalidates; `agent.list` refreshes. Never poll Herdr on a timer.
 - **Every live session** — default plus named sessions such as `work`. Identity is `(sessionName, pane_id)`.
-- **Focus, never create** — `agent.focus`, then raise the terminal already hosting that session’s TUI. No new window, pane, or agent.
+- **Focus, never create** — `agent.focus`, then `tab.focus` / `pane.focus` so the attached TUI follows (Herdr 0.9 keeps that view per client), then raise the host terminal. No new window, pane, or agent.
 - **Reconnect** — if Herdr restarts, the extra finds the socket again.
 
 ## Install
@@ -96,7 +96,7 @@ Push to `main` deploys GitHub Pages. Canonical, Open Graph, JSON-LD, sitemap, an
 
 ## Architecture
 
-Each discovered socket gets a `SessionWatcher`: a one-shot command socket for `agent.list` / `agent.focus`, plus a long-lived `events.subscribe` connection. Events invalidate; a fresh `agent.list` is truth. `AgentAggregator` merges online sessions. `HerdrLogic` is a Swift port of `Herdr.js`.
+Each discovered socket gets a `SessionWatcher`: a one-shot command socket for `agent.list` / `agent.focus` / `tab.focus` / `pane.focus`, plus a long-lived `events.subscribe` connection. Events invalidate; a fresh `agent.list` is truth. `AgentAggregator` merges online sessions. `HerdrLogic` is a Swift port of `Herdr.js`.
 
 ## License
 

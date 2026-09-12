@@ -99,7 +99,7 @@ Two Swift targets: `HerdrCore` (protocol, discovery, aggregation, raising the ho
 
 Each discovered socket gets a `SessionWatcher`:
 
-- **Command socket** (closed after one response): `agent.list`, `agent.focus`
+- **Command socket** (closed after one response): `agent.list`, `agent.focus`, `tab.focus`, `pane.focus`
 - **Subscribe socket** (long-lived): `events.subscribe`. Lines without `id` trigger a refresh
 
 Refresh path: `agent.list` → `GitBranchCache.enrich` (read `.git/HEAD`, never spawn `git`) → `SessionTimeCache.enrich` (Claude jsonl) → `SessionSnapshot`. Failure reconnects with exponential backoff (1s → 30s).
@@ -124,8 +124,9 @@ Agent identity is `(sessionName, pane_id)`. `Agent.id` renders as `sessionName::
 
 `FocusRaiser` is isolated from protocol logic. The click path is:
 
-1. `raiseHost` — move the window first; do not wait for RPC
-2. `agent.focus` — tell Herdr which pane to select
+1. `agent.focus` — mark that agent seen
+2. `tab.focus` / `pane.focus` — Herdr 0.9 keeps workspace/tab per client; the extra is an API socket, so `agent.focus` alone often does not move the attached TUI
+3. `raiseHost` — after the TUI has switched, activate the GUI ancestor (`activateIgnoringOtherApps`, not `activateAllWindows`)
 
 It looks for the **TUI client**:
 

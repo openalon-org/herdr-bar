@@ -67,6 +67,24 @@ public final class HerdrClient: @unchecked Sendable {
         )
     }
 
+    /// Move the attached TUI onto this tab. Herdr 0.9 keeps each client's
+    /// workspace/tab view local; `agent.focus` alone often only marks seen.
+    public func focusTab(id: String) throws {
+        _ = try request(
+            method: "tab.focus",
+            params: ["tab_id": id],
+            keepOpen: false
+        )
+    }
+
+    public func focusPane(id: String) throws {
+        _ = try request(
+            method: "pane.focus",
+            params: ["pane_id": id],
+            keepOpen: false
+        )
+    }
+
     /// Connects a long-lived subscribe socket. `onEvent` is invoked on a background
     /// queue for every event (payload without `id`). Returns a handle that closes
     /// the socket when cancelled.

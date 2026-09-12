@@ -99,7 +99,7 @@ herdr-bar 是两个 Swift target：`HerdrCore`（协议、发现、聚合、举�
 
 每个发现到的 socket 得到一个 `SessionWatcher`：
 
-- **命令 socket**（用完即关）：`agent.list`、`agent.focus`
+- **命令 socket**（用完即关）：`agent.list`、`agent.focus`、`tab.focus`、`pane.focus`
 - **订阅 socket**（长连接）：`events.subscribe`。无 `id` 的行触发刷新
 
 刷新路径：`agent.list` → `GitBranchCache.enrich`（读 `.git/HEAD`，不 spawn `git`）→ `SessionTimeCache.enrich`（Claude jsonl）→ `SessionSnapshot`。失败则指数退避重连（1s → 30s）。
@@ -118,14 +118,15 @@ herdr-bar 是两个 Swift target：`HerdrCore`（协议、发现、聚合、举�
 
 `SessionManager` 监视 `~/.config/herdr` 和 `sessions/`（`DispatchSource` 文件事件）。这是 **文件系统失效**，不是 `agent.list` 轮询。配置目录还不存在时，用 2s 退避直到出现。
 
-Agent 身份是 `(sessionName, pane_id)`。`Agent.id` 渲染成 `sessionName::paneId`。同名 pane 可以同时活在 default 和 eden 里。
+Agent 身份是 `(sessionName, pane_id)`。`Agent.id` 渲染成 `sessionName::paneId`。同名 pane 可以同时活在 default 和 work 里。
 
 ## 聚焦宿主 {#focus-raiser}
 
 `FocusRaiser` 和协议逻辑隔离。点击路径是：
 
-1. `raiseHost` — 先动窗口，不要等 RPC
-2. `agent.focus` — 告诉 Herdr 选哪个 pane
+1. `agent.focus` — 把该 agent 标成已看
+2. `tab.focus` / `pane.focus` — Herdr 0.9 起 workspace/tab 是每个客户端自己的；extra 走的是 API socket，只发 `agent.focus` 往往切不动已经 attach 的 TUI
+3. `raiseHost` — TUI 切完再激活 GUI 祖先（`activateIgnoringOtherApps`，不用 `activateAllWindows`）
 
 它找的是 **TUI 客户端**：
 

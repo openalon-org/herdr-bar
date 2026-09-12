@@ -31,7 +31,9 @@ Transport is **newline-delimited JSON-RPC over a Unix domain socket**. Herdr clo
 | Method | Socket | Role |
 |---|---|---|
 | `agent.list` | one-shot | agents in that session |
-| `agent.focus` | one-shot | focus `params.target` (name or pane id) |
+| `agent.focus` | one-shot | mark `params.target` seen (name or pane id) |
+| `tab.focus` | one-shot | move the attached TUI onto `params.tab_id` (Herdr 0.9+) |
+| `pane.focus` | one-shot | select `params.pane_id` inside that tab |
 | `events.subscribe` | long-lived | register invalidation subscriptions |
 
 `agent.list` rows map onto `Agent` (snake_case JSON → Swift):
@@ -39,6 +41,8 @@ Transport is **newline-delimited JSON-RPC over a Unix domain socket**. Herdr clo
 | JSON | Field |
 |---|---|
 | `pane_id` | identity; empty rows are dropped |
+| `tab_id` | tab that hosts the pane; used for `tab.focus` |
+| `workspace_id` | workspace that hosts the pane |
 | `name` | focus target, preferred over pane id |
 | `display_agent` / `agent` | label fallback |
 | `agent_status` | normalized to the five states |

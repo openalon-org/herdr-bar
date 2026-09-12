@@ -31,7 +31,7 @@ features:
     link: /guide/status
   - icon: 🪟
     title: Focus, never create
-    details: agent.focus, then raise the terminal already hosting that session’s TUI. Never open a window, pane, or agent.
+    details: agent.focus, then tab.focus so the attached TUI follows, then raise that session’s host terminal. Never open a window, pane, or agent.
     link: /guide/architecture#focus-raiser
   - icon: 🧩
     title: Every live session
@@ -58,4 +58,4 @@ A macOS menu-bar extra for [Herdr](https://herdr.dev/). It does not start Herdr.
 Download a tagged `HerdrBar-*-macos.zip` from [GitHub Releases](https://github.com/openalon-org/herdr-bar/releases), or `./scripts/install.sh` from source. The zip is ad-hoc signed — first launch may need right-click → Open. Details: [Install](/guide/installation).
 
 **Does it create new panes?**
-No. Focus is `agent.focus` plus raising the terminal that already hosts that session’s TUI. See [Usage](/guide/usage) and [Architecture](/guide/architecture).
+No. Focus is `agent.focus`, then `tab.focus` / `pane.focus` so the attached TUI follows, then raising the host terminal. See [Usage](/guide/usage) and [Architecture](/guide/architecture).

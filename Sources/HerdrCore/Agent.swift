@@ -3,6 +3,9 @@ import Foundation
 public struct Agent: Equatable, Sendable, Identifiable {
     public var sessionName: String
     public var paneId: String
+    /// Herdr 0.9+ layout. `tab.focus` needs this to move the attached TUI.
+    public var tabId: String?
+    public var workspaceId: String?
     public var name: String?
     public var displayAgent: String?
     public var agentKind: String?
@@ -23,6 +26,8 @@ public struct Agent: Equatable, Sendable, Identifiable {
     public init(
         sessionName: String,
         paneId: String,
+        tabId: String? = nil,
+        workspaceId: String? = nil,
         name: String? = nil,
         displayAgent: String? = nil,
         agentKind: String? = nil,
@@ -38,6 +43,8 @@ public struct Agent: Equatable, Sendable, Identifiable {
     ) {
         self.sessionName = sessionName
         self.paneId = paneId
+        self.tabId = tabId
+        self.workspaceId = workspaceId
         self.name = name
         self.displayAgent = displayAgent
         self.agentKind = agentKind
@@ -61,6 +68,8 @@ public struct Agent: Equatable, Sendable, Identifiable {
 
 struct AgentDTO: Decodable {
     var paneId: String?
+    var tabId: String?
+    var workspaceId: String?
     var name: String?
     var displayAgent: String?
     var agent: String?
@@ -74,6 +83,8 @@ struct AgentDTO: Decodable {
 
     enum CodingKeys: String, CodingKey {
         case paneId = "pane_id"
+        case tabId = "tab_id"
+        case workspaceId = "workspace_id"
         case name
         case displayAgent = "display_agent"
         case agent
@@ -91,6 +102,8 @@ struct AgentDTO: Decodable {
         return Agent(
             sessionName: sessionName,
             paneId: paneId,
+            tabId: tabId,
+            workspaceId: workspaceId,
             name: name,
             displayAgent: displayAgent,
             agentKind: agent,

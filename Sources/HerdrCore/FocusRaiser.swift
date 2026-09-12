@@ -2,7 +2,7 @@ import AppKit
 import Darwin
 import Foundation
 
-/// After `agent.focus`, raise the GUI terminal that hosts that herdr TUI client.
+/// After the focus RPCs, raise the GUI terminal that hosts that herdr TUI client.
 /// Isolated from protocol logic; never creates a pane, tab, or window.
 ///
 /// Herdr's listening socket is owned by `herdr server` (ppid 1). The TUI that
@@ -146,7 +146,9 @@ public enum FocusRaiser {
         if #available(macOS 14.0, *) {
             NSApp.yieldActivation(to: app)
         }
-        app.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
+        // Do not `.activateAllWindows`: that can front a different window of
+        // the same terminal and hide the herdr TUI that just switched tabs.
+        app.activate(options: [.activateIgnoringOtherApps])
     }
 
     // MARK: - Cache

@@ -19,7 +19,7 @@ tests/herdr.test.mjs   Node oracle tests
 tests/HerdrCoreTests/  Swift model and protocol tests
 tools/demo-server.py   newline JSON fixture
 scripts/dev-run.sh     local run (optional --demo)
-scripts/package-app.sh pack HerdrBar.app (native; HERDR_BAR_UNIVERSAL=1 for CI)
+scripts/package-app.sh pack HerdrBar.app (native; HERDR_BAR_UNIVERSAL=1 for CI). Version is HERDR_BAR_VERSION, else the exact git tag, else `<nearest>-dev`
 scripts/render-app-icon.swift SF Symbol `cpu` → AppIcon.icns (called from package-app.sh)
 scripts/install.sh     wrap package-app.sh into ~/Applications (does not kill the old process)
 scripts/reload.sh      swift test → install → kill MacBar + leftover HerdrWidget → open the extra

@@ -53,7 +53,7 @@ Rows:
 - Working rows: Darwin spinner and short model name
 - Status sits on the right of the row. No elapsed time, no token count — those live in the CLI footer, not herdr-bar
 
-Click a row = `agent.focus` that pane, then raise the host terminal.
+Click a row = `agent.focus` that pane, then `tab.focus` / `pane.focus` so the attached TUI follows, then raise the host terminal.
 
 ## Desktop widget {#widget}
 
@@ -78,7 +78,8 @@ The opener is a **system-wide** Carbon hotkey — no Accessibility prompt. Arrow
 Focus is always:
 
 1. `agent.focus` on the session that owns the pane
-2. Raise the GUI terminal already running that session’s TUI (cmux / Otty / Ghostty / …)
+2. `tab.focus` / `pane.focus` so the attached TUI shows that pane (Herdr 0.9 keeps workspace/tab per client)
+3. Raise the GUI terminal already running that session’s TUI (cmux / Otty / Ghostty / …)
 
 It **never**:
 

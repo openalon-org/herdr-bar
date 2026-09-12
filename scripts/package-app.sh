@@ -6,12 +6,18 @@ root="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$root"
 
 dest="${1:-$HOME/Applications/HerdrBar.app}"
+# Release CI sets HERDR_BAR_VERSION from the tag. Local pack: exact tag,
+# else nearest v* + `-dev` so About does not claim 1.0.0 (newer than 0.1.x).
 version="${HERDR_BAR_VERSION:-}"
 if [[ -z "$version" ]]; then
-  version="$(git -C "$root" describe --tags --exact-match 2>/dev/null || true)"
-  version="${version#v}"
+  if exact="$(git -C "$root" describe --tags --exact-match 2>/dev/null)"; then
+    version="${exact#v}"
+  elif nearest="$(git -C "$root" describe --tags --abbrev=0 2>/dev/null)"; then
+    version="${nearest#v}-dev"
+  else
+    version="dev"
+  fi
 fi
-version="${version:-1.0.0}"
 
 find_product() {
   local name="$1"

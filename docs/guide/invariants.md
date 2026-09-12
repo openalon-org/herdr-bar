@@ -15,7 +15,7 @@ These constraints *are* the product. Read [`AGENTS.md`](https://github.com/opena
 
 ## Focus
 
-- A click may `agent.focus` an existing pane.
+- A click may `agent.focus` an existing pane, then `tab.focus` / `pane.focus` so the attached TUI follows (Herdr 0.9 keeps workspace/tab per client).
 - **Never** create a terminal, window, pane, tab, or agent.
 - Raising the host is optional and isolated in `FocusRaiser`.
 - Raise the TUI client (`herdr` / `herdr session attach <name>`), **never** `herdr server`.

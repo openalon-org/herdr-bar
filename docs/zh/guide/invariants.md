@@ -15,7 +15,7 @@ description: 产品不变量：事件驱动更新、禁止创建 pane、菜单�
 
 ## 聚焦
 
-- 点击可以 `agent.focus` 已有 pane。
+- 点击可以 `agent.focus` 已有 pane，再 `tab.focus` / `pane.focus`，让已经 attach 的 TUI 跟过去（Herdr 0.9 起 workspace/tab 是每个客户端自己的）。
 - **禁止**创建 terminal、window、pane、tab 或 agent。
 - 举起宿主是可选的，隔离在 `FocusRaiser`。
 - 举起 TUI 客户端（`herdr` / `herdr session attach <name>`），**不要**举 `herdr server`。

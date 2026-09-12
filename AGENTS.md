@@ -8,7 +8,7 @@ herdr-bar is a macOS menu-bar companion for Herdr. It renders normalized coding-
 
 - Keep status updates event-driven through `events.subscribe`; never poll Herdr on a timer.
 - Treat events as invalidation signals and refresh with `agent.list`.
-- Clicking may focus an existing pane with `agent.focus`; it must never create a terminal, window, pane, tab, or agent.
+- Clicking may focus an existing pane (`agent.focus`, then Herdr 0.9 `tab.focus` / `pane.focus` so the attached TUI follows); it must never create a terminal, window, pane, tab, or agent.
 - Priority is `blocked`, `done`, `working`, `unknown`, then `idle`; newest `state_change_seq` wins ties.
 - Keep harness-specific state interpretation inside Herdr.
 - Host-app raising is optional and isolated in `FocusRaiser`. Raise the TUI client (`herdr` / `herdr session attach <name>`), never `herdr server` on the listening socket.

@@ -62,6 +62,14 @@ public final class SessionWatcher: @unchecked Sendable {
         try client.focus(target: target)
     }
 
+    public func focusTab(id: String) throws {
+        try client.focusTab(id: id)
+    }
+
+    public func focusPane(id: String) throws {
+        try client.focusPane(id: id)
+    }
+
     private func refresh() {
         if stopped || refreshPending { return }
         refreshPending = true

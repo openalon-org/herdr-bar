@@ -19,7 +19,7 @@ tests/herdr.test.mjs   Node 侧行为对照测试
 tests/HerdrCoreTests/  Swift 模型与协议测试
 tools/demo-server.py   newline JSON fixture
 scripts/dev-run.sh     本地运行（可选 --demo）
-scripts/package-app.sh 打 HerdrBar.app（本机架构；CI 用 HERDR_BAR_UNIVERSAL=1）
+scripts/package-app.sh 打 HerdrBar.app（本机架构；CI 用 HERDR_BAR_UNIVERSAL=1）。版本优先 HERDR_BAR_VERSION，否则精确 git tag，再否则 `<最近 tag>-dev`
 scripts/render-app-icon.swift SF Symbol `cpu` → AppIcon.icns（package-app.sh 调用）
 scripts/install.sh     包装 package-app.sh 到 ~/Applications（不杀旧进程）
 scripts/reload.sh      swift test → 安装 → 杀掉 MacBar 和残留的 HerdrWidget → 打开新 extra

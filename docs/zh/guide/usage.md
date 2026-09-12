@@ -53,7 +53,7 @@ Popover 固定 **372 × 480**。藏 idle 不会把窗口缩小后再长不回来
 - working 行：Darwin spinner、短模型名
 - 状态在行右侧。不画耗时、不画 token —— 那些在 CLI 页脚，不在 herdr-bar
 
-点一行 = `agent.focus` 那个 pane，然后举起宿主终端。
+点一行 = `agent.focus` 那个 pane，再 `tab.focus` / `pane.focus` 让已经 attach 的 TUI 跟过去，然后举起宿主终端。
 
 ## 桌面小组件 {#widget}
 
@@ -78,7 +78,8 @@ Popover 固定 **372 × 480**。藏 idle 不会把窗口缩小后再长不回来
 聚焦永远是：
 
 1. 在拥有该 pane 的 session 上调用 `agent.focus`
-2. 举起已经在跑该 session TUI 的 GUI 终端（cmux / Otty / Ghostty / …）
+2. `tab.focus` / `pane.focus`，让已经 attach 的 TUI 显示那个 pane（Herdr 0.9 起 workspace/tab 是每个客户端自己的）
+3. 举起已经在跑该 session TUI 的 GUI 终端（cmux / Otty / Ghostty / …）
 
 它 **从不**：
 
