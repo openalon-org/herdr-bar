@@ -5,6 +5,7 @@ Thanks for looking at herdr-bar. Keep changes focused, preserve the invariants i
 ## Before you start
 
 - Read [`AGENTS.md`](AGENTS.md) — those constraints *are* the product.
+- Non-trivial work starts as `sdlc/intent/NNNN-slug.md` (see [`sdlc/README.md`](sdlc/README.md) and [the delivery-loop guide](docs/guide/sdlc.md)). Human-facing files under `sdlc/` are Chinese; frontmatter keys stay English (`status: accepted` is the gate).
 - Search [existing issues](https://github.com/openalon-org/herdr-bar/issues) before filing a new one.
 - Use the [bug](https://github.com/openalon-org/herdr-bar/issues/new?template=bug_report.yml) or [feature](https://github.com/openalon-org/herdr-bar/issues/new?template=feature_request.yml) form. Questions about Herdr itself belong at [herdr.dev](https://herdr.dev/).
 
@@ -16,7 +17,7 @@ macOS 13+, Swift (Xcode or Command Line Tools), Node (for the oracle tests and t
 git clone https://github.com/openalon-org/herdr-bar.git
 cd herdr-bar
 swift test
-node --test tests/herdr.test.mjs
+node --test tests/herdr.test.mjs tests/changelog.test.mjs tests/sdlc.test.mjs
 ```
 
 Throwaway extra (does not replace `~/Applications/HerdrBar.app`):
@@ -45,7 +46,7 @@ After MacBar / HerdrCore changes the user should see, replace the live extra:
 6. Do not commit real home directories, logins, hostnames, local project paths, or real session / repo names. Use `/Users/me`, `/home/user`, `~/…`, and the generic session name `work`.
 7. Fill in `.github/pull_request_template.md`.
 
-CI (`.github/workflows/ci.yml`) runs `swift test`, the Node oracle plus changelog tests, and a VitePress build on every push and pull request.
+CI (`.github/workflows/ci.yml`) runs `swift test`, the Node oracle plus changelog and sdlc tests, and a VitePress build on every push and pull request.
 
 ## Releases
 

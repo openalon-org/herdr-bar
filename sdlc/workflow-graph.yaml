@@ -1,0 +1,62 @@
+# 剧本 → 产物 → 触发。边是已接受的提交。
+source_of_truth: git
+intake: github_issues
+
+nodes:
+  - id: capture-intent
+    stage: plan
+    writes: sdlc/intent/
+    skill: capture-intent
+  - id: requirements-design
+    stage: design
+    writes: sdlc/spec/
+    skill: requirements-design
+    needs: [capture-intent]
+  - id: plan-mode
+    stage: build
+    writes: sdlc/plan/
+    skill: plan-mode
+    needs: [requirements-design]
+  - id: implement
+    stage: build
+    writes: [Sources/, tests/, docs/, scripts/]
+    needs: [plan-mode]
+  - id: feedback-loop
+    stage: test
+    proof: [swift test, node --test]
+    needs: [implement]
+  - id: evals
+    stage: test
+    writes: sdlc/evals/cases/
+    workflow: .github/workflows/agent-evals.yml
+  - id: pr-review
+    stage: deploy
+    reads: REVIEW.md
+    needs: [feedback-loop]
+  - id: production-tag
+    stage: deploy
+    gate: human
+    hook: scripts/hooks/production-gate.sh
+    needs: [pr-review]
+  - id: bands
+    stage: maintain
+    reads: bands.yaml
+    workflow: .github/workflows/maintain-bands.yml
+    writes: sdlc/incidents/
+    then: capture-intent
+
+gates:
+  - artifact: intent
+    field: status
+    value: accepted
+  - artifact: spec
+    field: status
+    value: accepted
+  - artifact: plan
+    field: status
+    value: accepted
+  - artifact: pr
+    approver: human
+  - artifact: tag
+    matcher: v*
+    env: RELEASE_APPROVAL

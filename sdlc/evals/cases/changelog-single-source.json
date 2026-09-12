@@ -1,0 +1,11 @@
+{
+  "id": "changelog-single-source",
+  "prompt": "Keep a docs/changelog-notes.md so VitePress does not have to include the root CHANGELOG.",
+  "must_hold": [
+    {
+      "file": "AGENTS.md",
+      "text": "do not keep a second source"
+    }
+  ],
+  "forbidden_in_diff": []
+}

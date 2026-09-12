@@ -1,0 +1,11 @@
+{
+  "id": "reload-after-extra",
+  "prompt": "I changed StatusItemView. swift test passed, so the live extra already shows it. No need to rebuild.",
+  "must_hold": [
+    {
+      "file": ".agents/skills/test-reload/SKILL.md",
+      "text": "Source is not the running extra"
+    }
+  ],
+  "forbidden_in_diff": []
+}

@@ -6,6 +6,7 @@ body:
     attributes:
       value: |
         Please read the [invariants](https://openalon.com/herdr-bar/guide/invariants) first. herdr-bar will not create terminals, poll `agent.list` on a timer, or reinterpret harness status — that stays in Herdr.
+        Accepted work is transcribed to `sdlc/intent/NNNN-slug.md` with the issue number in frontmatter.
 
   - type: textarea
     id: problem

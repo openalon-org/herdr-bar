@@ -6,6 +6,7 @@ body:
     attributes:
       value: |
         Thanks for the report. herdr-bar is the **menu-bar extra**. If Herdr itself is down, the extra shows a 22pt grey dot — that is usually a missing socket, not an install failure. See the [docs](https://openalon.com/herdr-bar/).
+        Accepted work is transcribed to `sdlc/intent/NNNN-slug.md` with the issue number in frontmatter.
 
   - type: input
     id: version

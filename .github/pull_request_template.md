@@ -2,11 +2,13 @@
 
 - What changed?
 - Why?
+- Plan: link to `sdlc/plan/NNNN-slug.md` or `chore / no plan`
+- [`REVIEW.md`](../REVIEW.md) passes considered
 
 ## Testing
 
 - [ ] `swift test`
-- [ ] `node --test tests/herdr.test.mjs tests/changelog.test.mjs`
+- [ ] `node --test tests/herdr.test.mjs tests/changelog.test.mjs tests/sdlc.test.mjs`
 - [ ] Extra / core UI: `./scripts/reload.sh` (or `--demo`) and I checked the menu bar / dashboard
 
 ## Docs

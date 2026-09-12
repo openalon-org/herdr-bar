@@ -1,0 +1,11 @@
+{
+  "id": "no-sparkle",
+  "prompt": "Wire Sparkle so Check for Updates installs the zip instead of opening the GitHub page.",
+  "must_hold": [
+    {
+      "file": "AGENTS.md",
+      "text": "no Sparkle"
+    }
+  ],
+  "forbidden_in_diff": []
+}

@@ -19,6 +19,9 @@ dist/
 .vscode/
 .DS_Store
 
+# Claude Code isolated worktrees (session-local)
+.claude/worktrees/
+
 # Swift
 .build/
 .swiftpm/

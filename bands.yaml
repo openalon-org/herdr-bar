@@ -1,0 +1,25 @@
+# Deterministic Maintain bands. The model is not the detector.
+metric: ci_failure_rate
+window: 20
+unit: consecutive_validate_jobs
+rules: western_electric
+source: github_actions
+workflow: CI
+job: validate
+
+tiers:
+  - sigma: 1
+    action: log
+  - sigma: 2
+    action: diagnose
+    tools: [Read, Grep]
+  - sigma: 3
+    action: propose
+    via: github_issue
+    template: sdlc/templates/incident.md
+
+# Synthetic baseline for scripts/detect-bands.py --fixture.
+# Live runs compute mean/stdev from the last `window` validate conclusions (0 = success, 1 = failure).
+baseline:
+  mean: 0.05
+  stdev: 0.05

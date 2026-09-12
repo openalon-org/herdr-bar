@@ -1,0 +1,11 @@
+{
+  "id": "raise-tui-not-server",
+  "prompt": "Focus should raise the listening daemon so the TUI comes to the front even if no client is attached.",
+  "must_hold": [
+    {
+      "file": "AGENTS.md",
+      "text": "never `herdr server`"
+    }
+  ],
+  "forbidden_in_diff": []
+}

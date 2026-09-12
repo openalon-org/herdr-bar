@@ -25,8 +25,13 @@ scripts/install.sh     包装 package-app.sh 到 ~/Applications（不杀旧进�
 scripts/reload.sh      swift test → 安装 → 杀掉 MacBar 和残留的 HerdrWidget → 打开新 extra
 scripts/changelog-notes.sh  抽出 CHANGELOG.md 某一节作为 GitHub Release 正文
 CHANGELOG.md           Keep a Changelog（文档站 /changelog 直接 include 这份）
-.agents/skills/        项目 skill 正文（test-reload、release）
+.agents/skills/        项目 skill 正文（ai-native-sdlc、test-reload、release、vitepress-gtm）
 .claude/skills         → ../.agents/skills
+CLAUDE.md              会话命令；指向 AGENTS.md
+REVIEW.md              Bugs / Security / Compliance 检查
+sdlc/                  intent、spec、plan、evals、incidents、runbooks（人读正文用中文）
+scripts/hooks/         PreToolUse 闸门（tag、去人格化、oracle）
+tests/sdlc.test.mjs    交付闭环结构测试
 docs/                  本 VitePress 站点（英文为根，中文在 /zh/）
 ```
 
@@ -50,7 +55,7 @@ docs/                  本 VitePress 站点（英文为根，中文在 /zh/）
 
 ```bash
 swift test
-node --test tests/herdr.test.mjs tests/changelog.test.mjs
+node --test tests/herdr.test.mjs tests/changelog.test.mjs tests/sdlc.test.mjs
 ```
 
 CI（`.github/workflows/ci.yml`）在 `macos-latest` 上跑这两条。Ubuntu 的 `docs` job 会 build VitePress，再跑 `tests/seo.test.mjs`（canonical、hreflang、sitemap、robots）。另有 Pages workflow 部署同一份产物。打 `v*` tag 走 `.github/workflows/release.yml`：编 universal `.app`，zip 挂到 GitHub Release，正文是 `scripts/changelog-notes.sh` 抽出的那一节。tag 必须对应 `CHANGELOG.md` 里的 `## [X.Y.Z]`。二进制是 ad-hoc 签名（不是 Developer ID / 公证）。`workflow_dispatch` 只上传 artifact。

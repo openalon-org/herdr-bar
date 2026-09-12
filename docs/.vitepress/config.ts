@@ -59,6 +59,7 @@ function sidebar(prefix: string, t: {
   run: string
   docs: string
   changelog: string
+  sdlc: string
 }) {
   return [
     {
@@ -147,6 +148,7 @@ function sidebar(prefix: string, t: {
             { text: t.docs, link: `${prefix}/guide/development#docs` },
           ],
         },
+        { text: t.sdlc, link: `${prefix}/guide/sdlc` },
         { text: t.changelog, link: `${prefix}/changelog` },
       ],
     },
@@ -241,6 +243,7 @@ export default defineConfig({
             run: 'Run locally',
             docs: 'Docs site',
             changelog: 'Changelog',
+            sdlc: 'Delivery loop',
           })
           return { '/guide/': en, '/changelog': en }
         })(),
@@ -302,6 +305,7 @@ export default defineConfig({
             run: '本地运行',
             docs: '文档站',
             changelog: '更新日志',
+            sdlc: '交付闭环',
           })
           return { '/zh/guide/': zh, '/zh/changelog': zh }
         })(),

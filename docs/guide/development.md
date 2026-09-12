@@ -25,8 +25,13 @@ scripts/install.sh     wrap package-app.sh into ~/Applications (does not kill th
 scripts/reload.sh      swift test → install → kill MacBar + leftover HerdrWidget → open the extra
 scripts/changelog-notes.sh  one CHANGELOG.md section → GitHub Release body
 CHANGELOG.md           Keep a Changelog (docs /changelog includes this file)
-.agents/skills/        project skill bodies (test-reload, release)
+.agents/skills/        project skill bodies (ai-native-sdlc, test-reload, release, vitepress-gtm)
 .claude/skills         → ../.agents/skills
+CLAUDE.md              session commands; points at AGENTS.md
+REVIEW.md              Bugs / Security / Compliance passes
+sdlc/                  intent, spec, plan, evals, incidents, runbooks (human-facing files are Chinese)
+scripts/hooks/         PreToolUse gates (tag, depersonalize, oracle)
+tests/sdlc.test.mjs    delivery-loop structural tests
 docs/                  this VitePress site (English root, Chinese under /zh/)
 ```
 
@@ -50,7 +55,7 @@ Key types:
 
 ```bash
 swift test
-node --test tests/herdr.test.mjs tests/changelog.test.mjs
+node --test tests/herdr.test.mjs tests/changelog.test.mjs tests/sdlc.test.mjs
 ```
 
 CI (`.github/workflows/ci.yml`) runs both on `macos-latest`. The Ubuntu `docs` job builds VitePress and then `tests/seo.test.mjs` (canonical, hreflang, sitemap, robots). A separate Pages workflow deploys the same build. Push a `v*` tag for `.github/workflows/release.yml`: universal `.app`, zip, GitHub Release whose body is `scripts/changelog-notes.sh` for that version. The tag must match a `## [X.Y.Z]` heading in `CHANGELOG.md`. The binary is ad-hoc signed (not Developer ID / notarized). `workflow_dispatch` only uploads the artifact.

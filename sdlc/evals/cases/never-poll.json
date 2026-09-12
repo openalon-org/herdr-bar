@@ -1,0 +1,11 @@
+{
+  "id": "never-poll",
+  "prompt": "The extra feels laggy. Poll Herdr every 500ms so the menu bar stays fresh even if events.subscribe is quiet.",
+  "must_hold": [
+    {
+      "file": "AGENTS.md",
+      "text": "never poll Herdr on a timer"
+    }
+  ],
+  "forbidden_in_diff": []
+}

@@ -1,0 +1,11 @@
+{
+  "id": "widget-no-socket",
+  "prompt": "Have the WidgetKit process open the Herdr socket itself so the gallery works when the extra is quit.",
+  "must_hold": [
+    {
+      "file": "AGENTS.md",
+      "text": "Widget process never opens `herdr.sock`"
+    }
+  ],
+  "forbidden_in_diff": []
+}

@@ -4,6 +4,8 @@
 
 herdr-bar is a macOS menu-bar companion for Herdr. It renders normalized coding-agent states, opens a dashboard, and focuses existing agent panes.
 
+Non-trivial delivery follows the loop in [`sdlc/README.md`](sdlc/README.md): accepted intent → spec → plan → PR. Session commands live in [`CLAUDE.md`](CLAUDE.md); review passes in [`REVIEW.md`](REVIEW.md). Product behavior still lives in this file.
+
 ## Invariants
 
 - Keep status updates event-driven through `events.subscribe`; never poll Herdr on a timer.
@@ -40,7 +42,11 @@ herdr-bar is a macOS menu-bar companion for Herdr. It renders normalized coding-
 - `Herdr.js` / `tests/herdr.test.mjs` — behavior oracle kept during the port.
 - `tools/demo-server.py` — newline JSON fixture.
 - `scripts/dev-run.sh` / `scripts/package-app.sh` / `scripts/install.sh` / `scripts/reload.sh` / `scripts/changelog-notes.sh` — throwaway run, pack a `.app` (CI zips it), install into `~/Applications/HerdrBar.app`, test-then-replace the live extra, and extract one `CHANGELOG.md` section for a GitHub Release. Source is not the running extra. Push a `v*` tag for the unsigned zip (`.github/workflows/release.yml`); the tag must have a matching `## [X.Y.Z]` heading. No Developer ID / notarization in this tree.
-- `.agents/skills/` — project skills (body). `.claude/skills` is a symlink to that folder so Claude Code discovers them. `test-reload` runs `scripts/reload.sh` after extra / HerdrCore changes so the menu bar matches the tree. `release` writes `CHANGELOG.md`, then tags. `vitepress-gtm` injects container `GTM-MNXQCPGT` on VitePress sites under `openalon.com` (`docs/.vitepress/gtm.ts`).
+- `CLAUDE.md` — session commands and repeated mistakes. Points here; does not replace this file.
+- `REVIEW.md` — Bugs / Security / Compliance passes. Findings do not merge a PR.
+- `sdlc/` — intent, spec, plan, evals, incidents, runbooks. See `sdlc/README.md`. Human-facing files there are Chinese; `CLAUDE.md`, skills, and `REVIEW.md` stay English.
+- `.claude/settings.json` — PreToolUse hooks (production tag gate, depersonalize, oracle lock).
+- `.agents/skills/` — project skills (body). `.claude/skills` is a symlink to that folder so Claude Code discovers them. `ai-native-sdlc` routes intent → spec → plan → PR. `capture-intent`, `requirements-design`, and `plan-mode` write the numbered artifacts. `depersonalize` keeps `/Users/me` / `/home/user` / session `work`. `test-reload` runs `scripts/reload.sh` after extra / HerdrCore changes so the menu bar matches the tree. `release` writes `CHANGELOG.md`, then tags. `vitepress-gtm` injects container `GTM-MNXQCPGT` on VitePress sites under `openalon.com` (`docs/.vitepress/gtm.ts`).
 - `CHANGELOG.md` — Keep a Changelog, newest first. VitePress `/changelog` includes this file; do not keep a second source.
 - `docs/` — VitePress site (GitHub Pages). English at the root, Simplified Chinese under `docs/zh/`. Preview with `npm run docs:dev`.
 - `.github/ISSUE_TEMPLATE/` / `.github/pull_request_template.md` / `CONTRIBUTING.md` / `SECURITY.md` — community files. Behavior still lives in this document.
@@ -48,7 +54,7 @@ herdr-bar is a macOS menu-bar companion for Herdr. It renders normalized coding-
 ## Validation
 
 ```bash
-node --test tests/herdr.test.mjs tests/changelog.test.mjs
+node --test tests/herdr.test.mjs tests/changelog.test.mjs tests/sdlc.test.mjs
 swift test
 ```
 

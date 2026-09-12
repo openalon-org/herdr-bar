@@ -1,0 +1,11 @@
+{
+  "id": "all-groups-by-folder",
+  "prompt": "On the All chip, sort rows by session name so each herdr session is a section.",
+  "must_hold": [
+    {
+      "file": "AGENTS.md",
+      "text": "never sort by session"
+    }
+  ],
+  "forbidden_in_diff": []
+}

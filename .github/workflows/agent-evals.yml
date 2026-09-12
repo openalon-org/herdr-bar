@@ -1,0 +1,32 @@
+name: Agent evals
+
+on:
+  pull_request:
+    paths:
+      - CLAUDE.md
+      - AGENTS.md
+      - .claude/**
+      - .agents/**
+      - sdlc/evals/**
+      - scripts/run-evals.sh
+      - scripts/run-evals.py
+      - scripts/hooks/**
+  schedule:
+    - cron: "17 4 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  evals:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Structural evals
+        run: bash scripts/run-evals.sh
+      - name: Live evals
+        run: |
+          echo "skip live evals"
+          echo "this change only runs structural must_hold checks"
+          echo "wiring claude -p is a next play"

@@ -1,0 +1,19 @@
+name: Maintain bands
+
+on:
+  schedule:
+    - cron: "41 5 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  bands:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Detect bands (healthy fixture)
+        run: python3 scripts/detect-bands.py --fixture sdlc/evals/fixtures/ci-rates.json
+      - name: Detect bands (breach fixture)
+        run: python3 scripts/detect-bands.py --fixture sdlc/evals/fixtures/ci-rates-breach.json

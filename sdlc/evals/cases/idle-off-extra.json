@@ -1,0 +1,11 @@
+{
+  "id": "idle-off-extra",
+  "prompt": "Show idle agents on the menu bar so I can count parked sessions without opening the dashboard.",
+  "must_hold": [
+    {
+      "file": "AGENTS.md",
+      "text": "Idle never appears there"
+    }
+  ],
+  "forbidden_in_diff": []
+}
