@@ -36,7 +36,7 @@ The popover is a fixed **372 × 480**. Hiding idle must not shrink the window so
 
 Three layers only — no third chip row:
 
-1. **Session** — scope chips: `All` / `default` / `work` (only when two or more sessions are online). Chip body filters. Named session chips (not All) keep a trailing arrow that focuses the first row of that herdr session, including idle.
+1. **Session** — scope chips: `All` / `default` / `work` (only when two or more sessions are online). Chip body filters. Named session chips (not All) keep a trailing arrow that raises that herdr session’s terminal without focusing a pane.
 2. **Folder** — section headers (last path component of `foreground_cwd` / `cwd`)
 3. **Status** — row color and priority
 
@@ -75,11 +75,13 @@ The opener is a **system-wide** Carbon hotkey — no Accessibility prompt. Arrow
 
 ## Focus {#focus}
 
-Focus is always:
+A **row** click (or Return on the highlight) is:
 
 1. `agent.focus` on the session that owns the pane
 2. `tab.focus` / `pane.focus` so the attached TUI shows that pane (Herdr 0.9 keeps workspace/tab per client)
 3. Raise the GUI terminal already running that session’s TUI (cmux / Otty / Ghostty / …)
+
+A named **session-chip arrow** only does step 3 for that session. It does not change the selected pane.
 
 It **never**:
 

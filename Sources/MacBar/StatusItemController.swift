@@ -42,6 +42,9 @@ final class StatusItemController: NSObject {
                 onFocusPriority: { [weak self] in
                     self?.focusPriority()
                 },
+                onRaiseSession: { [weak self] name in
+                    self?.raiseSession(name)
+                },
                 onClose: { [weak self] in
                     self?.closePopover()
                 }
@@ -272,6 +275,15 @@ final class StatusItemController: NSObject {
         closePopover(animated: false)
         do {
             try manager.focusAttention()
+        } catch {
+            NSSound.beep()
+        }
+    }
+
+    private func raiseSession(_ name: String) {
+        closePopover(animated: false)
+        do {
+            try manager.raiseSession(name)
         } catch {
             NSSound.beep()
         }

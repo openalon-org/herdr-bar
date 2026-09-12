@@ -62,6 +62,14 @@ public final class SessionManager {
         try focus(agent)
     }
 
+    /// Raise the TUI host for a named herdr session without focusing a pane.
+    public func raiseSession(_ name: String) throws {
+        guard let watcher = watchers[name] else {
+            throw HerdrClient.ClientError.disconnected
+        }
+        FocusRaiser.raiseHost(sessionName: watcher.name, socketPath: watcher.socketPath)
+    }
+
     private func reconcile() {
         let discovered = SessionDiscovery.discover(home: home)
         let discoveredNames = Set(discovered.map(\.name))

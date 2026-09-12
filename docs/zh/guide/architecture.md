@@ -122,11 +122,13 @@ Agent 身份是 `(sessionName, pane_id)`。`Agent.id` 渲染成 `sessionName::pa
 
 ## 聚焦宿主 {#focus-raiser}
 
-`FocusRaiser` 和协议逻辑隔离。点击路径是：
+`FocusRaiser` 和协议逻辑隔离。**点一行**的路径是：
 
 1. `agent.focus` — 把该 agent 标成已看
 2. `tab.focus` / `pane.focus` — Herdr 0.9 起 workspace/tab 是每个客户端自己的；extra 走的是 API socket，只发 `agent.focus` 往往切不动已经 attach 的 TUI
 3. `raiseHost` — TUI 切完再激活 GUI 祖先（`activateIgnoringOtherApps`，不用 `activateAllWindows`）
+
+命名 **session 芯片箭头**跳过 1–2，只对该 session 调 `raiseHost`，TUI 保持上一次选中的 pane。
 
 它找的是 **TUI 客户端**：
 

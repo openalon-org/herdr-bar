@@ -67,7 +67,7 @@ Pin a single socket with `HERDR_SOCKET=/path/to/herdr.sock`.
 | Option-click extra | Focus the highest-priority agent |
 | Right-click extra | Refresh with `agent.list` now |
 | Click a row | Focus that pane and raise its terminal |
-| Session-chip arrow | Named session only: focus that session’s first row (chip body still filters) |
+| Session-chip arrow | Named session only: raise that session’s terminal (chip body still filters; last selected pane stays) |
 | Desktop widget | Notification Center gallery: Medium / Large list. Tap a row to focus that pane |
 | Enter | Focus the highlighted row (priority agent if none) |
 | Arrow keys | Up/down: tasks. Left/right: session chips, or folders when only one session is online |

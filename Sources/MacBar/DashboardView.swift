@@ -36,6 +36,7 @@ struct DashboardView: View {
     @ObservedObject var chrome: PopoverChrome
     var onFocus: (Agent) -> Void
     var onFocusPriority: () -> Void
+    var onRaiseSession: (String) -> Void
     var onClose: () -> Void
     @State private var scrollRequest: ScrollRequest?
 
@@ -285,7 +286,7 @@ struct DashboardView: View {
     }
 
     private func sessionChip(title: String, session: String?, selected: Bool, help: String) -> some View {
-        let jump = session.flatMap { DashboardNav.firstInSession(in: store.agents, session: $0) }
+        let canRaise = session.map { DashboardNav.hasAgents(in: store.agents, session: $0) } ?? false
         let ink = selected ? Color.primary : Color.secondary
         return HStack(spacing: 0) {
             Button {
@@ -294,7 +295,7 @@ struct DashboardView: View {
                 Text(title)
                     .font(.caption.weight(.semibold))
                     .padding(.leading, 7)
-                    .padding(.trailing, jump == nil ? 7 : 4)
+                    .padding(.trailing, canRaise ? 4 : 7)
                     .padding(.vertical, 3)
                     .foregroundStyle(ink)
                     .contentShape(Rectangle())
@@ -302,10 +303,9 @@ struct DashboardView: View {
             .buttonStyle(.plain)
             .help(help)
 
-            if let jump {
+            if let session, canRaise {
                 Button {
-                    chrome.selectedID = jump.id
-                    onFocus(jump)
+                    onRaiseSession(session)
                 } label: {
                     Image(systemName: "arrow.up.forward")
                         .font(.system(size: 8, weight: .semibold))

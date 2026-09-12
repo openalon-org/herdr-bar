@@ -36,7 +36,7 @@ Popover 固定 **372 × 480**。藏 idle 不会把窗口缩小后再长不回来
 
 层级只有三层，没有第三排 chip：
 
-1. **Session** — 顶行 scope chip：`All` / `default` / `work`（仅当 ≥2 个 session 在线）。点 chip 本体是筛选。具体 session（不是 All）名字后面有箭头，聚焦该 herdr session 列表的第一行（含 idle）。
+1. **Session** — 顶行 scope chip：`All` / `default` / `work`（仅当 ≥2 个 session 在线）。点 chip 本体是筛选。具体 session（不是 All）名字后面有箭头，只举起该 herdr session 的终端，不切换里面的 pane。
 2. **Folder** — 列表分区标题（`foreground_cwd` / `cwd` 的最后一段）
 3. **Status** — 行颜色与优先级
 
@@ -75,11 +75,13 @@ Popover 固定 **372 × 480**。藏 idle 不会把窗口缩小后再长不回来
 
 ## 聚焦 {#focus}
 
-聚焦永远是：
+**点一行**（或在高亮上行 Return）是：
 
 1. 在拥有该 pane 的 session 上调用 `agent.focus`
 2. `tab.focus` / `pane.focus`，让已经 attach 的 TUI 显示那个 pane（Herdr 0.9 起 workspace/tab 是每个客户端自己的）
 3. 举起已经在跑该 session TUI 的 GUI 终端（cmux / Otty / Ghostty / …）
+
+命名 **session 芯片箭头**只做第 3 步。它不改终端里上一次选中的 pane。
 
 它 **从不**：
 
