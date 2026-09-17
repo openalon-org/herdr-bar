@@ -2,6 +2,16 @@
 
 All notable changes to herdr-bar are documented here.
 
+## [0.1.3] - 2026-09-17
+
+### Changed
+- Click a dashboard row follows Herdr 0.9 TUI focus (`tab.focus` / `pane.focus`) before raising the host, and no longer fronts every window of that terminal.
+- Named session chip arrow raises that herdr TUI without focusing a pane, so the last selected agent stays.
+
+### Thanks to 1 contributor!
+
+- [@openalon](https://github.com/openalon)
+
 ## [0.1.2] - 2026-09-10
 
 ### Added

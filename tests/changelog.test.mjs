@@ -51,10 +51,11 @@ function notes(version) {
 test("CHANGELOG.md is Keep a Changelog with newest first", () => {
   const markdown = fs.readFileSync(changelogPath, "utf8")
   const versions = parseChangelog(markdown)
-  assert.ok(versions.length >= 3, "expected at least 0.1.0, 0.1.1, and 0.1.2")
-  assert.equal(versions[0].version, "0.1.2")
-  assert.equal(versions[1].version, "0.1.1")
-  assert.equal(versions[2].version, "0.1.0")
+  assert.ok(versions.length >= 4, "expected at least 0.1.0 through 0.1.3")
+  assert.equal(versions[0].version, "0.1.3")
+  assert.equal(versions[1].version, "0.1.2")
+  assert.equal(versions[2].version, "0.1.1")
+  assert.equal(versions[3].version, "0.1.0")
   for (const release of versions) {
     assert.match(release.version, /^\d+\.\d+\.\d+$/)
     assert.match(release.date, /^\d{4}-\d{2}-\d{2}$/)
@@ -74,12 +75,20 @@ test("CHANGELOG.md is Keep a Changelog with newest first", () => {
 })
 
 test("changelog-notes.sh extracts one version and fails closed", () => {
-  const latest = notes("v0.1.2")
-  assert.match(latest, /### Added/)
-  assert.match(latest, /WidgetKit/)
+  const latest = notes("v0.1.3")
+  assert.match(latest, /### Changed/)
+  assert.match(latest, /Herdr 0\.9/)
+  assert.match(latest, /Named session chip arrow/)
+  assert.doesNotMatch(latest, /## \[0\.1\.3\]/)
   assert.doesNotMatch(latest, /## \[0\.1\.2\]/)
-  assert.doesNotMatch(latest, /## \[0\.1\.1\]/)
-  assert.equal(notes("0.1.2"), latest)
+  assert.equal(notes("0.1.3"), latest)
+
+  const widget = notes("v0.1.2")
+  assert.match(widget, /### Added/)
+  assert.match(widget, /WidgetKit/)
+  assert.doesNotMatch(widget, /## \[0\.1\.2\]/)
+  assert.doesNotMatch(widget, /## \[0\.1\.1\]/)
+  assert.equal(notes("0.1.2"), widget)
 
   const body = notes("v0.1.1")
   assert.match(body, /### Changed/)
