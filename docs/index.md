@@ -49,6 +49,21 @@ features:
 Requires Herdr 0.8+ and macOS 13+. The app is an `LSUIElement` — it never appears in the Dock.
 :::
 
+<div class="shot-row triple">
+  <figure class="shot">
+    <img src="/dashboard.png" alt="Dashboard popover with session chips and Working rows">
+    <figcaption>Dashboard</figcaption>
+  </figure>
+  <figure class="shot">
+    <img src="/settings.png" alt="Settings: Open at login, keyboard, About">
+    <figcaption>Settings</figcaption>
+  </figure>
+  <figure class="shot">
+    <img src="/widget.png" alt="Desktop widget All-scope list">
+    <figcaption>Widget</figcaption>
+  </figure>
+</div>
+
 ## What it is {#what}
 
 Herdr owns the agents. The terminal owns the TUI. herdr-bar is the glance in between — it never starts Herdr and never creates a pane.
@@ -70,21 +85,6 @@ flowchart LR
 ```
 
 Without it you attach each session and hunt for the pane that needs you. With it: Option-click the extra for the highest-priority agent, or open the dashboard and click a row.
-
-<div class="shot-row triple">
-  <figure class="shot">
-    <img src="/dashboard.png" alt="Dashboard popover with session chips and Working rows">
-    <figcaption>Dashboard</figcaption>
-  </figure>
-  <figure class="shot">
-    <img src="/settings.png" alt="Settings: Open at login, keyboard, About">
-    <figcaption>Settings</figcaption>
-  </figure>
-  <figure class="shot">
-    <img src="/widget.png" alt="Desktop widget All-scope list">
-    <figcaption>Widget</figcaption>
-  </figure>
-</div>
 
 ## FAQ
 
