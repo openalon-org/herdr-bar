@@ -49,6 +49,28 @@ features:
 需要 Herdr 0.8+ 和 macOS 13+。应用是 `LSUIElement`，不出现在 Dock。
 :::
 
+## 这是什么 {#what}
+
+Herdr 管 agent。终端管 TUI。herdr-bar 是中间那一眼 — 不启动 Herdr，也不新建 pane。
+
+```mermaid
+flowchart LR
+  subgraph host [你的 Mac]
+    TUI["终端<br/>herdr TUI"]
+    Extra["herdr-bar<br/>菜单栏 extra"]
+    Widget["桌面小组件<br/>只读列表"]
+  end
+  Herdr["herdr server<br/>herdr.sock"]
+  TUI -->|"attach / session attach"| Herdr
+  Extra -->|"events.subscribe<br/>agent.list"| Herdr
+  Extra -->|"agent.focus 然后<br/>tab.focus / pane.focus"| Herdr
+  Extra -->|"举起宿主"| TUI
+  Extra -->|"widget-snapshot.json"| Widget
+  Widget -->|"herdr-bar://focus"| Extra
+```
+
+没有它，你得自己 attach 每个 session，再在 pane 里找谁在等你。有了它：Option-click extra 跳到最高优先级 agent，或打开仪表盘点一行。extra 举起已经在跑那个 session 的终端。
+
 ## 常见问题
 
 **herdr-bar 是什么？**

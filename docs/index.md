@@ -49,6 +49,28 @@ features:
 Requires Herdr 0.8+ and macOS 13+. The app is an `LSUIElement` — it never appears in the Dock.
 :::
 
+## What it is {#what}
+
+Herdr owns the agents. The terminal owns the TUI. herdr-bar is the glance in between — it never starts Herdr and never creates a pane.
+
+```mermaid
+flowchart LR
+  subgraph host [Your Mac]
+    TUI["Terminal<br/>herdr TUI"]
+    Extra["herdr-bar<br/>menu extra"]
+    Widget["Desktop widget<br/>read-only list"]
+  end
+  Herdr["herdr server<br/>herdr.sock"]
+  TUI -->|"attach / session attach"| Herdr
+  Extra -->|"events.subscribe<br/>agent.list"| Herdr
+  Extra -->|"agent.focus then<br/>tab.focus / pane.focus"| Herdr
+  Extra -->|"raise host"| TUI
+  Extra -->|"widget-snapshot.json"| Widget
+  Widget -->|"herdr-bar://focus"| Extra
+```
+
+Without it you attach each session and hunt for the pane that needs you. With it: Option-click the extra for the highest-priority agent, or open the dashboard and click a row.
+
 ## FAQ
 
 **What is herdr-bar?**

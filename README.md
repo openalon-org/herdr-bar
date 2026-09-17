@@ -11,6 +11,28 @@ A macOS menu-bar companion for [Herdr](https://herdr.dev/). It talks to Herdr’
 
 **Docs:** [openalon.com/herdr-bar](https://openalon.com/herdr-bar/) · [中文](https://openalon.com/herdr-bar/zh/)
 
+## What it is
+
+Herdr owns the agents. The terminal owns the TUI. herdr-bar is the glance in between — counts in the menu bar, a jump list in the popover, a read-only desktop widget. It never starts Herdr and never creates a pane.
+
+```mermaid
+flowchart LR
+  subgraph host [Your Mac]
+    TUI["Terminal<br/>herdr TUI"]
+    Extra["herdr-bar<br/>menu extra"]
+    Widget["Desktop widget<br/>read-only list"]
+  end
+  Herdr["herdr server<br/>herdr.sock"]
+  TUI -->|"attach / session attach"| Herdr
+  Extra -->|"events.subscribe<br/>agent.list"| Herdr
+  Extra -->|"agent.focus then<br/>tab.focus / pane.focus"| Herdr
+  Extra -->|"raise host"| TUI
+  Extra -->|"widget-snapshot.json"| Widget
+  Widget -->|"herdr-bar://focus"| Extra
+```
+
+Without it you attach each session and hunt for the pane that needs you. With it: Option-click the extra for the highest-priority agent, or open the dashboard and click a row. The extra raises the terminal that already hosts that session.
+
 ## Highlights
 
 - **Glance, not inventory** — Done and Working stay on the extra (zeros included). Blocked / Unknown join when they need you. Idle lives in the dashboard.

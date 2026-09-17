@@ -258,6 +258,43 @@
   border-radius: 50%;
 }
 
+.shot-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 1.25rem 0 1.75rem;
+}
+
+.shot-row.triple {
+  grid-template-columns: 1fr 1fr 0.7fr;
+}
+
+.shot {
+  margin: 0;
+}
+
+.shot img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  border: 1px solid var(--vp-c-divider);
+  background: var(--vp-c-bg-soft);
+}
+
+.shot figcaption {
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--vp-c-text-2);
+  text-align: center;
+}
+
+@media (max-width: 720px) {
+  .shot-row,
+  .shot-row.triple {
+    grid-template-columns: 1fr;
+  }
+}
+
 .priority-list {
   display: flex;
   flex-direction: column;
