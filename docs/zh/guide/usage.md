@@ -34,6 +34,10 @@ herdr-bar 有两层 UI：**菜单栏一览**（计数）和 **仪表盘**（跳�
 
 Popover 固定 **372 × 480**。藏 idle 不会把窗口缩小后再长不回来（`NSPopover` 会记住上次高度）。
 
+<figure class="shot">
+  <img src="/dashboard.png" alt="仪表盘：All / default chip、文件夹分组、Working 行">
+</figure>
+
 层级只有三层，没有第三排 chip：
 
 1. **Session** — 顶行 scope chip：`All` / `default` / `work`（仅当 ≥2 个 session 在线）。点 chip 本体是筛选。具体 session（不是 All）名字后面有箭头，只举起该 herdr session 的终端，不切换里面的 pane。
@@ -57,7 +61,11 @@ Popover 固定 **372 × 480**。藏 idle 不会把窗口缩小后再长不回来
 
 ## 桌面小组件 {#widget}
 
-通知中心 → 编辑小组件 → **Herdr**。Medium / Large 是 extra 当前眼睛下 All 范围的列表。extra 写 `~/.config/herdr/widget-snapshot.json`，小组件只读。点一行聚焦那个 pane（`herdr-bar://focus`）。底板是 Tahoe 系统玻璃（和日历 / 提醒事项一样）。列表从卡片顶部往下排——Medium 4 行、Large 10 行，WidgetKit 不滚动。extra 必须在跑（开机启动）。换过 `HerdrBar.app` 后如果画廊还是旧扩展，把小组件拿掉再加一次。
+通知中心 → 编辑小组件 → **Herdr**。Medium / Large 是 extra 当前眼睛下 All 范围的列表。
+
+<figure class="shot">
+  <img src="/widget.png" alt="桌面小组件 All 范围 Working 列表">
+</figure>extra 写 `~/.config/herdr/widget-snapshot.json`，小组件只读。点一行聚焦那个 pane（`herdr-bar://focus`）。底板是 Tahoe 系统玻璃（和日历 / 提醒事项一样）。列表从卡片顶部往下排——Medium 4 行、Large 10 行，WidgetKit 不滚动。extra 必须在跑（开机启动）。换过 `HerdrBar.app` 后如果画廊还是旧扩展，把小组件拿掉再加一次。
 
 ## 键盘 {#keyboard}
 

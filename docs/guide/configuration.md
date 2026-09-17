@@ -6,6 +6,10 @@ outline: false
 
 Preferences live in `~/.config/herdr/herdr-bar.json`, next to Herdr’s own config. The gear and a hand-edited file are the same document; the process watches the directory and hot-reloads colors.
 
+<figure class="shot">
+  <img src="/settings.png" alt="Settings: Open at login, keyboard shortcuts, About">
+</figure>
+
 ## Config file {#file}
 
 ```json

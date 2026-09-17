@@ -34,6 +34,10 @@ The menu bar is a glance. Parked agents still exist — open the eye in the dash
 
 The popover is a fixed **372 × 480**. Hiding idle must not shrink the window so it cannot grow back (`NSPopover` remembers the last height).
 
+<figure class="shot">
+  <img src="/dashboard.png" alt="Dashboard popover: All / default chips, folder groups, Working rows">
+</figure>
+
 Three layers only — no third chip row:
 
 1. **Session** — scope chips: `All` / `default` / `work` (only when two or more sessions are online). Chip body filters. Named session chips (not All) keep a trailing arrow that raises that herdr session’s terminal without focusing a pane.
@@ -57,7 +61,11 @@ Click a row = `agent.focus` that pane, then `tab.focus` / `pane.focus` so the at
 
 ## Desktop widget {#widget}
 
-Notification Center → Edit Widgets → **Herdr**. Medium and Large show the All-scope list under the extra’s current eye. The extra writes `~/.config/herdr/widget-snapshot.json`; the widget only reads it. Tap a row to focus that pane (`herdr-bar://focus`). The plate is Tahoe’s system glass (same as Calendar / Reminders). The list pins to the top of the card — Medium 4 rows, Large 10; WidgetKit does not scroll. The extra has to be running (Open at login). After replacing `HerdrBar.app`, remove and re-add the widget if the gallery still shows the old extension.
+Notification Center → Edit Widgets → **Herdr**. Medium and Large show the All-scope list under the extra’s current eye.
+
+<figure class="shot">
+  <img src="/widget.png" alt="Desktop widget All-scope Working list">
+</figure> The extra writes `~/.config/herdr/widget-snapshot.json`; the widget only reads it. Tap a row to focus that pane (`herdr-bar://focus`). The plate is Tahoe’s system glass (same as Calendar / Reminders). The list pins to the top of the card — Medium 4 rows, Large 10; WidgetKit does not scroll. The extra has to be running (Open at login). After replacing `HerdrBar.app`, remove and re-add the widget if the gallery still shows the old extension.
 
 ## Keyboard {#keyboard}
 

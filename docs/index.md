@@ -71,6 +71,21 @@ flowchart LR
 
 Without it you attach each session and hunt for the pane that needs you. With it: Option-click the extra for the highest-priority agent, or open the dashboard and click a row.
 
+<div class="shot-row triple">
+  <figure class="shot">
+    <img src="/dashboard.png" alt="Dashboard popover with session chips and Working rows">
+    <figcaption>Dashboard</figcaption>
+  </figure>
+  <figure class="shot">
+    <img src="/settings.png" alt="Settings: Open at login, keyboard, About">
+    <figcaption>Settings</figcaption>
+  </figure>
+  <figure class="shot">
+    <img src="/widget.png" alt="Desktop widget All-scope list">
+    <figcaption>Widget</figcaption>
+  </figure>
+</div>
+
 ## FAQ
 
 **What is herdr-bar?**

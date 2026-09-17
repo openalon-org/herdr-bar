@@ -71,6 +71,21 @@ flowchart LR
 
 没有它，你得自己 attach 每个 session，再在 pane 里找谁在等你。有了它：Option-click extra 跳到最高优先级 agent，或打开仪表盘点一行。extra 举起已经在跑那个 session 的终端。
 
+<div class="shot-row triple">
+  <figure class="shot">
+    <img src="/dashboard.png" alt="仪表盘：session chip 与 Working 行">
+    <figcaption>仪表盘</figcaption>
+  </figure>
+  <figure class="shot">
+    <img src="/settings.png" alt="设置：开机启动、键盘、About">
+    <figcaption>设置</figcaption>
+  </figure>
+  <figure class="shot">
+    <img src="/widget.png" alt="桌面小组件 All 范围列表">
+    <figcaption>小组件</figcaption>
+  </figure>
+</div>
+
 ## 常见问题
 
 **herdr-bar 是什么？**

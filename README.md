@@ -33,6 +33,12 @@ flowchart LR
 
 Without it you attach each session and hunt for the pane that needs you. With it: Option-click the extra for the highest-priority agent, or open the dashboard and click a row. The extra raises the terminal that already hosts that session.
 
+<p align="center">
+  <img src="docs/public/dashboard.png" alt="Dashboard popover: session chips, folder groups, Working rows" width="280">
+  <img src="docs/public/settings.png" alt="Settings: Open at login, keyboard, About" width="280">
+  <img src="docs/public/widget.png" alt="Desktop widget: All-scope Working list" width="220">
+</p>
+
 ## Highlights
 
 - **Glance, not inventory** — Done and Working stay on the extra (zeros included). Blocked / Unknown join when they need you. Idle lives in the dashboard.

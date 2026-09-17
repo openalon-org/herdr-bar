@@ -6,6 +6,10 @@ outline: false
 
 偏好写在 `~/.config/herdr/herdr-bar.json`，和 Herdr 自己的配置放在一起。齿轮改的值和手改文件是同一份；进程会监视该目录并热加载颜色。
 
+<figure class="shot">
+  <img src="/settings.png" alt="设置：开机启动、键盘、About">
+</figure>
+
 ## 配置文件 {#file}
 
 ```json
