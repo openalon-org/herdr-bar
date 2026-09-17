@@ -4,7 +4,7 @@
 
 herdr-bar is a macOS menu-bar companion for Herdr. It renders normalized coding-agent states, opens a dashboard, and focuses existing agent panes.
 
-Non-trivial delivery follows the loop in [`sdlc/README.md`](sdlc/README.md): accepted intent → spec → plan → PR. Session commands live in [`CLAUDE.md`](CLAUDE.md); review passes in [`REVIEW.md`](REVIEW.md). Product behavior still lives in this file.
+Non-trivial delivery follows the loop in [`sdlc/README.md`](sdlc/README.md): accepted intent → spec → plan → code. A single maintainer may push `main` for ordinary work and for the changelog bump; external contributors open a pull request. A `v*` tag still waits until `CHANGELOG.md` has that heading on `main`. Session commands live in [`CLAUDE.md`](CLAUDE.md); review passes in [`REVIEW.md`](REVIEW.md). Product behavior still lives in this file.
 
 ## Invariants
 
@@ -46,7 +46,7 @@ Non-trivial delivery follows the loop in [`sdlc/README.md`](sdlc/README.md): acc
 - `REVIEW.md` — Bugs / Security / Compliance passes. Findings do not merge a PR.
 - `sdlc/` — intent, spec, plan, evals, incidents, runbooks. See `sdlc/README.md`. Human-facing files there are Chinese; `CLAUDE.md`, skills, and `REVIEW.md` stay English.
 - `.claude/settings.json` — PreToolUse hooks (production tag gate, depersonalize, oracle lock).
-- `.agents/skills/` — project skills (body). `.claude/skills` is a symlink to that folder so Claude Code discovers them. `ai-native-sdlc` routes intent → spec → plan → PR. `capture-intent`, `requirements-design`, and `plan-mode` write the numbered artifacts. `depersonalize` keeps `/Users/me` / `/home/user` / session `work`. `test-reload` runs `scripts/reload.sh` after extra / HerdrCore changes so the menu bar matches the tree. `release` writes `CHANGELOG.md`, then tags. `vitepress-gtm` injects container `GTM-MNXQCPGT` on VitePress sites under `openalon.com` (`docs/.vitepress/gtm.ts`).
+- `.agents/skills/` — project skills (body). `.claude/skills` is a symlink to that folder so Claude Code discovers them. `ai-native-sdlc` routes intent → spec → plan → code on `main` (or a PR from outside). `capture-intent`, `requirements-design`, and `plan-mode` write the numbered artifacts. `depersonalize` keeps `/Users/me` / `/home/user` / session `work`. `test-reload` runs `scripts/reload.sh` after extra / HerdrCore changes so the menu bar matches the tree. `release` writes `CHANGELOG.md` on `main`, then a human tags. `vitepress-gtm` injects container `GTM-MNXQCPGT` on VitePress sites under `openalon.com` (`docs/.vitepress/gtm.ts`).
 - `CHANGELOG.md` — Keep a Changelog, newest first. VitePress `/changelog` includes this file; do not keep a second source.
 - `docs/` — VitePress site (GitHub Pages). English at the root, Simplified Chinese under `docs/zh/`. Preview with `npm run docs:dev`.
 - `.github/ISSUE_TEMPLATE/` / `.github/pull_request_template.md` / `CONTRIBUTING.md` / `SECURITY.md` — community files. Behavior still lives in this document.

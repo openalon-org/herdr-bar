@@ -1,6 +1,6 @@
 ---
 name: ai-native-sdlc
-description: Route herdr-bar work through intent then spec then plan then PR then a human tag. Use on any feature, product bug, incident, or delivery question. Do not skip gates for non-trivial work.
+description: Route herdr-bar work through intent then spec then plan then code then a human tag. Use on any feature, product bug, incident, or delivery question. Do not skip gates for non-trivial work.
 ---
 
 # AI-native SDLC
@@ -9,7 +9,7 @@ Non-trivial work in this repo follows [`sdlc/README.md`](../../../sdlc/README.md
 
 ```text
 intent (accepted) -> spec (approved) -> plan (engineer accepts)
-  -> code + tests -> PR + REVIEW.md -> tag / zip (human)
+  -> code + tests -> main (maintainer) or PR (external) -> tag / zip (human)
   -> band breach / incident -> new intent
 ```
 
@@ -24,11 +24,11 @@ intent (accepted) -> spec (approved) -> plan (engineer accepts)
 1. Start at `capture-intent` unless an accepted `sdlc/intent/NNNN-slug.md` already exists.
 2. Humans flip `status: accepted` on intent, spec, and plan. That **is** the gate. Do not treat a draft as permission to edit `Sources/`.
 3. After the plan is accepted, implement and keep the plan file in the same commit if the work diverges.
-4. Open a PR. Fill `.github/pull_request_template.md`. Point at `sdlc/plan/NNNN-slug.md` or write `chore / no plan`.
-5. Stop at the tag. A human publishes `v*`. Do not tag without `RELEASE_APPROVAL`.
+4. A single maintainer pushes `main`. External contributors open a PR and fill `.github/pull_request_template.md`. Point at `sdlc/plan/NNNN-slug.md` or write `chore / no plan`.
+5. Stop at the tag. A human publishes `v*` after the changelog heading is on `main`. Do not tag without `RELEASE_APPROVAL`.
 
 ## Do not
 
-- Skip intent/spec/plan for non-trivial work. Typos, comment-only, and CI yaml nits may skip — say `chore / no plan` on the PR.
+- Skip intent/spec/plan for non-trivial work. Typos, comment-only, and CI yaml nits may skip — say `chore / no plan` on an external PR.
 - Move invariants into `CLAUDE.md`.
 - Pretend hosted security scans or Slack on-call products exist in this public MIT extra.

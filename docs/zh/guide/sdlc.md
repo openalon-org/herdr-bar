@@ -9,15 +9,15 @@ description: herdr-bar 如何把已接受的意图变成打了 tag 的 zip，以
 
 ```text
 intent (accepted) -> spec (approved) -> plan (engineer accepts)
-  -> code + tests -> PR + REVIEW.md -> tag / zip (human)
+  -> code + tests -> main（维护者）或 PR（外部） -> tag / zip (human)
   -> band breach / incident -> new intent
 ```
 
-错别字、纯注释、CI yaml 小修可以跳过产物。PR 上写 `chore / no plan`。
+错别字、纯注释、CI yaml 小修可以跳过产物。外部 PR 上写 `chore / no plan`。单维护者时日常改动和发版 changelog 都直推 `main`。heading 进 `main` 之后才打 tag。
 
 ## 闸门
 
-人把 intent、spec、plan 的 `status` 翻成 `accepted`。那就是闸门。草稿不是改 `Sources/` 的许可。人仍然合并 PR、推 `v*`。没有 `RELEASE_APPROVAL` 时，agent 会话过不了 tag 闸门。
+人把 intent、spec、plan 的 `status` 翻成 `accepted`。那就是闸门。草稿不是改 `Sources/` 的许可。人仍然推 `v*`。没有 `RELEASE_APPROVAL` 时，agent 会话过不了 tag 闸门。
 
 ## 产物路径
 
@@ -27,7 +27,7 @@ intent (accepted) -> spec (approved) -> plan (engineer accepts)
 | Design | `sdlc/spec/NNNN-slug.md` |
 | Build | `sdlc/plan/NNNN-slug.md`，然后是 diff |
 | Test | `sdlc/evals/` |
-| Ship | PR；GitHub Release zip |
+| Ship | 直推 `main`；GitHub Release zip |
 | Maintain | `sdlc/incidents/` |
 
 编号文件共用 slug。从 `sdlc/templates/` 复制。回滚是安装上一份 zip（`sdlc/runbooks/rollback-release.md`）。

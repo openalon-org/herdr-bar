@@ -5,7 +5,7 @@ description: "herdr-bar release workflow: changelog, version tag, GitHub Release
 
 # herdr-bar Release
 
-Ship a stable extra built by CI: update `CHANGELOG.md`, merge, tag `vX.Y.Z`. `.github/workflows/release.yml` packs the universal zip and fills the GitHub Release body from that changelog section (`scripts/changelog-notes.sh`). There is no Sparkle / Developer ID / Homebrew lane.
+Ship a stable extra built by CI: update `CHANGELOG.md` on `main`, push, tag `vX.Y.Z`. `.github/workflows/release.yml` packs the universal zip and fills the GitHub Release body from that changelog section (`scripts/changelog-notes.sh`). There is no Sparkle / Developer ID / Homebrew lane. A single maintainer does not open a `release/` branch.
 
 The docs changelog page (`docs/changelog.md`, `docs/zh/changelog.md`) includes `CHANGELOG.md`, so there is no second changelog file to edit.
 
@@ -33,13 +33,11 @@ The docs changelog page (`docs/changelog.md`, `docs/zh/changelog.md`) includes `
 
 ## CI-built release
 
-5. **Branch, commit, push.** `git checkout -b release/vX.Y.Z`, stage `CHANGELOG.md` (and any version-adjacent docs), commit `Bump version to X.Y.Z`, then `git push -u origin release/vX.Y.Z`.
+A single maintainer commits on `main`. External contributors still open a pull request.
 
-6. **PR and CI.** `gh pr create --title "Release vX.Y.Z"` with the changelog section in the body, then wait for `.github/workflows/ci.yml`. Fix failures until it passes.
+5. **Commit and push `main`.** Stage `CHANGELOG.md` (and any version-adjacent tests), commit `Bump version to X.Y.Z`, then `git push origin main`. `ci.yml` runs on that push.
 
-7. **Merge.** `gh pr merge --squash --delete-branch`, then `git checkout main && git pull`.
-
-8. **Tag the merge commit** (the tree must contain the new changelog section).
+6. **Tag the commit that contains the new heading.** Wait until CI is green unless the user already accepted the risk.
 
    ```bash
    ./scripts/changelog-notes.sh X.Y.Z >/dev/null
@@ -47,7 +45,7 @@ The docs changelog page (`docs/changelog.md`, `docs/zh/changelog.md`) includes `
    git push origin vX.Y.Z
    ```
 
-9. **Watch the release workflow.** `gh run watch`. Confirm https://github.com/openalon-org/herdr-bar/releases has `HerdrBar-X.Y.Z-macos.zip` and a body that matches the changelog section, plus the unzip / `xattr` hint.
+7. **Watch the release workflow.** `gh run watch`. Confirm https://github.com/openalon-org/herdr-bar/releases has `HerdrBar-X.Y.Z-macos.zip` and a body that matches the changelog section, plus the unzip / `xattr` hint.
 
 `workflow_dispatch` on **Release macOS app** only uploads an Actions artifact (`0.0.0-dev`) — it does not publish.
 

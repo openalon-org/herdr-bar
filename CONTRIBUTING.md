@@ -38,6 +38,8 @@ After MacBar / HerdrCore changes the user should see, replace the live extra:
 
 ## Pull requests
 
+External contributors open a pull request against `main`. While there is a single maintainer, that person may push `main` directly for ordinary work. A second in-tree maintainer is when feature branches become the default for everyone.
+
 1. Branch from latest `main`.
 2. Keep the diff on one concern.
 3. Behavior changes: add the narrowest useful test (`tests/HerdrCoreTests` and/or `tests/herdr.test.mjs`).
@@ -50,7 +52,7 @@ CI (`.github/workflows/ci.yml`) runs `swift test`, the Node oracle plus changelo
 
 ## Releases
 
-Maintainers follow `.agents/skills/release`: add a `## [X.Y.Z]` section at the top of [`CHANGELOG.md`](CHANGELOG.md), merge that, then push `vX.Y.Z`. The tag must match a heading. `.github/workflows/release.yml` builds a universal zip and fills the GitHub Release body from that section (`scripts/changelog-notes.sh`). The docs page includes the same file.
+Maintainers follow `.agents/skills/release`: on `main`, add a `## [X.Y.Z]` section at the top of [`CHANGELOG.md`](CHANGELOG.md), push, then tag `vX.Y.Z`. The tag must match a heading. `.github/workflows/release.yml` builds a universal zip and fills the GitHub Release body from that section (`scripts/changelog-notes.sh`). The docs page includes the same file.
 
 Manually running **Release macOS app** only uploads an Actions artifact (`0.0.0-dev`) — it does not publish.
 

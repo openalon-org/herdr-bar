@@ -9,15 +9,15 @@ Non-trivial work in this repo follows a committed loop. Chat is not the source o
 
 ```text
 intent (accepted) -> spec (approved) -> plan (engineer accepts)
-  -> code + tests -> PR + REVIEW.md -> tag / zip (human)
+  -> code + tests -> main (maintainer) or PR (external) -> tag / zip (human)
   -> band breach / incident -> new intent
 ```
 
-Typos, comment-only, and CI yaml nits may skip the artifacts. Say `chore / no plan` on the PR.
+Typos, comment-only, and CI yaml nits may skip the artifacts. External PRs say `chore / no plan`. A single maintainer pushes `main` for ordinary work and for the changelog bump. The `v*` tag still waits until that heading is on `main`.
 
 ## Gates
 
-Humans flip `status: accepted` on intent, spec, and plan. That **is** the gate. A draft is not permission to edit `Sources/`. A human still merges the PR and pushes `v*`. An agent session cannot pass the tag gate without `RELEASE_APPROVAL`.
+Humans flip `status: accepted` on intent, spec, and plan. That **is** the gate. A draft is not permission to edit `Sources/`. A human still pushes `v*`. An agent session cannot pass the tag gate without `RELEASE_APPROVAL`.
 
 ## Artifact paths
 
@@ -27,7 +27,7 @@ Humans flip `status: accepted` on intent, spec, and plan. That **is** the gate. 
 | Design | `sdlc/spec/NNNN-slug.md` |
 | Build | `sdlc/plan/NNNN-slug.md`, then the diff |
 | Test | `sdlc/evals/` |
-| Ship | PR; GitHub Release zip |
+| Ship | push `main`; GitHub Release zip |
 | Maintain | `sdlc/incidents/` |
 
 Numbered files share a slug. Copy `sdlc/templates/`. Rollback is install the previous zip (`sdlc/runbooks/rollback-release.md`).

@@ -4,7 +4,7 @@ herdr-bar 按 [AI-native SDLC 剧本](https://claude.com/blog/the-ai-native-sdlc
 
 ```text
 intent (accepted) → spec (approved) → plan (engineer accepts)
-  → code + tests → PR + REVIEW.md → tag / zip (human)
+  → code + tests → main（维护者）或 PR（外部）→ tag / zip (human)
   → band breach / incident → new intent
 ```
 
@@ -20,12 +20,14 @@ Git 是真相来源。GitHub Issues 是入口。产品行为仍写在 [`AGENTS.m
 | Design | `sdlc/spec/NNNN-slug.md` | 维护者接受 |
 | Build | `sdlc/plan/NNNN-slug.md`，然后是 diff | 工程师在改代码前接受 plan |
 | Test | 测试输出、`sdlc/evals/` | CI + 会话反馈环 |
-| Deploy | PR、GitHub Release zip | 人打 `v*`；hook 拦住 agent |
+| Deploy | 直推 `main`，然后 GitHub Release zip | 人打 `v*`；hook 拦住 agent |
 | Maintain | `sdlc/incidents/`、新 intent | `bands.yaml` 是确定性的；分诊是人做的 |
 
 编号文件共用 slug。从 `sdlc/templates/` 复制。`status` 是 `draft`、`accepted`、`rejected` 或 `superseded`。翻成 `accepted` **就是**闸门。
 
-杂务（错别字、纯注释、CI yaml 小修）可以跳过 intent/spec/plan。PR 上写 `chore / no plan`。
+杂务（错别字、纯注释、CI yaml 小修）可以跳过 intent/spec/plan。外部 PR 上写 `chore / no plan`。
+
+单维护者时日常改动和发版 changelog 都直推 `main`（heading 进 `main` 之后才打 `v*`）。外部贡献走 GitHub pull request。内部维护者超过一人再默认人人开分支。`main` 上的 GitHub ruleset 只禁止 force-push 和删分支，不要求 PR。
 
 ## Skill、hook、subagent
 
@@ -62,4 +64,4 @@ Claude Security（托管扫描）和 Claude Tag（Slack 值班）是 Anthropic �
 - 有 `ANTHROPIC_API_KEY` 时对评测 case 跑现场 `claude -p`；缺 key 仍 skip，不打红默认 CI。
 - 有 key 之后，对失败的 CI 日志做只读 `claude -p`。
 - 周任务读真实 `validate` 结论，按档写诊断或按 `sdlc/templates/incident.md` 开 bug。
-- 仓库超过一名维护者时，再上 CODEOWNERS / `main` 分支保护。
+- 仓库超过一名维护者时，再上 CODEOWNERS，并把 `main` 的 ruleset 改成要求 PR。
