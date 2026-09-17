@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitepress'
+import { withMermaid } from 'vitepress-plugin-mermaid'
 import { gtmHead, injectGtmNoscript } from './gtm'
 import {
   GITHUB,
@@ -155,7 +156,7 @@ function sidebar(prefix: string, t: {
   ]
 }
 
-export default defineConfig({
+export default withMermaid(defineConfig({
   ignoreDeadLinks: false,
   base,
   title: SITE_TITLE,
@@ -325,4 +326,4 @@ export default defineConfig({
       text: 'Edit this page on GitHub',
     },
   },
-})
+}))

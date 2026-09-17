@@ -258,6 +258,21 @@
   border-radius: 50%;
 }
 
+.vp-doc .mermaid {
+  margin: 1.5rem 0 2rem;
+  padding: 1rem 0.75rem;
+  border-radius: 14px;
+  background: var(--vp-c-bg-soft);
+  border: 1px solid var(--vp-c-divider);
+  overflow-x: auto;
+}
+
+.vp-doc .mermaid svg {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+}
+
 .shot-row {
   display: grid;
   grid-template-columns: 1fr 1fr;

@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict'
-import { existsSync, readFileSync } from 'node:fs'
+import { existsSync, readFileSync, readdirSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { describe, it } from 'node:test'
 import { fileURLToPath } from 'node:url'
@@ -80,6 +80,23 @@ describe('docs SEO head', () => {
     const body = html('404.html')
     mustInclude(body, ['name="robots" content="noindex, nofollow"'], '404')
     assert.equal((body.match(/rel="canonical"/g) || []).length, 0)
+  })
+
+  it('home mermaid fences compile to a diagram, not a highlighted code block', () => {
+    const assets = join(dist, 'assets')
+    const pages = readdirSync(assets).filter((name) =>
+      /^(index|zh_index)\.md\.[^.]+\.js$/.test(name) && !name.includes('.lean.'),
+    )
+    assert.ok(pages.length >= 2, `expected compiled home pages, got ${pages.join(',')}`)
+    for (const name of pages) {
+      const body = readFileSync(join(assets, name), 'utf8')
+      assert.ok(body.includes('class:"mermaid"'), `${name} missing Mermaid component`)
+      assert.ok(body.includes('flowchart'), `${name} missing flowchart graph`)
+      assert.ok(!body.includes('language-mermaid'), `${name} still highlights mermaid as a code fence`)
+    }
+    for (const rel of ['index.html', 'zh/index.html']) {
+      assert.ok(!html(rel).includes('language-mermaid'), `${rel} still highlights mermaid as a code fence`)
+    }
   })
 
   it('every page loads Google Tag Manager in head and noscript after body', () => {
