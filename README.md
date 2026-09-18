@@ -1,3 +1,5 @@
+<a href="https://openalon.com/herdr-bar/"><img src="docs/banner.svg" alt="HerdrBar" width="100%" /></a>
+
 # herdr-bar
 
 [English](README.md) · [中文](README.zh.md) · [Docs](https://openalon.com/herdr-bar/)
@@ -14,17 +16,28 @@ See every coding agent at a glance. Jump to the one that needs you. No polling. 
 
 [Install](https://openalon.com/herdr-bar/guide/installation.html) · [Changelog](https://openalon.com/herdr-bar/changelog.html)
 
-<p align="center">
-  <a href="https://openalon.com/herdr-bar/">
-    <img src="docs/public/app-mark.png" alt="HerdrBar" height="96">
-  </a>
-</p>
-
-| 👁 [Menu-bar glance](https://openalon.com/herdr-bar/guide/usage.html) | ⚡ [Event-driven](https://openalon.com/herdr-bar/guide/protocol.html) | 🎯 [Priority focus](https://openalon.com/herdr-bar/guide/status.html) |
-|---|---|---|
-| Done and Working stay on the extra. Blocked and Unknown join when they need you. Idle lives behind the dashboard eye. | `events.subscribe` invalidates the snapshot; `agent.list` refreshes it. Never poll Herdr on a timer. | Option-click jumps to the highest-priority agent — blocked, then done, working, unknown, idle. |
-| **🪟 [Focus, never create](https://openalon.com/herdr-bar/guide/architecture.html#focus-raiser)** | **🧩 [Every live session](https://openalon.com/herdr-bar/guide/architecture.html#discovery)** | **🎨 [Claude Code palette](https://openalon.com/herdr-bar/guide/configuration.html)** |
-| `agent.focus`, then `tab.focus` so the attached TUI follows, then raise that session’s host terminal. Never open a window, pane, or agent. | Discover default and named sessions (`work`, …) and identify agents as `(sessionName, pane_id)`. | Defaults match Claude’s terminal tabs; working uses the CLI spinner terracotta. Override from the gear. |
+<table>
+  <tr>
+    <th align="center">👁 <a href="https://openalon.com/herdr-bar/guide/usage.html">Menu-bar glance</a></th>
+    <th align="center">⚡ <a href="https://openalon.com/herdr-bar/guide/protocol.html">Event-driven</a></th>
+    <th align="center">🎯 <a href="https://openalon.com/herdr-bar/guide/status.html">Priority focus</a></th>
+  </tr>
+  <tr>
+    <td>Done and Working stay on the extra. Blocked and Unknown join when they need you. Idle lives behind the dashboard eye.</td>
+    <td><code>events.subscribe</code> invalidates the snapshot; <code>agent.list</code> refreshes it. Never poll Herdr on a timer.</td>
+    <td>Option-click jumps to the highest-priority agent — blocked, then done, working, unknown, idle.</td>
+  </tr>
+  <tr>
+    <th align="center">🪟 <a href="https://openalon.com/herdr-bar/guide/architecture.html#focus-raiser">Focus, never create</a></th>
+    <th align="center">🧩 <a href="https://openalon.com/herdr-bar/guide/architecture.html#discovery">Every live session</a></th>
+    <th align="center">🎨 <a href="https://openalon.com/herdr-bar/guide/configuration.html">Claude Code palette</a></th>
+  </tr>
+  <tr>
+    <td><code>agent.focus</code>, then <code>tab.focus</code> so the attached TUI follows, then raise that session’s host terminal. Never open a window, pane, or agent.</td>
+    <td>Discover default and named sessions (<code>work</code>, …) and identify agents as <code>(sessionName, pane_id)</code>.</td>
+    <td>Defaults match Claude’s terminal tabs; working uses the CLI spinner terracotta. Override from the gear.</td>
+  </tr>
+</table>
 
 > **What this is**
 >

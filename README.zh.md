@@ -1,3 +1,5 @@
+<a href="https://openalon.com/herdr-bar/zh/"><img src="docs/banner.svg" alt="HerdrBar" width="100%" /></a>
+
 # herdr-bar
 
 [English](README.md) · [中文](README.zh.md) · [文档](https://openalon.com/herdr-bar/zh/)
@@ -14,17 +16,28 @@
 
 [开始安装](https://openalon.com/herdr-bar/zh/guide/installation.html) · [更新日志](https://openalon.com/herdr-bar/zh/changelog.html)
 
-<p align="center">
-  <a href="https://openalon.com/herdr-bar/zh/">
-    <img src="docs/public/app-mark.png" alt="HerdrBar" height="96">
-  </a>
-</p>
-
-| 👁 [菜单栏一览](https://openalon.com/herdr-bar/zh/guide/usage.html) | ⚡ [事件驱动](https://openalon.com/herdr-bar/zh/guide/protocol.html) | 🎯 [优先级聚焦](https://openalon.com/herdr-bar/zh/guide/status.html) |
-|---|---|---|
-| Done / Working 常驻菜单栏。Blocked / Unknown 有人时才出现。Idle 不占菜单栏，藏在仪表盘的眼睛后面。 | 通过 Herdr 的 `events.subscribe` 失效快照，再用 `agent.list` 刷新。从不按定时器轮询。 | Option-click 跳到最高优先级 agent：blocked → done → working → unknown → idle。 |
-| **🪟 [只聚焦，不创建](https://openalon.com/herdr-bar/zh/guide/architecture.html#focus-raiser)** | **🧩 [每个 live session](https://openalon.com/herdr-bar/zh/guide/architecture.html#discovery)** | **🎨 [Claude Code 调色板](https://openalon.com/herdr-bar/zh/guide/configuration.html)** |
-| 调用 `agent.focus`，再 `tab.focus` 让已经 attach 的 TUI 跟过去，然后举起宿主终端。从不新开窗口、pane 或 agent。 | 同时发现 default 与 named session（如 `work`），按 `(sessionName, pane_id)` 聚合身份。 | 默认颜色跟 Claude 终端 tab 对齐；working 用 CLI spinner 陶土色。齿轮里可覆盖。 |
+<table>
+  <tr>
+    <th align="center">👁 <a href="https://openalon.com/herdr-bar/zh/guide/usage.html">菜单栏一览</a></th>
+    <th align="center">⚡ <a href="https://openalon.com/herdr-bar/zh/guide/protocol.html">事件驱动</a></th>
+    <th align="center">🎯 <a href="https://openalon.com/herdr-bar/zh/guide/status.html">优先级聚焦</a></th>
+  </tr>
+  <tr>
+    <td>Done / Working 常驻菜单栏。Blocked / Unknown 有人时才出现。Idle 不占菜单栏，藏在仪表盘的眼睛后面。</td>
+    <td>通过 Herdr 的 <code>events.subscribe</code> 失效快照，再用 <code>agent.list</code> 刷新。从不按定时器轮询。</td>
+    <td>Option-click 跳到最高优先级 agent：blocked → done → working → unknown → idle。</td>
+  </tr>
+  <tr>
+    <th align="center">🪟 <a href="https://openalon.com/herdr-bar/zh/guide/architecture.html#focus-raiser">只聚焦，不创建</a></th>
+    <th align="center">🧩 <a href="https://openalon.com/herdr-bar/zh/guide/architecture.html#discovery">每个 live session</a></th>
+    <th align="center">🎨 <a href="https://openalon.com/herdr-bar/zh/guide/configuration.html">Claude Code 调色板</a></th>
+  </tr>
+  <tr>
+    <td>调用 <code>agent.focus</code>，再 <code>tab.focus</code> 让已经 attach 的 TUI 跟过去，然后举起宿主终端。从不新开窗口、pane 或 agent。</td>
+    <td>同时发现 default 与 named session（如 <code>work</code>），按 <code>(sessionName, pane_id)</code> 聚合身份。</td>
+    <td>默认颜色跟 Claude 终端 tab 对齐；working 用 CLI spinner 陶土色。齿轮里可覆盖。</td>
+  </tr>
+</table>
 
 > **这是什么**
 >

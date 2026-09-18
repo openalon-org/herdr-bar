@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="400" viewBox="0 0 1400 400">
+  <rect width="1400" height="400" rx="24" fill="#F3F1EB"/>
+
+  <g font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" fill="#1C1C1E">
+    <text x="72" y="92" font-size="18" font-weight="600" letter-spacing="4" fill="#CF7650">HERDR COMPANION</text>
+    <text x="64" y="210" font-size="96" font-weight="700" letter-spacing="-2">HerdrBar</text>
+    <text x="72" y="272" font-size="26" fill="#6E6E73">See every coding agent at a glance.</text>
+    <text x="72" y="314" font-size="22" fill="#8E8E93">No polling. No new panes.</text>
+  </g>
+
+  <g transform="translate(1008 80)">
+    <rect width="240" height="240" rx="54" fill="#FFFFFF"/>
+    <g transform="translate(120 120)" fill="none" stroke="#3A3A3C" stroke-linecap="round">
+      <rect x="-52" y="-52" width="104" height="104" rx="18" stroke-width="10"/>
+      <rect x="-24" y="-24" width="48" height="48" rx="8" stroke-width="10"/>
+      <g stroke-width="8">
+        <path d="M-28 -68 V-58 M0 -68 V-58 M28 -68 V-58"/>
+        <path d="M-28 68 V58 M0 68 V58 M28 68 V58"/>
+        <path d="M-68 -28 H-58 M-68 0 H-58 M-68 28 H-58"/>
+        <path d="M68 -28 H58 M68 0 H58 M68 28 H58"/>
+      </g>
+    </g>
+    <g transform="translate(148 196)">
+      <rect width="80" height="28" rx="14" fill="#1C1C1E"/>
+      <circle cx="20" cy="14" r="5" fill="#5F87FF"/>
+      <circle cx="40" cy="14" r="5" fill="#00D75F"/>
+      <circle cx="60" cy="14" r="5" fill="#CF7650"/>
+    </g>
+  </g>
+</svg>
