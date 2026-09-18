@@ -16,7 +16,7 @@
 
 <p align="center">
   <a href="https://openalon.com/herdr-bar/zh/">
-    <img src="docs/public/app-mark.png" alt="HerdrBar" height="72">
+    <img src="docs/public/app-mark.png" alt="HerdrBar" height="96">
   </a>
 </p>
 
