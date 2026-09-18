@@ -60,7 +60,7 @@ node --test tests/herdr.test.mjs tests/changelog.test.mjs tests/sdlc.test.mjs
 
 CI（`.github/workflows/ci.yml`）在 `macos-latest` 上跑这两条。Ubuntu 的 `docs` job 会 build VitePress，再跑 `tests/seo.test.mjs`（canonical、hreflang、sitemap、robots）。另有 Pages workflow 部署同一份产物。打 `v*` tag 走 `.github/workflows/release.yml`：编 universal `.app`，zip 挂到 GitHub Release，正文是 `scripts/changelog-notes.sh` 抽出的那一节。tag 必须对应 `CHANGELOG.md` 里的 `## [X.Y.Z]`。二进制是 ad-hoc 签名（不是 Developer ID / 公证）。`workflow_dispatch` 只上传 artifact。
 
-行为变化应带上最窄有用的测试。改了安装、设置、交互或前置条件时，同步 README 和 `docs/guide/`。用户能看见的历史写在 `CHANGELOG.md`，发版时再改（skill `release`）。
+行为变化应带上最窄有用的测试。改了安装、设置、交互或前置条件时，同步 `README.md`、`README.zh.md` 和 `docs/guide/`。用户能看见的历史写在 `CHANGELOG.md`，发版时再改（skill `release`）。
 
 ## 本地运行 {#run}
 

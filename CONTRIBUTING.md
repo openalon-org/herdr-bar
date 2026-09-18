@@ -43,7 +43,7 @@ External contributors open a pull request against `main`. While there is a singl
 1. Branch from latest `main`.
 2. Keep the diff on one concern.
 3. Behavior changes: add the narrowest useful test (`tests/HerdrCoreTests` and/or `tests/herdr.test.mjs`).
-4. If install, settings, interactions, or requirements change, update `README.md` and `docs/guide/` (English and `docs/zh/`).
+4. If install, settings, interactions, or requirements change, update `README.md`, `README.zh.md`, and `docs/guide/` (English and `docs/zh/`).
 5. User-facing behavior belongs in [`CHANGELOG.md`](CHANGELOG.md) at release time, not in the PR unless you are cutting the tag. Do not keep a second changelog under `docs/`.
 6. Do not commit real home directories, logins, hostnames, local project paths, or real session / repo names. Use `/Users/me`, `/home/user`, `~/…`, and the generic session name `work`.
 7. Fill in `.github/pull_request_template.md`.

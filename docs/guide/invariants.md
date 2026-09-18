@@ -52,4 +52,4 @@ These constraints *are* the product. Read [`AGENTS.md`](https://github.com/opena
 
 - Harness-specific status interpretation stays in Herdr.
 - Git branch and model are local enrichment, not Herdr fields. Do not show elapsed time or tokens. Do not timer-poll jsonl or `agent.list`.
-- `Herdr.js` remains the oracle for status order, counts, and socket paths. Behavior changes should ship the narrowest useful test, and update the README plus this site when they affect install, settings, or interactions.
+- `Herdr.js` remains the oracle for status order, counts, and socket paths. Behavior changes should ship the narrowest useful test, and update `README.md`, `README.zh.md`, plus this site when they affect install, settings, or interactions.

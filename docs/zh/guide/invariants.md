@@ -52,4 +52,4 @@ description: 产品不变量：事件驱动更新、禁止创建 pane、菜单�
 
 - 各 agent 运行时特有的状态解释留在 Herdr。
 - Git 分支和模型是本机富化，不是 Herdr 字段。不画耗时、不画 token。禁止定时轮询 jsonl 或 `agent.list`。
-- `Herdr.js` 仍是状态顺序、计数、socket 路径的行为对照。行为变化应带上最窄有用的测试，并在影响安装 / 设置 / 交互时更新 README 与本站。
+- `Herdr.js` 仍是状态顺序、计数、socket 路径的行为对照。行为变化应带上最窄有用的测试，并在影响安装 / 设置 / 交互时更新 `README.md`、`README.zh.md` 与本站。

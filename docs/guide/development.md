@@ -60,7 +60,7 @@ node --test tests/herdr.test.mjs tests/changelog.test.mjs tests/sdlc.test.mjs
 
 CI (`.github/workflows/ci.yml`) runs both on `macos-latest`. The Ubuntu `docs` job builds VitePress and then `tests/seo.test.mjs` (canonical, hreflang, sitemap, robots). A separate Pages workflow deploys the same build. Push a `v*` tag for `.github/workflows/release.yml`: universal `.app`, zip, GitHub Release whose body is `scripts/changelog-notes.sh` for that version. The tag must match a `## [X.Y.Z]` heading in `CHANGELOG.md`. The binary is ad-hoc signed (not Developer ID / notarized). `workflow_dispatch` only uploads the artifact.
 
-Behavior changes should include the narrowest useful test. When install, settings, interactions, or requirements change, keep the README and `docs/guide/` in sync. User-facing history is `CHANGELOG.md` at release time (skill `release`).
+Behavior changes should include the narrowest useful test. When install, settings, interactions, or requirements change, keep `README.md`, `README.zh.md`, and `docs/guide/` in sync. User-facing history is `CHANGELOG.md` at release time (skill `release`).
 
 ## Run locally {#run}
 
