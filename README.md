@@ -15,7 +15,9 @@ See every coding agent at a glance. Jump to the one that needs you. No polling. 
 [Install](https://openalon.com/herdr-bar/guide/installation.html) · [Changelog](https://openalon.com/herdr-bar/changelog.html)
 
 <p align="center">
-  <img src="docs/public/herdr-bar-icon.svg" alt="herdr-bar" width="120">
+  <a href="https://openalon.com/herdr-bar/">
+    <img src="docs/public/app-mark.png" alt="HerdrBar" height="72">
+  </a>
 </p>
 
 | 👁 [Menu-bar glance](https://openalon.com/herdr-bar/guide/usage.html) | ⚡ [Event-driven](https://openalon.com/herdr-bar/guide/protocol.html) | 🎯 [Priority focus](https://openalon.com/herdr-bar/guide/status.html) |

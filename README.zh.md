@@ -15,7 +15,9 @@
 [开始安装](https://openalon.com/herdr-bar/zh/guide/installation.html) · [更新日志](https://openalon.com/herdr-bar/zh/changelog.html)
 
 <p align="center">
-  <img src="docs/public/herdr-bar-icon.svg" alt="herdr-bar" width="120">
+  <a href="https://openalon.com/herdr-bar/zh/">
+    <img src="docs/public/app-mark.png" alt="HerdrBar" height="72">
+  </a>
 </p>
 
 | 👁 [菜单栏一览](https://openalon.com/herdr-bar/zh/guide/usage.html) | ⚡ [事件驱动](https://openalon.com/herdr-bar/zh/guide/protocol.html) | 🎯 [优先级聚焦](https://openalon.com/herdr-bar/zh/guide/status.html) |
